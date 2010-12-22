@@ -197,12 +197,11 @@ Probleme:
 
 \section{Live-Migration als Teil der Lösung}
 \label{sec:livemigration}
-Dr. Jacob Gorm Hansen described the process of live migration
-as implemented in his NomadBIOS, which we will recapitulate here.
-
-The following sections summarize some of the real-world use cases for
-live migration and how it compares to the previous solutions which
-were applied to these problems.
+Dr. Jacob Gorm Hansen pr"asentierte das NomadBIOS~\cite{needed} als
+Live-Migrations-L"osung als Teil der L"osung f"ur oben genannte
+Probleme der Clouds. Im Folgenden werden wir auf die von ihm
+vorgestellte L"osung technische rekapitulieren und dabei den
+L"osungsbeitrag aufzeigen.
 
 \subsection{Verlässlichkeit von Virtualisierung}
 In jedem verteilten System muss man mit der Realität umgehen, dass
@@ -266,23 +265,101 @@ unterbrochen werden müssen, sondern, für den Nutzer transparent, auf
 den neuen Server migriert werden.
 
 \subsection{Interoparibilität von Virtualisierungs-Lösungen}
-Several process migration systems were developed in the 1980s,
-examples are Sprite and MOSIX\cite{hansen2004self}. Such migration
-solutions depend on capabilities of the hypervisor as well as the
-operating system, limiting their use across organization boundaries,
-during system upgrades, as well as for cloud hosting solutions where
-the OS software is not controlled by the hosting provider.
+F"ur Unternehmen, die mit "offentlichem Cloud-Hosting lieb"augeln,
+kann die Bindung an ein bestimmtes System schwerwiegende Konsequenzen
+nach sich ziehen. Um mit der Flexibilit"at vom eigenen Rechenzentrum
+mitzuhalten, darf die Virtualisierungstechnologie des Providers nicht
+die Verwendung des Systems innerhalb das Unternehmens
+einschr"anken. Insbesondere muss f"ur den Kunden die M"oglichkeit
+bestehen, auf eine andere Virtualisierungstechnologie umzusteigen,
+vorhandene VMs direkt in die Cloud zu bewegen oder auch VMs aus der
+Cloud wieder in das eigene Rechenzentrum oder auf die Rechner der
+Entwickler umzuziehen. Die Interoparibilität der verwendeten
+Virtualisierungsl"osungen spielt hier eine wichtige Rolle.
 
-Virtualized machine hardware varies even today. There are efforts
-underway\cite{cloudstandard} to standardize different aspects of
-virtualization, like the format for virtual machine descriptions and
-the APIs of hypervisors. This is a work-in-progress, however, and
-moving complete systems between different vendors usually involves
-shutting those systems down to allow various data conversions to take
-place.
+Virtuelle Maschinen variieren stark zwischen verschiedenen
+Virtualisierungsl"osungen. Das f"angt mit den Formaten der virtuellen
+Dateisysteme an~\cite{none} und geht bis hinunter zu den spezifischen
+Arten der virtualisierten Hardwarekomponenten~\cite{none}. Das
+bedeutet im Einzelnen, dass der Wechsel zwischen Hypervisor
+Technologien von au"sen eine Konvertierung zwischen den (oft
+propriet"aren) Formaten bedeutet, aber auch im virtualisierten Host
+unter Umst"anden Treiber neu installiert werden m"ussen. Solch
+tiefgreifende "Anderungen, die oftmals gezwungenerma"sen mit Neustarts
+der virtuellen Betriebssysteme einhergehen, sind kaum ohne
+Ausfallzeiten zu unternehmen. Folglich hat ein Cloud-Hosting Provider
+allein durch die Auswahl seiner Virtualisierungsl"osung die
+M"oglichkeit, Kunden sehr stark zu binden.
+
+Live-Migration verspricht hier Abhilfe, wenn nur die
+Migrationsprotokolle der Hypervisoren kompatibel
+sind~\cite{none}. Dann n"amlich kann, ohne Umweg "uber die
+serialisierten Formate der Virtualisierungsl"osungen, das
+virtualisierte System direkt zwischen zwei VMs kopiert werden, und
+sozusagen zur Laufzeit konvertiert werden.
 
 \subsection{Inter-Cloud Verschiebungen}
 \label{sec:movclouds}
+Probleme durch inkompatible Virtualisierungen werden im Rahmen des
+Outsourcings in die \emph{Public Cloud} noch verst"arkt, da die
+Entscheidung f"ur einen Cloud-Provider unter Umst"anden bedeutet, dass
+die Dienste nur unter erheblichem Aufwand wieder in eine andere Cloud
+verschiebbar sind. Das bedeutet f"ur den Cloud-Kunden eine starke
+Bindung an den Hosting Provider, eine Bindung die f"ur Unternehmen so
+problematisch sein kann, dass auf das Hosting bei einem fremden
+Provider ganz verzichtet werden muss.
+
+Prozessmigrationssysteme, wie sie in den 1980er Jahren entwickelt
+wurden, wie z.B. das Sprite oder das MOSIX
+System~\cite{hansen2004self} benutzten F"ahigkeiten des Hypervisors
+sowie der darauf laufenden Betriebssysteme in Konjunktion und waren
+damit per-se nicht auf beliebigen Kombinationen der beiden
+ausf"uhrbar. Desweiteren schr"ankte die Notwendigkeit von spezifischen
+Anpassungen and verschiedenen Teilen des Softwarestacks und
+propriet"are Protokolle die Verwendung derselben "uber die Grenzen von
+Unternehmen und Organisationen hinweg ein. Migration ganzer VMs bietet
+hier einen Ausweg durch kleinere Schnittstellen und Wegfallen der
+Kommunikation zwischen den migrierten Systemen nachdem die neue VM in
+Betrieb geht. Da kein kompliziertes Routing zwischen der neuen und der
+alten VM vonstatten gehen muss, beschr"ankt sich die Kommunikation
+(und damit der Anspruch an die Schnittstellen der Providers) auf die
+initiale Synchronisationsphase.
+
+Selbst wenn der Migrationspfad zwischen Virtualisierungsl"osungen
+vorhanden ist, ist das Bewegen einer VM aus einer fremden Cloud
+trotzdem oft nicht trivial. Cloud Provider bieten derzeit noch
+verschiedene, teilweise inkompatible und in ihrer M"achtigkeit
+schwankende Zugriffsm"oglichkeiten auf die gehosteten Systeme. Kleine
+Provider wie Heroku~\cite{none} bieten "ublicherweise nur vollen
+Zugriff auf einen Teil der gehosteten Software und erlauben
+Maschinenkonfiguration nach dem Baukastenprinzip. Ein vollst"andiges
+VM Image ist so einfach nicht zu bekommen. Im Vergleich dazu bieten
+Engine Yard~\cite{none} und VMWare ausgefeilte Tools um VMs mit
+Meta-Konfigurationen~\cite{none} vollst"andig selbst einzurichten und
+bei Problemen auch komplette Images dieser Maschinen zu
+erhalten~\cite{none}. Wieder muss allerdings gesagt werden, dass diese
+Interfaces inkompatibel sind, und es nicht ohne Ausfallzeit m"oglich
+sein d"urfte, Dienste von einer in
+die andere Cloud zu bewegen.\\
+
+Es gibt Bem"uhungen diese Verschiedenen Aspekte des Cloud Hostings zu
+standardisieren~\cite{cloudstandard}. Darin inbegriffen sind die
+Beschreibungen von VMs sowie die APIs die Hypervisoren
+bereitstellen. Dieser Prozess ist allerdings noch nicht abgeschlossen,
+und obwohl gro"se Hosting-Anbieter wie Rackspace, VMWare und Engine
+Yard daran teilnehmen~\cite{none}, fehlt z.B. noch Amazon als der
+gr"o"ste Hosting-Provider in Europa.
+
+Die Fortentwicklung der VM-Migrationstechnologie, wie sie
+Dr. Gorm-Hansen beschrieben hat, k"onnte eine einfache L"osung f"ur
+dieses Problem bieten, indem sie die F"ahigkeiten zur Live-Migration
+vollst"andig in das Betriebssystem verschiebt. Mittels
+standardisierter Hypervisor APIs k"onnte dann vom virtuellen System
+aus der Migrationsprozess angesto"sen werden, und der Umzug in eine
+neue Cloud auch ohne Mitwirken des Hosting-Providers m"oglich
+werden. Das bedeutet effektiv eine Reduzierung der Bindung an eine
+bestimmte Cloud und vermindert das Risiko von \emph{Public Clouds} aus
+Sicht des Unternehmes~\cite{none}.
 
 \subsection{Hardware-Aufstockung ohne Ausfallzeigen}
 Modern businesses have to be able to react to market change quickly
