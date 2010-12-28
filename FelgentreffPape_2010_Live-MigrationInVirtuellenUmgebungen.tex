@@ -396,11 +396,6 @@ M"oglichkeit, nur den Umfang an Leistung zu zahlen, der auch
 tats"achlich genutzt wird, und bei Bedarf mehr Leistung
 "`einzukaufen"'.
 
-\subsection{Keine Ausfallzeit durch Verschiebungen}
-\label{sec:keine-ausfallzeit}
-Netzwerklast is hoeher, aber who cares.
-Yes: Github, heroku, engineyard.
-
 \subsection{Adaptive Auslastung}
 \label{sec:adaptive-auslastung}
 Neben der Notwendigkeit, bei Marktwachstum schnell skalieren zu
@@ -440,6 +435,52 @@ Wir argumentieren, dass die Kosten f"ur einen solchen Parallelbetrieb
 zweier Netzwerke weit hinter den Kosten f"ur das vorhalten von
 ausreichender, aber meist ungenutzter, Rechenkapazit"at
 zur"uckbleiben.
+
+\subsection{Keine Ausfallzeit durch Verschiebungen}
+\label{sec:keine-ausfallzeit}
+Neben den Use-Cases zur Skalierung und Aufrechterhaltung von
+(Cloud-)Services, gibt es ein weiteres Problem, mit dem international
+agierende Anbieter umgehen m"ussen, und das sind die sich wandelnden
+gesetzlichen Vorschriften zur Datenverarbeitung, die gerade in
+Deutschland noch vielfach in Ver"anderung begriffen sind~\cite{none}.
+
+Ein Beispiel ist die von \cite{MrBlah} im Vortrag zu \cite{foo}
+genannte Vorschrift, dass personenbezogene Daten von deutschen
+Beh"orden nur auf deutschem Boden verarbeitet werden d"urfen. Diese
+Art von Gesetz schlie"st Dienst, die in anderen L"andern gro"se
+Datenverarbeitungsdienste bieten, oft von Auftr"agen deutscher
+Beh"orden aus. Rechenleistung in anderen L"andern als Deutschland ist
+unter Umst"anden wesentlich billiger f"ur ein Unternehmen mit einem
+hohen Leistungsbedarf. Dauerhaft ein Rechenzentrum in Deutschland zu
+betreiben, f"ur die M"oglichkeit, ab und an einen Auftrag von einer
+deutschen Beh"orde zu erhalten, wiegt unter Umst"anden nicht den
+Ertrag solcher Auftr"age auf.
+
+Durch die M"oglichkeit, ohne Verlust des aktuellen Dienstzustandes die
+Virtuelle Maschine umzuziehen, ist es jedoch m"oglich, solchen
+gesetzlichen Vorschriften trotzdem gerecht zu werden. Indem der
+Datenverarbeiter bei einem Cloud Hosting Service auf deutschem Boden
+Rechenzeit einkauft, kann er den gestzlichen Vorschriften gerecht
+werden. Die VMs, die f"ur den Auftrag bereitgestellt sind, k"onnen
+einfach in die Cloud auf deutschem Boden migriert werden. Migrationen
+"uber L"andergrenzen hinweg, z.B. durch den Atlantik, sind zwar
+notwendigerweise langsamer als zwischen Rechenzentren mit h"oherer
+Lokalit"at, bei gro"sen, lang laufenden Auftr"agen ist das jedoch
+unter Umst"anden zu vernachl"assigen. 
+
+Auf diese Weise ist es Datenverarbeitungsdiensten m"oglich,
+landesspezifischen Einschr"ankungen bez"uglich der geografischen Lage
+der physikalischen Nodes gerecht zu werden, und Services "`on-demand"'
+anzubieten, ohne die Flexibilit"at von lokal vorbereiteten Maschinen
+aufzugeben.
+
+Die Amazon EC2 bietet diese M"oglichkeit bereits zum Teil, indem man
+solche Einschr"ankungen beim Kauf der Rechenzeit
+angibt~\cite{none}. Derzeit m"ussen dazu allerdings die VMs neu
+gestartet werden. Mithilfe von Live-Migration k"onnte man hier einen
+Service anbieten, bei dem es m"oglich ist, zur Laufzeit solche
+Einschr"ankungen zu konfigurieren, ohne Downtime in Kauf nehmen zu
+m"ussen.
 
 \subsection{Langzeit-Lauffähigkeit}
 \label{sec:langz-lauff}
