@@ -403,10 +403,43 @@ Yes: Github, heroku, engineyard.
 
 \subsection{Adaptive Auslastung}
 \label{sec:adaptive-auslastung}
-SLAs zwingen nicht zum idlen herumsitzenlassen von Servern um
-abzusichern, VMs können im Zweifel schnell umgezogen werden.
--> Contra: Durchsatz, Netzlast, Umzugszeit
--> Pro: Github uptime
+Neben der Notwendigkeit, bei Marktwachstum schnell skalieren zu
+k"onnen, gibt es auch die Anforderung an viele Systeme, in
+Sto"szeiten, oder bei unvorhergesehenen Nachfrageschwankungen adaptiv
+skalieren zu k"onnen. Ein Beispiel nannte \cite{none} von der
+Deutschen Bahn, der darauf hinwies, dass gerade wetterbedingte
+Ausf"alle die Rechenzentren der Deutschen Bahn oft auf eine harte
+Probe stellen, da durch diesen unvorhersehbaren Umstand viele Reisende
+zus"atzliche Erkundigungen einziehen wollen. In solch einem Fall ist
+es f"ur den Dienstanbieter wichtig, weiterhin einen stabilen und
+schnellen Service zu leisten, um die Kundenzufriedenheit nicht
+st"arker zu gef"ahrden und gar Kunden zu verlieren. In klassischen
+Rechenzentren kann man, wie im Vortrag von \cite{benchmarkingthecloud}
+besprochen, die verf"ugbare Kapazit"at auf die erwarteten
+Maximalauslastungen optimieren. Das ist jedoch tendentiell teuer und
+gerade in Situationen, wo die maximale Abweichung von der
+durchschnittlichen Auslastung sehr gro"s ist, oder Spikes sehr selten
+auftreten, ist die Investition oft nicht gerechtfertigt.
+
+VM-Live-Migration kann auch hier zum schnellen Verschieben von
+Maschienen zwischen leistungsstarken und -schwachen physikalischen
+Nodes genutzt werden.
+
+Ein Gegenargument, dass man f"ur diesen Use-Case im Besonderen
+hervorbringen kann, ist, dass VM-Migration mit hoher Netzwerklast
+einhergeht. In Situationen, in denen der Durchsatz eh gef"ardet ist,
+kann man argumentieren, dass die zus"atzliche Netzwerklast durch eine
+laufende Migration den Dienst vor"ubergehend ganz zum Erliegen bringen
+k"onnte. Die erh"ohte Last liegt, je nach Anwendung, f"ur mehrere
+Minuten auf dem Netzwerk, da die Umzugszeiten von der Netzwerklatenz
+zwischen den Servern abh"angen. Zu l"osen w"are dieses Problem durch
+ein komplett parallel betriebenes Netzwerk, dass speziell f"ur diesen
+Anwendungsfall freigehalten wird.
+
+Wir argumentieren, dass die Kosten f"ur einen solchen Parallelbetrieb
+zweier Netzwerke weit hinter den Kosten f"ur das vorhalten von
+ausreichender, aber meist ungenutzter, Rechenkapazit"at
+zur"uckbleiben.
 
 \subsection{Langzeit-Lauffähigkeit}
 \label{sec:langz-lauff}
