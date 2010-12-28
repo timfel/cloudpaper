@@ -254,7 +254,7 @@ meist nichts anderes übrig, als das Spiel zu unterbrechen: Das kann
 bedeutet mindestens unzufriedene Kunden, und vielleicht sogar
 Umsatzverluste.
 
-Mit dem von Dr. Hansen vorgestellten NomadBIOS kann auf Hardwarefehler
+Mit dem von Dr. Gorm Hansen vorgestellten NomadBIOS kann auf Hardwarefehler
 angemessener reagiert werden: Zuerst kann die VM bis aufs letzte
 Detail vom aktuellen Stand kopiert werden, das heißt, dass Änderungen,
 die seit der letzten Checkpoint-Sicherung geschehen sind, nicht
@@ -351,7 +351,7 @@ Yard daran teilnehmen~\cite{none}, fehlt z.B. noch Amazon als der
 gr"o"ste Hosting-Provider in Europa.
 
 Die Fortentwicklung der VM-Migrationstechnologie, wie sie
-Dr. Gorm-Hansen beschrieben hat, k"onnte eine einfache L"osung f"ur
+Dr. Gorm Hansen beschrieben hat, k"onnte eine einfache L"osung f"ur
 dieses Problem bieten, indem sie die F"ahigkeiten zur Live-Migration
 vollst"andig in das Betriebssystem verschiebt. Mittels
 standardisierter Hypervisor APIs k"onnte dann vom virtuellen System
@@ -362,26 +362,41 @@ bestimmte Cloud und vermindert das Risiko von \emph{Public Clouds} aus
 Sicht des Unternehmes~\cite{none}.
 
 \subsection{Hardware-Aufstockung ohne Ausfallzeigen}
-Modern businesses have to be able to react to market change quickly
-and with minimal cost. New services are first explored on cheap
-hardware\cite{tanenbaum1992modern}, but sudden bursts of customer
-interest might require fast upscaling of the underlying
-hardware. Being able to quickly scale up to rising interest is crucial
-for the success of a service. Studies show that slow loading times
-will cause people to use online services less or leave them and never
-return\cite{kohavi2007online}. Historically, the quick success of such
-a scenario dependent on quick and correct assertion of upcoming
-hardware requirements and carefully planned downtime.
+Moderne IT-Unternehmen m"ussen auf Markt"anderungen, die Skalierung
+erfordern, schnell und mit geringen Kosten reagieren k"onnen. Neue
+M"arkte werden oft erst erschlossen, indem Dienste auf g"unstiger
+Hardware erpropt werden~\cite{tanenbaum1992modern}. Wenn sich ein
+Marktsegment als lukrativ erweist, muss man in der Lage sein, schnell
+die Anzahl und Menge der Server zu skalieren. Diese F"ahigkeit ist
+entscheidend f"ur den Erfolg eines modernen Web-Unternehmens. Studien
+zeigen, dass gerade am Anfang eines Online-Angebots lange Ladezeiten
+die Adoption beeintr"achtigen~\cite{kohavi2007online}.
 
-Using live migration, services can stay online and better hardware can
-be booted in parallel to the existing. A new 
+Oftmals k"onnen diese Vorrausetzungen nur durch gro"sz"ugige Planung
+der kommendenen Hardwareanforderungen erf"ullt werden, was mit einem
+gr"o"seren finanziellen Risiko einhergeht. Gerade kleine Unternehmen
+und \emph{Start-Ups} k"onnen sich dies oft nicht leisten. Die
+F"ahigkeit, Services in der Cloud anzubieten und \emph{bei Bedarf}
+mehr gleichartige VMs zu starten, oder VMs auf st"arkere physikalische
+Nodes zu verschieben, ohne daf"ur Downtime in Kauf nehmen zu m"ussen,
+kann den Unterschied zwischen einem erfolgreichen Service und einer
+Seite, zu der Kunden nicht mehr zur"uckkehren, weil sie zu langsam
+ist, machen.
 
-\begin{itemize}
-\item Heroku
-\item App engines auf anderem scale (IaaS)
-\end{itemize}
+Der Cloud-Hosting Provider \emph{Heroku} hat sich auf ebenso solche,
+kleine, Webdienste spezialisiert, und versteckt den Prozess des
+Skalierens f"ur den Kunden vollst"andig hinter einem einfach
+Schieberegler im Web-Interface: Der Leistungsindex wird hochgeschraubt
+und Heroku k"ummert sich um das Spawning und Verschieben von VMs.
 
-\subsection{keine Ausfallzeit durch verschiebungen}
+In Relation hierzu sind auch Services wie die Google-App Engine zu
+nennen, wenngleich sie eher \emph{Infra-Structure as a Service}
+(IaaS) zuzurechnen sind, bieten auch sie kleineren Unternehmen die
+M"oglichkeit, nur den Umfang an Leistung zu zahlen, der auch
+tats"achlich genutzt wird, und bei Bedarf mehr Leistung
+"`einzukaufen"'.
+
+\subsection{Keine Ausfallzeit durch Verschiebungen}
 \label{sec:keine-ausfallzeit}
 Netzwerklast is hoeher, aber who cares.
 Yes: Github, heroku, engineyard.
@@ -392,30 +407,59 @@ SLAs zwingen nicht zum idlen herumsitzenlassen von Servern um
 abzusichern, VMs können im Zweifel schnell umgezogen werden.
 -> Contra: Durchsatz, Netzlast, Umzugszeit
 -> Pro: Github uptime
+
 \subsection{Langzeit-Lauffähigkeit}
 \label{sec:langz-lauff}
-Cloud nutzlos wenn der Server dann weiterhin alle paar Monate down
-wegen:
+Das Versprechen der Cloud ist, Informationen und Dienste jederzeit
+verf"ugbar zu haben, unabh"angig von der physikalischen Verf"ugbarkeit
+einzelner physikalischer Server oder (Teil-)Netzwerke. Der Aufwand und
+damit die Kosten, die durch die Umstellung bestehender Systeme (und
+der zugeh"origen Prozesse) entstehen, werden gerechtfertigt dadurch,
+dass der Zugang zu kritischen Diensten und Informationen nicht alle
+paar Monate unterbrochen wird, um umzugehen mit den Folgen von:
 \begin{itemize}
-\item Hardware-Ausfalls
-\item Hardware-Upgrades
-\item Steigender Nachfrage
+\item Hardware-Ausf"allen
+\item Turnus-m"a"sigen Hardware-Upgrades
+\item Schwankenden Anforderungen
+\item Ausweitung des Kerngesch"afts
+\item Hosting Wechsel
 \end{itemize}
 
+Wie wir gezeigt haben, kann diesen Problemen mit VM-Level
+Live-Migration Technologie begegnet werden. Folglich ist die
+Flexibilit"at von Cloud Hosting in Kombination mit dieser Technologie,
+im Vergleich zum klassischen Rechenzentrum, in diesen Bereichen
+h"oher, und besser an wechselnde Gegebenheiten anzupassen. Ein
+Anbieter kann daher l"angerfristig davon ausgehen, dass Dienste und
+Informationen verf"ugbar sind. Das vermindert den Druck und die
+Kosten, Dienste "`In-House"' und Datensicherungen auschlie"slich "`vor
+Ort"' vornehmen zu m"ussen. Gesch"aftsmodelle k"onnen daraufhin f"ur
+gr"o"sere Marktschwankungen ausgelegt werden, ohne die Kosten f"ur
+Hosting und Hardware unn"otig in die H"ohe zu treiben. Weiterhin
+k"onnen strategische Entscheidungen langfristiger getroffen werden, da
+die dauerhafte Verf"ugbarkeit einfacher zu gew"ahrleisten ist, und
+nicht mit l"angerer Laufzeit rapide schwieriger und damit teurer wird.
+
 \section{Live-Migration-Systeme}
-Ziele/Einsatzgebiete, Verbreitung
+Im Folgenden wollen wir einige konkrete Implementierungen der oben
+vorgestellten Techniken vorstellen, und deren Limitationen und
+Einsatzbarkeit f"ur die oben genannten Use-Cases betrachten.
 
 \subsection{NomadBIOS and VMWare}
 \label{sec:nomadbios--vmware}
-
+Wir im Vortrag von Dr. Gorm Hansen beschrieben, war die erste
+vollst"andige Implementierung zur Live-Migration einer kompletten VM
+der NomadBIOS Hypervisor.
 
 \subsection{IBM}
+
 \subsection{HP}
+
 \subsection{Sun/Solaris}
 
 \subsection{Vergleich}
 Vergleich der Eignung als Lösung für die oben genannten Probleme
-zwischen dem von Dr. Hansen vorgestellen System und den Alternativen.
+zwischen dem von Dr. Gorm Hansen vorgestellen System und den Alternativen.
 
 \section{Schlussfolgerungen, Zusammenfassung}
 Überblick über die Bewertung der Systeme
