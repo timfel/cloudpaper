@@ -1,0 +1,413 @@
+%%
+%%
+%%
+\NeedsTeXFormat{LaTeX2e}
+
+% from typo-kurz
+% \input glyphtounicode
+% \pdfgentounicode=1
+
+
+\KOMAoptions{%
+  twoside=false,
+  fontsize=10pt,
+  paper=a4,
+  headinclude=false,
+  footinclude=false,
+  cleardoublepage=empty
+}
+\if@titlepage\relax\else%
+\KOMAoptions{abstract=on}%
+\fi
+
+%%
+%% enable searchable PDFs
+%%
+\RequirePackage{cmap}
+%%
+%% Character settings.
+%%
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{textcomp,textcase}
+\RequirePackage[english,british]{babel}
+
+
+%marginpar hack
+\RequirePackage{mparhack}
+%latex bugs
+\RequirePackage{fixltx2e}
+
+\RequirePackage{marvosym,pifont}
+\RequirePackage{url,float}
+\RequirePackage{xspace}
+\RequirePackage{listings}
+\RequirePackage{scrpage2}
+\RequirePackage{addlines}
+\RequirePackage{gridset}
+
+
+% color and graphics support
+\RequirePackage[dvipsnames]{xcolor}
+\definecolor{linkblue}{rgb}{0,0,.45}
+\RequirePackage{graphicx}
+
+
+
+\RequirePackage[titles]{tocloft}
+\RequirePackage[toc]{multitoc} % TOC in mehreren Spalten setzen
+%%
+%% Font-Settings.
+%% * Base font: Pazo (Palatino)
+%% * Typewriter (code) font: Bera Mono (Bitstream Vera Mono)
+%% * Math font: Euler
+%%
+\RequirePackage[scaled=0.9]{beramono}
+\RequirePackage[euler-digits]{eulervm}
+%% \RequirePackage{avant}
+%% \let\ttdefault\sfdefault
+% \RequirePackage[urw-garamond]{mathdesign}
+\RequirePackage[osf,sc]{mathpazo} % Palatino with real small caps and old style figures
+% alternate palatino
+% \usepackage{tgpagella}
+\def\defaultLinespread{\linespread{1.05}} % a bit more for Palatino
+\def\codeLinespread{\linespread{1}} % revoke
+\setkomafont{title}{\normalfont}
+\addtokomafont{disposition}{\unskip\vskipnextgrid\rmfamily}
+\renewcommand{\cftsecfont}{\normalfont\bfseries}%
+\renewcommand{\cftsecpagefont}{\normalfont\bfseries}%
+\renewcommand{\cftsecpresnum}{\scshape\MakeTextLowercase}%
+\renewcommand{\cftsubsecpresnum}{\scshape\MakeTextLowercase}%
+\renewcommand{\cftsubsecfont}{\normalfont}%
+\renewcommand{\cftsubsubsecpresnum}{\scshape\MakeTextLowercase}%
+\renewcommand{\cftsubsubsecfont}{\normalfont}%
+
+%%
+%% spaced (small) caps
+%% 
+\DeclareRobustCommand{\spacedallcaps}[1]{\textls[160]{\MakeTextUppercase{#1}}}%
+\DeclareRobustCommand{\spacedlowsmallcaps}[1]{{\MakeTextLowercase{\scshape #1}}}%
+\DeclareRobustCommand\Largespacedlowsmallcaps[1]{\spacedlowsmallcaps{\Large #1}}
+
+
+%%
+%% Hanging enumeration. See Bringhurst.
+%%
+\RequirePackage{enumitem}
+%\setlist{noitemsep,topsep=\baselineskip,partopsep=0pt}
+\setlist{noitemsep,topsep=0pt,partopsep=0pt}
+\setdescription{noitemsep,topsep=0pt,font=\normalfont\scshape}
+\setlist[1]{leftmargin=0pt}
+\setitemize[1]{label=\footnotesize\textbullet}
+
+
+%%
+%% misc. packages needed
+%%
+\RequirePackage[
+%%
+%%
+%% as of typokurz
+%%
+  breaklinks               % Links »überstehen« Zeilenumbruch
+  ,colorlinks              % Links erhalten Farben statt Kästen
+  ,citecolor=linkblue        % Farbe für Zitate
+  ,linkcolor=linkblue        % beeinflusst Inhaltsverzeichnis und Seitenzahlen
+  ,urlcolor=linkblue         % Farbe für URLs
+  ,bookmarks               % Erzeugung von Bookmarks für PDF-Viewer
+  ,bookmarksnumbered       % Nummerierung der Bookmarks
+  ,hyperfootnotes=false    % Keine Links auf Fußnoten
+  ,pdfpagelabels
+  ,pdfstartview=FitH,      % Dokument wird »Fit Width« geöffnet
+  ,pdfpagemode=UseOutlines % Bookmarks im Viewer anzeigen
+  ,bookmarksopenlevel=2    % Gliederungstiefe der Bookmarks
+]{hyperref}
+
+\RequirePackage{marginnote}
+
+\newif\ifsecHadSubsec
+\secHadSubsecfalse
+
+%%
+%% from ClassicThesis
+%% Adjusted for better baseline grid fitting.
+%%
+\RequirePackage{titlesec}
+
+% adjust headings
+\titleformat{\section}
+  {\relax}{\textsc{\MakeTextLowercase{\Large \thesection}}}{1em}{\Largespacedlowsmallcaps}[\secHadSubsecfalse]
+% subsections
+\titleformat{\subsection}
+  {\relax}{\textsc{\MakeTextLowercase{\large\thesubsection}}}{1em}{\large}[\secHadSubsectrue]
+% subsubsections
+\titleformat{\subsubsection}
+  {\relax}{\textsc{\MakeTextLowercase{\large\thesubsubsection}}}{1em}{\large\itshape}
+% paragraphs
+\titleformat{\paragraph}[runin]
+  {\normalfont\normalsize}{\theparagraph}{0pt}{\spacedlowsmallcaps}    
+% 
+% ClassicThesis changes descriptionlable here, yet, this is
+% already dealt with at enumitem
+% 
+% spacing
+% adjusted for Palatino on a baseline grid. Old defaults commented.
+\titlespacing*{\section}{0pt}
+   {\baselineskip}
+  % {\ifsecHadSubsec
+  %   .8\baselineskip
+  %   \else
+  %   .7\baselineskip
+  %   \fi}
+  {1\baselineskip}
+  %{*1.5} 
+\titlespacing*{\subsection}{0pt}
+   {\baselineskip}
+  %{.95\baselineskip}
+  % {1\baselineskip}
+  {0pt}
+\titlespacing*{\subsubsection}{0pt}
+  % {\baselineskip}
+  {.95\baselineskip}
+  % {1\baselineskip}
+  {0pt}
+\titlespacing*{\paragraph}{0pt}{\baselineskip}
+  % {1\baselineskip}
+  {1em}
+\RequirePackage[hang,small,bf]{caption}
+
+%% from classicthesis & Typokurz
+\cftsetpnumwidth{1.4em}
+\cftsetrmarg{0pt}
+\setlength{\cftbeforesecskip}{0pt}%
+\setlength{\cftbeforesubsecskip}{0pt}%
+\setlength{\cftbeforesubsubsecskip}{0pt}%
+\renewcommand{\cftsecleader}{}% 
+\renewcommand{\cftsecafterpnum}{\cftparfillskip}%
+%\ifthenelse{\boolean{@tocaligned}}{\renewcommand{\cftsecindent}{0em}}{\relax}
+% subsections
+\renewcommand{\cftsubsecleader}{}% 
+\renewcommand{\cftsubsecafterpnum}{\cftparfillskip}%   
+%\ifthenelse{\boolean{@tocaligned}}{\renewcommand{\cftsubsecindent}{0em}}{\relax}
+% subsubsections
+\renewcommand{\cftsubsubsecleader}{}% 
+\renewcommand{\cftsubsubsecafterpnum}{\cftparfillskip}%   
+%\ifthenelse{\boolean{@tocaligned}}{\renewcommand{\cftsubsubsecindent}{0em}}{\relax}
+
+% no sub sub
+\addtocounter{tocdepth}{-1}
+
+
+% Disable single lines at the start of a paragraph (Schusterjungen)
+\clubpenalty = 10000
+% Disable single lines at the end of a paragraph (Hurenkinder)
+\widowpenalty = 10000 
+\displaywidowpenalty = 10000 % formulas
+
+\setlength{\textfloatsep}{\baselineskip}
+\setlength{\floatsep}{\baselineskip}
+
+\ifdebug
+\errorcontextlines=909
+%%
+%% debug macro to print baseline grid.
+%% Based on macrocode of the typogrid package
+%%
+\RequirePackage{eso-pic}[2002/11/16]
+\RequirePackage{calc}
+\def\printgrid{%
+\newlength{\tpg@left}%
+\newlength{\tpg@top}%
+\newlength{\tpg@bottom}%
+\newlength{\tpg@gridheight}%
+\newlength{\tpg@gridcount}%
+\newlength{\tpg@width}
+\AddToShipoutPicture{%
+\begingroup
+  \normalcolor
+  \setlength{\unitlength}{1pt}%
+  \thinlines
+  \normalsize
+  \setlength{\tpg@top}{\gridbase sp}
+  \setlength{\tpg@bottom}{\tpg@top-\textheight}%
+  \setlength{\tpg@gridheight}{\gridinterval sp}% 
+  \setlength{\tpg@gridcount}{\textheight/\tpg@gridheight}
+%  \setlength{\tpg@width}{\textwidth/2}
+  \setlength{\tpg@width}{\textwidth}
+  \@tempcnta=\tpg@gridcount
+  \advance\@tempcnta by 1
+  \if@twoside\ifthispageodd{%
+    \setlength{\tpg@left}{\oddsidemargin+1in}%
+  }{%
+    \setlength{\tpg@left}{\evensidemargin+1in}%
+  }
+  \else
+    \setlength{\tpg@left}{\oddsidemargin+1in}%
+  \fi
+  \multiput%
+  (\LenToUnit{\tpg@left},\LenToUnit{\tpg@top})%
+  (0,-\LenToUnit{\tpg@gridheight}){\the\@tempcnta}{%
+    \line(1,0){\LenToUnit\tpg@width}}%
+  \endgroup
+}}%
+\fi
+
+
+%%
+%% An Asterism (three * arranged triangularly)
+%% works well as separator.
+%%
+\newcommand{\asterism}{\smash{% 
+    \raisebox{-.5ex}{% 
+      \setlength{\tabcolsep}{.2pt}% 
+      \begin{tabular}{@{}cc@{}}% 
+        \multicolumn2c*\\[-1.8ex]*&*% 
+      \end{tabular}}}}
+\newcommand{\ParSep}{{\medskip\noindent\centerline{\large\asterism}\unskip\vskipnextgrid}}
+
+%%
+%% no double spaces after full stop.
+%% This is outdated, as pointed out by Bringhurst.
+%%
+\frenchspacing
+
+%%
+%% footnotes at bottom
+%%
+\RequirePackage{fnpos}
+
+
+
+\lineskiplimit = -10pt 
+\lineskip = 0pt
+
+\global\edef\gridinterval{\the\baselineskip}
+\setlength\topskip{\gridinterval}
+%%
+%% allow for baselinegrid
+%%
+\raggedbottom
+
+% Better float parameters: (from the TeX FAQ)
+\renewcommand{\topfraction}{.85}
+\renewcommand{\bottomfraction}{.7}
+\renewcommand{\textfraction}{.15}
+\renewcommand{\floatpagefraction}{.66}
+\renewcommand{\dbltopfraction}{.66}
+\renewcommand{\dblfloatpagefraction}{.66}
+\setcounter{topnumber}{9}
+\setcounter{bottomnumber}{9}
+\setcounter{totalnumber}{20}
+\setcounter{dbltopnumber}{9}
+
+\newcommand\fs@register{
+\fs@plain%
+\def\@fs@post{\vskipnextgrid}
+}
+\floatstyle{register}
+
+\restylefloat{figure}
+\restylefloat{table}
+\floatplacement{figure}{htb}
+\floatplacement{table}{htb}
+
+
+ 
+\renewcommand*{\@maketitle}{%
+  \clearpage
+  \let\footnote\thanks
+  \ifx\@extratitle\@empty \else
+    \noindent\@extratitle \next@tpage \if@twoside \null\next@tpage \fi
+  \fi
+  \setparsizes{\z@}{\z@}{\z@\@plus 1fil}\par@updaterelative
+  \ifx\@titlehead\@empty \else
+    \begin{minipage}[t]{\textwidth}
+      \@titlehead
+    \end{minipage}\par
+  \fi
+  \null\normalsize\selectfont\vskipnextgrid
+   \centering{ \ifx\@subject\@empty \else
+      {\subject@font \@subject \par}
+      \normalsize\selectfont\vskipnextgrid
+    \fi
+    {\titlefont\huge \@title \par}%
+    \null\vskipnextgrid
+    {\ifx\@subtitle\@empty\else\usekomafont{subtitle}\@subtitle\par\fi}%
+    \vskipnextgrid
+    {\Large \lineskip .5em%
+        \begin{tabular}[t]{c}
+          \@author
+        \end{tabular}\par
+    }%
+    \vskip \baselineskip
+    {\Large \@date \par}%
+    \vskip \z@ \@plus 1em
+    {\Large \@publishers \par}
+    \ifx\@dedication\@empty \else
+      \vskip 2em
+      {\Large \@dedication \par}
+    \fi
+  }%
+  \par
+  \null\normalsize\selectfont\vskipnextgrid
+}%
+
+\ifdebug
+  \RequirePackage{showframe}
+\fi
+
+%%
+%% Character protrusion is unwanted in a TOC, thus, it is disabled
+%% therein.
+%%
+\g@addto@macro\tocbasic@@before@hook{%
+  \microtypesetup{protrusion=false}%
+  \unskip%
+}
+\g@addto@macro\tocbasic@@after@hook{%
+  \microtypesetup{protrusion=true}% 
+  \unskip\vskipnextgrid%
+}
+
+\AtBeginDocument{
+  \let\thebibliography\thebibliography
+  \let\endthebibliography\endthebibliography
+  % 
+  \renewenvironment{thebibliography}[1]{%
+    \thebibliography{#1}%
+    \setlength{\itemsep}{0pt}%
+    \setlength{\parskip}{0pt}%
+   }{%
+     \endthebibliography%
+   }
+   \ifdebug
+     \printgrid
+    \fi
+}
+
+%%
+%% Calculate for a good type area
+%%
+\typearea[current]{calc}
+
+%% setups
+\RequirePackage[final]{microtype}
+\microtypesetup{babel,stretch=10,shrink=15,step=3,tracking=smallcaps}
+
+
+%%
+%% Provide a Code environment that allows for different line spreads
+%% based on the context text/code
+%%
+\lstnewenvironment{code}[1][]%
+{\lstset{#1}\relax%
+\codeLinespread\relax\selectfont%
+}{%
+\defaultLinespread\relax\selectfont%
+\vskipnextgrid%
+}
+
+\newcommand{\authoremail}[2]{%
+  \author{{#1}%
+    \\[.3\baselineskip]{\small{\href{mailto:#2}{\texttt{#2}}}}}
+}
