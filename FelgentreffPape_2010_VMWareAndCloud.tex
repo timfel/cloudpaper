@@ -24,9 +24,10 @@ machines not because one machine cannot handle the load, but for
 reasons of reliability.  All software is faulty\cite{Zeller2006}, and
 operating systems with thousands of lines of code, running servers
 written by different software vendors simply cannot be trusted to
-provide uptimes of 99.9 percent. Putting each service on a separate
-machine will achieve reliablity at the expense of maintainability
-simply because a large number of physical machines is involved.
+provide uptimes of 99.9 percent or more. Putting each service on a
+separate machine will achieve reliablity at the expense of
+maintainability simply because a large number of physical machines is
+involved.
 
 Virtual machine technology has been around for more than 40
 years\cite{tanenbaum1992modern}. The technology to host multiple
@@ -35,19 +36,29 @@ for data centers and represents enormous cost savings for companies
 like Amazon, Microsoft or Google, which deploy hundreds or thousands
 of servers for a variety of services. Unsurprisingly, virtualization
 for cost reduction and transparent scalability is becoming
-increasingly popular.
+increasingly popular. Cloud providers such as Amazon, Rackspace or
+Engine Yard offer scalable hosting solutions for companies and
+individiuals who cannot of do not want to maintain a private cloud.
 
-This trend, however, seems to contradict the reliability requirements
-mentioned above. We will discuss how virtualization solutions solve
-their reliability issues and how cloud providers such as Amazon,
-Rackspace or Engine Yard are able to guarantee uptimes of 99.9 percent
-to the third of fourth decimal value.
+There are obvious issues with isolation, however. As a service
+provider, I want to avoid downtime as much as possible. Thus, I cannot
+easily move my virtual machine from one provider to another. I cannot
+easily migrate existing VMs to new a hypervisor architecture or a
+completely new virtualization solution. If hardware is failing, I
+cannot simply migrate the VM to new hardware without taking it down.
+
+Asger Jensen and Dr. Jacob Gorm Hansen proposed live VM migration as a
+solution to these problems. They were the first to demonstrate live
+migration of a running VM in 2002 on a research hypervisor called
+NomadBIOS. Since then, HP has equipped it's HP-UX with live migration
+capabilities, VMWare has implemented it in its vMotion product, the
+open-source Xen project supports it and IBM is actively researching to
+enable VM migration on a number of open-source virtualization
+solutions.
 
 \section{State of the Art}
+\subsection{Reliability of Virtualization}
 \label{sec:sota}
-
-\paragraph{What are the reliability implications of running virtual machines on a single
-physical node?}
 
 Running a large number of virtual machines (VMs) on very few physical
 nodes seems like betting all your money on one horse only. If one
@@ -73,16 +84,20 @@ mode on the physical machine and has orders of magnitude fewer lines
 of code than the average operating system. This means it is equally
 less likely to encounter a bug in it's programming.
 
-Still, hardware failure, while less likely than software bugs, are an 
+Still, hardware failure, while less likely than software bugs, are an
 issue that has to be considered.
 
-\subsection{VMWare and Livemigration}
-\label{sec:vmware}
+\subsection{Compatibility of Virtualization Solutions}
+
+\subsection{Hardware Upgrades without Downtime}
+
+\section{Livemigration}
+\label{sec:livemigration}
 
 \blindtext
 
-\subsection{Bla}
-\label{sec:bla}
+\subsection{Moving between Clouds}
+\label{sec:movclouds}
 
 \blindtext
 
@@ -90,10 +105,12 @@ issue that has to be considered.
 
 \blindtext
 
-\section{Ble}
-\label{sec:ble}
+\subsection{Uptime Despite Hardware Failure}
+\label{sec:hardfail}
 
 Ble
+
+\subsection{Scaling through Replication}
 
 \begin{code}[language=SQL]
 select  * from foo where true;
