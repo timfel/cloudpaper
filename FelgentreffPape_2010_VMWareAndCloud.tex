@@ -56,7 +56,7 @@ open-source Xen project supports it and IBM is actively researching to
 enable VM migration on a number of open-source virtualization
 solutions.
 
-\section{State of the Art}
+\section{State of the Art before Live Migration}
 \subsection{Reliability of Virtualization}
 \label{sec:sota}
 
@@ -84,14 +84,28 @@ mode on the physical machine and has orders of magnitude fewer lines
 of code than the average operating system. This means it is equally
 less likely to encounter a bug in it's programming.
 
-Still, hardware failure, while less likely than software bugs, are an
-issue that has to be considered.
+Still, hardware failures, while less likely than software bugs, are an
+issue that has to be considered. Before live migration of VMs was
+possible, an alarm state from a hardware monitor could be answered by
+migrating the relevant processes to new VMs\cite{hansen2004self}. For
+a given VM, another one similar to it would be booted on a another
+machine. The state of the services could be copied and new service
+requests would be routed to the fresh VM, with the old VM only
+finishing in-progress requests before shutting down.
 
 \subsection{Compatibility of Virtualization Solutions}
+Several process migration systems were developed in the 1980s,
+examples are Sprite and MOSIX\cite{hansen2004self}. Such migration
+solutions depend on capabilities of the hypervisor as well as the
+operating system, limiting their use across organization boundaries,
+during system upgrades, as well as for cloud hosting solutions where
+the OS software is not controlled by the hosting provider.
+
+
 
 \subsection{Hardware Upgrades without Downtime}
 
-\section{Livemigration}
+\section{Live Migration}
 \label{sec:livemigration}
 
 \blindtext
