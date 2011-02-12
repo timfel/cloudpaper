@@ -90,8 +90,9 @@ possible, an alarm state from a hardware monitor could be answered by
 migrating the relevant processes to new VMs\cite{hansen2004self}. For
 a given VM, another one similar to it would be booted on a another
 machine. The state of the services could be copied and new service
-requests would be routed to the fresh VM, with the old VM only
-finishing in-progress requests before shutting down.
+requests would be routed to the fresh VM, with the old VM kept online
+to serve low-level calls and dependencies of in-process requests,
+before shutting down\cite{clark2005live}.
 
 \subsection{Compatibility of Virtualization Solutions}
 Several process migration systems were developed in the 1980s,
@@ -101,7 +102,13 @@ operating system, limiting their use across organization boundaries,
 during system upgrades, as well as for cloud hosting solutions where
 the OS software is not controlled by the hosting provider.
 
-
+Virtualized machine hardware varies even today. There are efforts
+underway\cite{cloudstandard} to standardize different aspects of
+virtualization, like the format for virtual machine descriptions and
+the APIs of hypervisors. This is a work-in-progress, however, and
+moving complete systems between different vendors usually involves
+shutting those systems down to allow various data conversions to take
+place.
 
 \subsection{Hardware Upgrades without Downtime}
 
