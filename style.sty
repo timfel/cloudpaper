@@ -370,15 +370,15 @@
 }
 
 \AtBeginDocument{
-  \let\thebibliography\thebibliography
-  \let\endthebibliography\endthebibliography
+  \let\Mythebibliography\thebibliography
+  \let\Myendthebibliography\endthebibliography
   % 
   \renewenvironment{thebibliography}[1]{%
-    \thebibliography{#1}%
+    \Mythebibliography{#1}%
     \setlength{\itemsep}{0pt}%
     \setlength{\parskip}{0pt}%
    }{%
-     \endthebibliography%
+     \Myendthebibliography%
    }
    \ifdebug
      \printgrid
