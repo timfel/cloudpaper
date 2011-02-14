@@ -7,8 +7,8 @@
 \usepackage{blindtext}
 \bibliographystyle{alpha}
 
-\title{Live VM Migration technology for Cloud hosting providers}
-\subtitle{Ab inne cloud}
+\title{Live VM Migration}
+\subtitle{Use-Cases for Cloud hosting providers}
 %\authoremail{Tim Felgentreff \and Tobias Pape}{\{firstname.lastname\}@student.hpi.uni-potsdam.de}
 \author{Tim Felgentreff \and Tobias Pape}
 
@@ -18,14 +18,14 @@
 
 \section{Introduction}
 \label{sec:introduction}
-Today, many organizations deploy a multiude of services on a large
+Today, many organizations deploy a multitude of services on a large
 number of servers. In some cases, all these services run on different
 machines not because one machine cannot handle the load, but for
-reasons of reliability.  All software is faulty\cite{Zeller2006}, and
-operating systems with thousands of lines of code, running servers
+reasons of reliability.  All software is faulty\cite{zellerprograms},
+and operating systems with thousands of lines of code, running servers
 written by different software vendors simply cannot be trusted to
 provide uptimes of 99.9 percent or more. Putting each service on a
-separate machine will achieve reliablity at the expense of
+separate machine will achieve reliability at the expense of
 maintainability simply because a large number of physical machines is
 involved.
 
@@ -38,7 +38,7 @@ of servers for a variety of services. Unsurprisingly, virtualization
 for cost reduction and transparent scalability is becoming
 increasingly popular. Cloud providers such as Amazon, Rackspace or
 Engine Yard offer scalable hosting solutions for companies and
-individiuals who cannot of do not want to maintain a private cloud.
+individuals who cannot of do not want to maintain a private cloud.
 
 There are obvious issues with isolation, however. As a service
 provider, I want to avoid downtime as much as possible. Thus, I cannot
@@ -56,9 +56,23 @@ open-source Xen project supports it and IBM is actively researching to
 enable VM migration on a number of open-source virtualization
 solutions.
 
-\section{State of the Art before Live Migration}
-\subsection{Reliability of Virtualization}
+\section{State of the Art}
 \label{sec:sota}
+
+In this part we will explore the state of the art in live VM
+migration, both from a technical as from a use-case point of view.
+
+\subsection{VMWare Live Migration}
+\label{sec:livemigration}
+\blindtext
+
+\subsection{Live Migration Use Cases}
+
+The following sections summarize some of the real-world use cases for
+live migration and how it compares to the previous solutions which
+were applied to these problems.
+
+\subsubsection{Reliability of Virtualization}
 
 Running a large number of virtual machines (VMs) on very few physical
 nodes seems like betting all your money on one horse only. If one
@@ -94,7 +108,7 @@ requests would be routed to the fresh VM, with the old VM kept online
 to serve low-level calls and dependencies of in-process requests,
 before shutting down\cite{clark2005live}.
 
-\subsection{Compatibility of Virtualization Solutions}
+\subsubsection{Compatibility of Virtualization Solutions}
 Several process migration systems were developed in the 1980s,
 examples are Sprite and MOSIX\cite{hansen2004self}. Such migration
 solutions depend on capabilities of the hypervisor as well as the
@@ -110,35 +124,37 @@ moving complete systems between different vendors usually involves
 shutting those systems down to allow various data conversions to take
 place.
 
-\subsection{Hardware Upgrades without Downtime}
+\subsubsection{Hardware Upgrades without Downtime}
+Modern businesses have to be able to react to market change quickly
+and with minimal cost. New services are first explored on cheap
+hardware\cite{tanenbaum1992modern}, but sudden bursts of customer
+interest might require fast upscaling of the underlying
+hardware. Being able to quickly scale up to rising interest is crucial
+for the success of a service. Studies show that slow loading times
+will cause people to use online services less or leave them and never
+return\cite{kohavi2007online}. Historically, the quick success of such
+a scenario dependent on quick and correct assertion of upcoming
+hardware requirements and carefully planned downtime.
 
-\section{Live Migration}
-\label{sec:livemigration}
+Using live migration, services can stay online and better hardware can
+be booted in parallel to the existing. A new 
 
-\blindtext
-
-\subsection{Moving between Clouds}
+\subsubsection{Moving between Clouds}
 \label{sec:movclouds}
 
 \blindtext
 
-\ParSep
+\subsubsection{Uptime Despite Hardware Failure}
+\label{sec:hardfail}
 
 \blindtext
 
-\subsection{Uptime Despite Hardware Failure}
-\label{sec:hardfail}
+\subsubsection{Scaling through Replication}
 
-Ble
-
-\subsection{Scaling through Replication}
 
 \begin{code}[language=SQL]
 select  * from foo where true;
 \end{code}
-\spacedlowsmallcaps{TheFooTest}
-\spacedallcaps{test}
-\blinddocument
 
 \bibliography{timfelgentreff}
 \end{document}
