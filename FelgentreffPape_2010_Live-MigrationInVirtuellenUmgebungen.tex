@@ -1,4 +1,5 @@
-\documentclass[a4paper]{IEEEtran}
+\documentclass[a4paper,conference]{IEEEtran}
+%\documentclass[a4paper]{IEEEtran}
 %%
 %% enable searchable PDFs
 %%
@@ -23,11 +24,19 @@
   \let\endtodolist=\endcomment
 }
 
-%%
-%% Character settings.
-%%
+
+\ifCLASSOPTIONcompsoc
+% requires cite.sty v4.0 or later (November 2003) 
+\usepackage[nocompress]{cite}
+\else 
 \usepackage{cite}
-\usepackage[caption=false ,font=footnotesize]{subfig}
+\fi
+
+\ifCLASSOPTIONcompsoc 
+\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig} 
+\else
+\usepackage[caption=false,font=footnotesize]{subfig}
+\fi
 \usepackage{graphicx}
 
 \usepackage{float,mparhack,fixltx2e,stfloats}
@@ -109,16 +118,25 @@
 \bibliographystyle{IEEEtran}
 
 \title{Live-Migration in virtuellen Umgebungen}
+
+\ifCLASSOPTIONconference
 \author{\IEEEauthorblockN{Tim Felgentreff}
-\IEEEauthorblockA{Hasso-Plattner-Institut\\
-Potsdam, Germany\\
-Email: \url{tim.felgentreff@student.hpi.uni-potsdam.de}}%
-\and
-\IEEEauthorblockN{Tobias.Pape}
-\IEEEauthorblockA{Hasso-Plattner-Institut\\
-Potsdam, Germany\\
-Email: \url{tobias.pape@student.hpi.uni-potsdam.de}}
+  \IEEEauthorblockA{Hasso-Plattner-Institut\\
+    Potsdam, Germany\\
+    Email: \url{tim.felgentreff@student.hpi.uni-potsdam.de}}%
+  \and
+  \IEEEauthorblockN{Tobias.Pape}
+  \IEEEauthorblockA{Hasso-Plattner-Institut\\
+    Potsdam, Germany\\
+    Email: \url{tobias.pape@student.hpi.uni-potsdam.de}}
 }
+\else
+\author{Tim~Felgentreff und~Tobias~Pape%
+\thanks{%
+  Hasso-Plattner-Institut, Potsdam.\goodbreak
+  Email: \{vorname.nachname\}@student.hpi.uni-potsdam.de}%
+}
+\fi
 
 \begin{document}
 \maketitle
@@ -133,9 +151,9 @@ Email: \url{tobias.pape@student.hpi.uni-potsdam.de}}
 \IEEEpeerreviewmaketitle
 
 
-\section{Introduction}
-\label{sec:introduction}
-Today, many organizations deploy a multitude of services on a large
+\section{Einführung}
+\label{sec:einfuehrung}
+\IEEEPARstart{H}{eute} Today, many organizations deploy a multitude of services on a large
 number of servers. In some cases, all these services run on different
 machines not because one machine cannot handle the load, but for
 reasons of reliability.  All software is faulty\cite{zellerprograms},
@@ -173,23 +191,23 @@ open-source Xen project supports it and IBM is actively researching to
 enable VM migration on a number of open-source virtualization
 solutions.
 
-\section{State of the Art}
+\section{Stand der Technik}
 \label{sec:sota}
 
 In this part we will explore the state of the art in live VM
 migration, both from a technical as from a use-case point of view.
 
-\subsection{VMWare Live Migration}
+\subsection{VMWare Live-Migration}
 \label{sec:livemigration}
 \blindtext
 
-\subsection{Live Migration Use Cases}
+\subsection{Anwendungsfälle für Live-Migration}
 
 The following sections summarize some of the real-world use cases for
 live migration and how it compares to the previous solutions which
 were applied to these problems.
 
-\subsubsection{Reliability of Virtualization}
+\subsubsection{Verlässlichkeit von Virtualisierung}
 
 Running a large number of virtual machines (VMs) on very few physical
 nodes seems like betting all your money on one horse only. If one
@@ -225,7 +243,7 @@ requests would be routed to the fresh VM, with the old VM kept online
 to serve low-level calls and dependencies of in-process requests,
 before shutting down\cite{clark2005live}.
 
-\subsubsection{Compatibility of Virtualization Solutions}
+\subsubsection{Interoparibilität von Virtualisierungs-Lösungen}
 Several process migration systems were developed in the 1980s,
 examples are Sprite and MOSIX\cite{hansen2004self}. Such migration
 solutions depend on capabilities of the hypervisor as well as the
@@ -241,7 +259,7 @@ moving complete systems between different vendors usually involves
 shutting those systems down to allow various data conversions to take
 place.
 
-\subsubsection{Hardware Upgrades without Downtime}
+\subsubsection{Hardware-Aufstockung ohne Ausfallzeigen}
 Modern businesses have to be able to react to market change quickly
 and with minimal cost. New services are first explored on cheap
 hardware\cite{tanenbaum1992modern}, but sudden bursts of customer
@@ -256,7 +274,7 @@ hardware requirements and carefully planned downtime.
 Using live migration, services can stay online and better hardware can
 be booted in parallel to the existing. A new 
 
-\subsubsection{Moving between Clouds}
+\subsubsection{Inter-Cloud Verschiebungen}
 \label{sec:movclouds}
 
 \blindtext
@@ -268,7 +286,15 @@ be booted in parallel to the existing. A new
 
 \subsubsection{Scaling through Replication}
 
-\bibliography{Live-MigrationInVrituellenUmgebungen}
+% trigger a \newpage just before the given reference
+% number - used to balance the columns on the last page
+% adjust value as needed - may need to be readjusted if
+% the document is modified later
+%\IEEEtriggeratref{8}
+% The "triggered" command can be changed if desired:
+%\IEEEtriggercmd{\enlargethispage{-5in}}
+\bibliographystyle{IEEEtran} 
+\bibliography{IEEEabrv,Live-MigrationInVrituellenUmgebungen}
 \end{document}
 
 %%% Local Variables: 
