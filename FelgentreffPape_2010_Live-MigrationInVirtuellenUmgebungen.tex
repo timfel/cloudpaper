@@ -1,4 +1,4 @@
-\documentclass[a4paper,conference]{IEEEtran}
+\documentclass[a4paper,conference,compsoc]{IEEEtran}
 %\documentclass[a4paper]{IEEEtran}
 %%
 %% enable searchable PDFs
@@ -120,16 +120,19 @@
 \title{Live-Migration in virtuellen Umgebungen}
 
 \ifCLASSOPTIONconference
-\author{\IEEEauthorblockN{Tim Felgentreff}
+% \ifCLASSOPTIONcompsoc
+% \author{Tim~Felgentreff und~Tobias~Pape%
+% \thanks{%
+%   Hasso-Plattner-Institut, Potsdam.\goodbreak
+%   Email: \{vorname.nachname\}@student.hpi.uni-potsdam.de}%
+% }
+% \else
+\author{\IEEEauthorblockN{Tim Felgentreff und Tobias Pape}
   \IEEEauthorblockA{Hasso-Plattner-Institut\\
     Potsdam, Germany\\
-    Email: \url{tim.felgentreff@student.hpi.uni-potsdam.de}}%
-  \and
-  \IEEEauthorblockN{Tobias.Pape}
-  \IEEEauthorblockA{Hasso-Plattner-Institut\\
-    Potsdam, Germany\\
-    Email: \url{tobias.pape@student.hpi.uni-potsdam.de}}
+    Email: \{vorname.nachname\}@student.hpi.uni-potsdam.de}%
 }
+% \fi
 \else
 \author{Tim~Felgentreff und~Tobias~Pape%
 \thanks{%
@@ -153,7 +156,7 @@
 
 \section{Einführung}
 \label{sec:einfuehrung}
-\IEEEPARstart{H}{eute} Today, many organizations deploy a multitude of services on a large
+P, many organizations deploy a multitude of services on a large
 number of servers. In some cases, all these services run on different
 machines not because one machine cannot handle the load, but for
 reasons of reliability.  All software is faulty\cite{zellerprograms},
