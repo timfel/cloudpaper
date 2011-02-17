@@ -1,20 +1,137 @@
-\documentclass{scrartcl}
+\documentclass[a4paper]{IEEEtran}
+%%
+%% enable searchable PDFs
+%%
+\usepackage{cmap}
+%%
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp,textcase}
+\usepackage[ngerman]{babel}
 
 %\let\ifdebug\iftrue
 \let\ifdebug\iffalse
+\usepackage{ifdraft}
+\usepackage[nomargins]{ed}
+\ifdraft{
+  \def\Todolist#1{% the comment
+    \ifshowednotes\message{todolist!}{{\sffamily To Do: #1}}\bgroup\sffamily\scriptsize\begin{compactenum}%
+      \else\comment%
+      \fi}
+}{%
+  \let\todolist=\comment
+  \let\endtodolist=\endcomment
+}
 
-\usepackage{style}
+%%
+%% Character settings.
+%%
+\usepackage{cite}
+\usepackage[caption=false ,font=footnotesize]{subfig}
+\usepackage{graphicx}
+
+\usepackage{float,mparhack,fixltx2e,stfloats}
+
+\usepackage{xspace}
+\usepackage{listings}
+\usepackage{url}
+
+%%
+%% spaced (small) caps
+%% 
+\DeclareRobustCommand{\spacedallcaps}[1]{\textls[160]{\MakeTextUppercase{#1}}}%
+\DeclareRobustCommand{\spacedlowsmallcaps}[1]{{\MakeTextLowercase{\scshape #1}}}%
+\DeclareRobustCommand\Largespacedlowsmallcaps[1]{\spacedlowsmallcaps{\Large #1}}
+
+\ifdebug
+\errorcontextlines=909
+%%
+%% debug macro to print baseline grid.
+%% Based on macrocode of the typogrid package
+%%
+\RequirePackage{eso-pic}[2002/11/16]
+\RequirePackage{calc}
+\makeatletter
+\def\printgrid{%
+\newlength{\tpg@left}%
+\newlength{\tpg@top}%
+\newlength{\tpg@bottom}%
+\newlength{\tpg@gridheight}%
+\newlength{\tpg@gridcount}%
+\newlength{\tpg@width}
+\AddToShipoutPicture{%
+\begingroup
+  \normalcolor
+  \setlength{\unitlength}{1pt}%
+  \thinlines
+  \normalsize
+  \setlength{\tpg@top}{\gridbase sp}
+  \setlength{\tpg@bottom}{\tpg@top-\textheight}%
+  \setlength{\tpg@gridheight}{\gridinterval sp}% 
+  \setlength{\tpg@gridcount}{\textheight/\tpg@gridheight}
+%  \setlength{\tpg@width}{\textwidth/2}
+  \setlength{\tpg@width}{\textwidth}
+  \@tempcnta=\tpg@gridcount
+  \advance\@tempcnta by 1
+  \if@twoside\ifthispageodd{%
+    \setlength{\tpg@left}{\oddsidemargin+1in}%
+  }{%
+    \setlength{\tpg@left}{\evensidemargin+1in}%
+  }
+  \else
+    \setlength{\tpg@left}{\oddsidemargin+1in}%
+  \fi
+  \multiput%
+  (\LenToUnit{\tpg@left},\LenToUnit{\tpg@top})%
+  (0,-\LenToUnit{\tpg@gridheight}){\the\@tempcnta}{%
+    \line(1,0){\LenToUnit\tpg@width}}%
+  \endgroup
+}}%
+\makeatother
+\fi
+
+\ifdebug
+  \RequirePackage{showframe}
+\fi
+
+%% setups
+\fnbelowfloat
+\usepackage[final]{microtype}
+\microtypesetup{babel,stretch=10,shrink=15,step=3,tracking=smallcaps}
+
+\lstnewenvironment{code}[1][]%
+{\lstset{#1}\relax%
+}{%
+}
+
+%\usepackage{style}
 \usepackage{blindtext}
-\bibliographystyle{alpha}
+\bibliographystyle{IEEEtran}
 
-\title{Live VM Migration}
-\subtitle{Use-Cases for Cloud hosting providers}
-%\authoremail{Tim Felgentreff \and Tobias Pape}{\{firstname.lastname\}@student.hpi.uni-potsdam.de}
-\author{Tim Felgentreff \and Tobias Pape}
+\title{Live-Migration in virtuellen Umgebungen}
+\author{\IEEEauthorblockN{Tim Felgentreff}
+\IEEEauthorblockA{Hasso-Plattner-Institut\\
+Potsdam, Germany\\
+Email: \url{tim.felgentreff@student.hpi.uni-potsdam.de}}%
+\and
+\IEEEauthorblockN{Tobias.Pape}
+\IEEEauthorblockA{Hasso-Plattner-Institut\\
+Potsdam, Germany\\
+Email: \url{tobias.pape@student.hpi.uni-potsdam.de}}
+}
 
 \begin{document}
 \maketitle
-\tableofcontents
+%\tableofcontents
+
+\begin{abstract}
+  
+\end{abstract}
+
+% \begin{IEEEkeywords}
+% \end{IEEEkeywords}
+\IEEEpeerreviewmaketitle
+
 
 \section{Introduction}
 \label{sec:introduction}
@@ -151,12 +268,7 @@ be booted in parallel to the existing. A new
 
 \subsubsection{Scaling through Replication}
 
-
-\begin{code}[language=SQL]
-select  * from foo where true;
-\end{code}
-
-\bibliography{timfelgentreff}
+\bibliography{Live-MigrationInVrituellenUmgebungen}
 \end{document}
 
 %%% Local Variables: 
