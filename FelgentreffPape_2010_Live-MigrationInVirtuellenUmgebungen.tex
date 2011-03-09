@@ -1,5 +1,5 @@
 %\documentclass[a4paper,conference,compsoc]{IEEEtran}
-\documentclass[journal]{IEEEtran}
+\documentclass[journal,draft]{IEEEtran}
 %\documentclass[a4paper]{IEEEtran}
 %%
 %% enable searchable PDFs
@@ -14,12 +14,8 @@
 %\let\ifdebug\iftrue
 \let\ifdebug\iffalse
 \usepackage{ifdraft}
-\usepackage[nomargins]{ed}
+\usepackage{ed}
 \ifdraft{
-  \def\Todolist#1{% the comment
-    \ifshowednotes\message{todolist!}{{\sffamily To Do: #1}}\bgroup\sffamily\scriptsize\begin{compactenum}%
-      \else\comment%
-      \fi}
 }{%
   \let\todolist=\comment
   \let\endtodolist=\endcomment
@@ -195,6 +191,7 @@ capabilities, VMWare has implemented it in its vMotion product, the
 open-source Xen project supports it and IBM is actively researching to
 enable VM migration on a number of open-source virtualization
 solutions.
+
 
 \section{Stand der Technik}
 \label{sec:sota}
