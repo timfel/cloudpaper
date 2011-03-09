@@ -1,23 +1,162 @@
-\documentclass{scrartcl}
+\documentclass[a4paper,conference,compsoc]{IEEEtran}
+%\documentclass[a4paper]{IEEEtran}
+%%
+%% enable searchable PDFs
+%%
+\usepackage{cmap}
+%%
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp,textcase}
+\usepackage[ngerman]{babel}
 
 %\let\ifdebug\iftrue
 \let\ifdebug\iffalse
+\usepackage{ifdraft}
+\usepackage[nomargins]{ed}
+\ifdraft{
+  \def\Todolist#1{% the comment
+    \ifshowednotes\message{todolist!}{{\sffamily To Do: #1}}\bgroup\sffamily\scriptsize\begin{compactenum}%
+      \else\comment%
+      \fi}
+}{%
+  \let\todolist=\comment
+  \let\endtodolist=\endcomment
+}
 
-\usepackage{style}
+
+\ifCLASSOPTIONcompsoc
+% requires cite.sty v4.0 or later (November 2003) 
+\usepackage[nocompress]{cite}
+\else 
+\usepackage{cite}
+\fi
+
+\ifCLASSOPTIONcompsoc 
+\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig} 
+\else
+\usepackage[caption=false,font=footnotesize]{subfig}
+\fi
+\usepackage{graphicx}
+
+\usepackage{float,mparhack,fixltx2e,stfloats}
+
+\usepackage{xspace}
+\usepackage{listings}
+\usepackage{url}
+
+%%
+%% spaced (small) caps
+%% 
+\DeclareRobustCommand{\spacedallcaps}[1]{\textls[160]{\MakeTextUppercase{#1}}}%
+\DeclareRobustCommand{\spacedlowsmallcaps}[1]{{\MakeTextLowercase{\scshape #1}}}%
+\DeclareRobustCommand\Largespacedlowsmallcaps[1]{\spacedlowsmallcaps{\Large #1}}
+
+\ifdebug
+\errorcontextlines=909
+%%
+%% debug macro to print baseline grid.
+%% Based on macrocode of the typogrid package
+%%
+\RequirePackage{eso-pic}[2002/11/16]
+\RequirePackage{calc}
+\makeatletter
+\def\printgrid{%
+\newlength{\tpg@left}%
+\newlength{\tpg@top}%
+\newlength{\tpg@bottom}%
+\newlength{\tpg@gridheight}%
+\newlength{\tpg@gridcount}%
+\newlength{\tpg@width}
+\AddToShipoutPicture{%
+\begingroup
+  \normalcolor
+  \setlength{\unitlength}{1pt}%
+  \thinlines
+  \normalsize
+  \setlength{\tpg@top}{\gridbase sp}
+  \setlength{\tpg@bottom}{\tpg@top-\textheight}%
+  \setlength{\tpg@gridheight}{\gridinterval sp}% 
+  \setlength{\tpg@gridcount}{\textheight/\tpg@gridheight}
+%  \setlength{\tpg@width}{\textwidth/2}
+  \setlength{\tpg@width}{\textwidth}
+  \@tempcnta=\tpg@gridcount
+  \advance\@tempcnta by 1
+  \if@twoside\ifthispageodd{%
+    \setlength{\tpg@left}{\oddsidemargin+1in}%
+  }{%
+    \setlength{\tpg@left}{\evensidemargin+1in}%
+  }
+  \else
+    \setlength{\tpg@left}{\oddsidemargin+1in}%
+  \fi
+  \multiput%
+  (\LenToUnit{\tpg@left},\LenToUnit{\tpg@top})%
+  (0,-\LenToUnit{\tpg@gridheight}){\the\@tempcnta}{%
+    \line(1,0){\LenToUnit\tpg@width}}%
+  \endgroup
+}}%
+\makeatother
+\fi
+
+\ifdebug
+  \RequirePackage{showframe}
+\fi
+
+%% setups
+\fnbelowfloat
+\usepackage[final]{microtype}
+\microtypesetup{babel,stretch=10,shrink=15,step=3,tracking=smallcaps}
+
+\lstnewenvironment{code}[1][]%
+{\lstset{#1}\relax%
+}{%
+}
+
+%\usepackage{style}
 \usepackage{blindtext}
-\bibliographystyle{alpha}
+\bibliographystyle{IEEEtran}
 
-\title{Live VM Migration}
-\subtitle{Use-Cases for Cloud hosting providers}
-%\authoremail{Tim Felgentreff \and Tobias Pape}{\{firstname.lastname\}@student.hpi.uni-potsdam.de}
-\author{Tim Felgentreff \and Tobias Pape}
+\title{Live-Migration in virtuellen Umgebungen}
+
+\ifCLASSOPTIONconference
+% \ifCLASSOPTIONcompsoc
+% \author{Tim~Felgentreff und~Tobias~Pape%
+% \thanks{%
+%   Hasso-Plattner-Institut, Potsdam.\goodbreak
+%   Email: \{vorname.nachname\}@student.hpi.uni-potsdam.de}%
+% }
+% \else
+\author{\IEEEauthorblockN{Tim Felgentreff und Tobias Pape}
+  \IEEEauthorblockA{Hasso-Plattner-Institut\\
+    Potsdam, Germany\\
+    Email: \{vorname.nachname\}@student.hpi.uni-potsdam.de}%
+}
+% \fi
+\else
+\author{Tim~Felgentreff und~Tobias~Pape%
+\thanks{%
+  Hasso-Plattner-Institut, Potsdam.\goodbreak
+  Email: \{vorname.nachname\}@student.hpi.uni-potsdam.de}%
+}
+\fi
 
 \begin{document}
 \maketitle
-\tableofcontents
+%\tableofcontents
 
-\section{Introduction}
-\label{sec:introduction}
+\begin{abstract}
+  
+\end{abstract}
+
+% \begin{IEEEkeywords}
+% \end{IEEEkeywords}
+\IEEEpeerreviewmaketitle
+
+
+\section{Einführung}
+\label{sec:einfuehrung}
+Heute ...
 Today, many organizations deploy a multitude of services on a large
 number of servers. In some cases, all these services run on different
 machines not because one machine cannot handle the load, but for
@@ -56,25 +195,25 @@ open-source Xen project supports it and IBM is actively researching to
 enable VM migration on a number of open-source virtualization
 solutions.
 
-\section{State of the Art}
+\section{Stand der Technik}
 \label{sec:sota}
 
 In this part we will explore the state of the art in live VM
 migration, both from a technical as from a use-case point of view.
 
-\subsection{VMWare Live Migration}
+\subsection{VMWare Live-Migration}
 \label{sec:livemigration}
 
 Dr. Jacob Gorm Hansen described the process of live migration
 as implemented in his NomadBIOS, which we will recapitulate here.
 
-\subsection{Live Migration Use Cases}
+\subsection{Anwendungsfälle für Live-Migration}
 
 The following sections summarize some of the real-world use cases for
 live migration and how it compares to the previous solutions which
 were applied to these problems.
 
-\subsubsection{Reliability of Virtualization}
+\subsubsection{Verlässlichkeit von Virtualisierung}
 
 Running a large number of virtual machines (VMs) on very few physical
 nodes seems like betting all your money on one horse only. If one
@@ -110,7 +249,7 @@ requests would be routed to the fresh VM, with the old VM kept online
 to serve low-level calls and dependencies of in-process requests,
 before shutting down\cite{clark2005live}.
 
-\subsubsection{Compatibility of Virtualization Solutions}
+\subsubsection{Interoparibilität von Virtualisierungs-Lösungen}
 Several process migration systems were developed in the 1980s,
 examples are Sprite and MOSIX\cite{hansen2004self}. Such migration
 solutions depend on capabilities of the hypervisor as well as the
@@ -126,7 +265,7 @@ moving complete systems between different vendors usually involves
 shutting those systems down to allow various data conversions to take
 place.
 
-\subsubsection{Hardware Upgrades without Downtime}
+\subsubsection{Hardware-Aufstockung ohne Ausfallzeigen}
 Modern businesses have to be able to react to market change quickly
 and with minimal cost. New services are first explored on cheap
 hardware\cite{tanenbaum1992modern}, but sudden bursts of customer
@@ -141,7 +280,7 @@ hardware requirements and carefully planned downtime.
 Using live migration, services can stay online and better hardware can
 be booted in parallel to the existing. A new 
 
-\subsubsection{Moving between Clouds}
+\subsubsection{Inter-Cloud Verschiebungen}
 \label{sec:movclouds}
 
 \blindtext
@@ -153,12 +292,15 @@ be booted in parallel to the existing. A new
 
 \subsubsection{Scaling through Replication}
 
-
-\begin{code}[language=SQL]
-select  * from foo where true;
-\end{code}
-
-\bibliography{timfelgentreff}
+% trigger a \newpage just before the given reference
+% number - used to balance the columns on the last page
+% adjust value as needed - may need to be readjusted if
+% the document is modified later
+%\IEEEtriggeratref{8}
+% The "triggered" command can be changed if desired:
+%\IEEEtriggercmd{\enlargethispage{-5in}}
+\bibliographystyle{IEEEtran} 
+\bibliography{IEEEabrv,Live-MigrationInVrituellenUmgebungen}
 \end{document}
 
 %%% Local Variables: 
