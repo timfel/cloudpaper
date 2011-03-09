@@ -1,6 +1,12 @@
 %\documentclass[a4paper,conference,compsoc]{IEEEtran}
-\documentclass[journal,draft]{IEEEtran}
+\documentclass[journal]{IEEEtran}
 %\documentclass[a4paper]{IEEEtran}
+
+\makeatletter
+\def\markboth#1#2{\def\leftmark{\@IEEEcompsoconly{\sffamily}\MakeUppercase{\protect#1}}%
+\def\rightmark{\@IEEEcompsoconly{\sffamily}\MakeUppercase{\protect#2}}}
+\makeatother
+
 %%
 %% enable searchable PDFs
 %%
@@ -11,29 +17,8 @@
 \usepackage{textcomp,textcase}
 \usepackage[ngerman]{babel}
 
-%\let\ifdebug\iftrue
-\let\ifdebug\iffalse
-\usepackage{ifdraft}
-\usepackage{ed}
-\ifdraft{
-}{%
-  \let\todolist=\comment
-  \let\endtodolist=\endcomment
-}
-
-
-\ifCLASSOPTIONcompsoc
-% requires cite.sty v4.0 or later (November 2003) 
-\usepackage[nocompress]{cite}
-\else 
 \usepackage{cite}
-\fi
-
-\ifCLASSOPTIONcompsoc 
-\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig} 
-\else
 \usepackage[caption=false,font=footnotesize]{subfig}
-\fi
 \usepackage{graphicx}
 
 \usepackage{float,mparhack,fixltx2e,stfloats}
@@ -49,56 +34,7 @@
 \DeclareRobustCommand{\spacedlowsmallcaps}[1]{{\MakeTextLowercase{\scshape #1}}}%
 \DeclareRobustCommand\Largespacedlowsmallcaps[1]{\spacedlowsmallcaps{\Large #1}}
 
-\ifdebug
 \errorcontextlines=909
-%%
-%% debug macro to print baseline grid.
-%% Based on macrocode of the typogrid package
-%%
-\RequirePackage{eso-pic}[2002/11/16]
-\RequirePackage{calc}
-\makeatletter
-\def\printgrid{%
-\newlength{\tpg@left}%
-\newlength{\tpg@top}%
-\newlength{\tpg@bottom}%
-\newlength{\tpg@gridheight}%
-\newlength{\tpg@gridcount}%
-\newlength{\tpg@width}
-\AddToShipoutPicture{%
-\begingroup
-  \normalcolor
-  \setlength{\unitlength}{1pt}%
-  \thinlines
-  \normalsize
-  \setlength{\tpg@top}{\gridbase sp}
-  \setlength{\tpg@bottom}{\tpg@top-\textheight}%
-  \setlength{\tpg@gridheight}{\gridinterval sp}% 
-  \setlength{\tpg@gridcount}{\textheight/\tpg@gridheight}
-%  \setlength{\tpg@width}{\textwidth/2}
-  \setlength{\tpg@width}{\textwidth}
-  \@tempcnta=\tpg@gridcount
-  \advance\@tempcnta by 1
-  \if@twoside\ifthispageodd{%
-    \setlength{\tpg@left}{\oddsidemargin+1in}%
-  }{%
-    \setlength{\tpg@left}{\evensidemargin+1in}%
-  }
-  \else
-    \setlength{\tpg@left}{\oddsidemargin+1in}%
-  \fi
-  \multiput%
-  (\LenToUnit{\tpg@left},\LenToUnit{\tpg@top})%
-  (0,-\LenToUnit{\tpg@gridheight}){\the\@tempcnta}{%
-    \line(1,0){\LenToUnit\tpg@width}}%
-  \endgroup
-}}%
-\makeatother
-\fi
-
-\ifdebug
-  \RequirePackage{showframe}
-\fi
 
 %% setups
 \fnbelowfloat
@@ -114,31 +50,19 @@
 \usepackage{blindtext}
 \bibliographystyle{IEEEtran}
 
-\title{Live-Migration in virtuellen Umgebungen}
 
-\ifCLASSOPTIONconference
-% \ifCLASSOPTIONcompsoc
-% \author{Tim~Felgentreff und~Tobias~Pape%
-% \thanks{%
-%   Hasso-Plattner-Institut, Potsdam.\goodbreak
-%   Email: \{vorname.nachname\}@student.hpi.uni-potsdam.de}%
-% }
-% \else
-\author{\IEEEauthorblockN{Tim Felgentreff und Tobias Pape}
-  \IEEEauthorblockA{Hasso-Plattner-Institut\\
-    Potsdam, Germany\\
-    Email: \{vorname.nachname\}@student.hpi.uni-potsdam.de}%
-}
-% \fi
-\else
+
+
+\begin{document}
+\title{Live-Migration in virtuellen Umgebungen}
 \author{Tim~Felgentreff und~Tobias~Pape%
 \thanks{%
+  Tim Felgentreff und Tobias Pape studieren am
   Hasso-Plattner-Institut, Potsdam.\goodbreak
   Email: \{vorname.nachname\}@student.hpi.uni-potsdam.de}%
 }
-\fi
+\markboth{Industrieseminar Cloud-Computing}{Felgentreff, Pape: Live-Migration}
 
-\begin{document}
 \maketitle
 %\tableofcontents
 
