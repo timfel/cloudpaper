@@ -1,5 +1,5 @@
 %\documentclass[a4paper,conference,compsoc]{IEEEtran}
-\documentclass[journal]{IEEEtran}
+\documentclass[draft,journal]{IEEEtran}
 %\documentclass[a4paper]{IEEEtran}
 
 \makeatletter
@@ -22,6 +22,8 @@
 \usepackage{graphicx}
 
 \usepackage{float,mparhack,fixltx2e,stfloats}
+
+\usepackage{hyperref}
 
 \usepackage{xspace}
 \usepackage{listings}
@@ -64,7 +66,7 @@
 \markboth{Industrieseminar Cloud-Computing}{Felgentreff, Pape: Live-Migration}
 
 \maketitle
-%\tableofcontents
+\tableofcontents
 
 \begin{abstract}
   
@@ -77,6 +79,8 @@
 
 \section{Einführung}
 \label{sec:einfuehrung}
+
+
 \IEEEPARstart{H}{eutzutage} gibt es zu viele Probleme
 Today, many organizations deploy a multitude of services on a large
 number of servers. In some cases, all these services run on different
@@ -115,6 +119,21 @@ capabilities, VMWare has implemented it in its vMotion product, the
 open-source Xen project supports it and IBM is actively researching to
 enable VM migration on a number of open-source virtualization
 solutions.
+
+
+\subsection{Def Virtualisierung Level}
+\label{sec:def-virtualisierung}
+
+\url{http://www.dcl.hpi.uni-potsdam.de/teaching/cloudIndustSem/slides/giesekus.pdf}
+\begin{itemize}
+\item Level der virualisierung
+  \begin{itemize}
+  \item hw (ldoms)
+  \item hypervisoren !!
+  \item Os-partitioning (Solaris Zones)
+  \item Process VMs (JVM etc.pp.)
+  \end{itemize}
+\end{itemize}
 
 
 \section{Stand der Technik}
@@ -205,14 +224,38 @@ be booted in parallel to the existing. A new
 \subsubsection{Inter-Cloud Verschiebungen}
 \label{sec:movclouds}
 
-\blindtext
 
 \subsubsection{Uptime Despite Hardware Failure}
 \label{sec:hardfail}
 
-\blindtext
 
 \subsubsection{Scaling through Replication}
+
+
+\section{Anwendungsfälle}
+\label{sec:anwendungsbeispiele}
+
+\begin{itemize}
+\item Heroku
+\item App engines auf anderem scale (IaaS)
+\end{itemize}
+
+
+\subsection{keine Ausfallzeit}
+\label{sec:keine-ausfallzeit}
+
+. Netzwerklast is hoeher, aber who cares.
+Yes: Github, heroku, engineyard.
+
+
+\subsection{Adaptive Auslastung}
+\label{sec:adaptive-auslastung}
+
+\subsection{Langzeit-Lauffähigkeit}
+\label{sec:langz-lauff}
+
+
+
 
 % trigger a \newpage just before the given reference
 % number - used to balance the columns on the last page
@@ -221,7 +264,6 @@ be booted in parallel to the existing. A new
 %\IEEEtriggeratref{8}
 % The "triggered" command can be changed if desired:
 %\IEEEtriggercmd{\enlargethispage{-5in}}
-\bibliographystyle{IEEEtran} 
 \bibliography{IEEEabrv,Live-MigrationInVrituellenUmgebungen}
 \end{document}
 
