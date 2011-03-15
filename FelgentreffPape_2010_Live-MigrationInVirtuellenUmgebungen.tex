@@ -191,6 +191,7 @@ Probleme:
   \item Scalierbedarf gegen Wartungsaufwand -> Menge der HW
   \item Gleichmäßige Auslastung zunächst genauso schwierig wie vorher
   \item Hardware-Wechsel soll nicht mehr zu Donwtime führen
+  \item Virtualisierung 
   \end{itemize}
 \end{itemize}
 
@@ -240,6 +241,29 @@ neuen Server umgeleitet. Die alte VM musste allerdings zunächst online
 bleiben, um Abhängigkeiten von Dienstanfragen bereitzustellen, die
 sich noch in Ausführung befanden, als der Hardwarealarm ausgelöst
 wurde~\cite{clark2005live}.
+
+Diese Vorgehensweise zur Migration auf Prozessebene hat also den
+wesentlichen Nachteil, dass laufende Prozesse nicht verschoben werden
+können, sondern noch auf der bestehenden Hardware zum Ende laufen
+müssen. Im Falle eines Web-Servers, bei dem jeder Request auch an
+einen neuen Prozess gehen kann, ist das nicht weiter
+problematisch. Schwieriger ist die Situation bei Diensten wie
+z.B. Online-Spieleplattformen, bei denen ein Serverprozess
+TCP-Verbindungen zu mehreren Clients teilweise über Stunden aufrecht
+erhalten muss. Wenn ein Hardwareausfall kurz bevor steht, bleibt hier
+meist nichts anderes übrig, als das Spiel zu unterbrechen: Das kann
+bedeutet mindestens unzufriedene Kunden, und vielleicht sogar
+Umsatzverluste.
+
+Mit dem von Dr. Hansen vorgestellten NomadBIOS kann auf Hardwarefehler
+angemessener reagiert werden: Zuerst kann die VM bis aufs letzte
+Detail vom aktuellen Stand kopiert werden, das heißt, dass Änderungen,
+die seit der letzten Checkpoint-Sicherung geschehen sind, nicht
+verloren gehen. Wichtiger, allerdings, ist, dass auch Prozesse, die
+sich gerade in Ausführung befinden, migriert werden können. Im
+Beispiel der Spieleplattform bedeutet dies, dass Spiele nicht
+unterbrochen werden müssen, sondern, für den Nutzer transparent, auf
+den neuen Server migriert werden.
 
 \subsection{Interoparibilität von Virtualisierungs-Lösungen}
 Several process migration systems were developed in the 1980s,
