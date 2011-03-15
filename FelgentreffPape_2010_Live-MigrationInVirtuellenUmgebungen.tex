@@ -75,54 +75,78 @@
 % \end{IEEEkeywords}
 \IEEEpeerreviewmaketitle
 
-
 \section{Einführung}
 \label{sec:einfuehrung}
+% \IEEEPARstart{H}{eutzutage} gibt es zu viele Probleme
+% Today, many organizations deploy a multitude of services on a large
+% number of servers. In some cases, all these services run on different
+% machines not because one machine cannot handle the load, but for
+% reasons of reliability.  All software is faulty~\cite{zellerprograms},
+% and operating systems with thousands of lines of code, running servers
+% written by different software vendors simply cannot be trusted to
+% provide uptimes of 99.9 percent or more. Putting each service on a
+% separate machine will achieve reliability at the expense of
+% maintainability simply because a large number of physical machines is
+% involved.
 
+% Virtual machine technology has been around for more than 40
+% years~\cite{tanenbaum1992modern}. The technology to host multiple
+% machines on a single system reduces the space and power requirements
+% for data centers and represents enormous cost savings for companies
+% like Amazon, Microsoft or Google, which deploy hundreds or thousands
+% of servers for a variety of services. Unsurprisingly, virtualization
+% for cost reduction and transparent scalability is becoming
+% increasingly popular. Cloud providers such as Amazon, Rackspace or
+% Engine Yard offer scalable hosting solutions for companies and
+% individuals who cannot of do not want to maintain a private cloud.
 
-\IEEEPARstart{H}{eutzutage} gibt es zu viele Probleme
-Today, many organizations deploy a multitude of services on a large
-number of servers. In some cases, all these services run on different
-machines not because one machine cannot handle the load, but for
-reasons of reliability.  All software is faulty~\cite{zellerprograms},
-and operating systems with thousands of lines of code, running servers
-written by different software vendors simply cannot be trusted to
-provide uptimes of 99.9 percent or more. Putting each service on a
-separate machine will achieve reliability at the expense of
-maintainability simply because a large number of physical machines is
-involved.
+% There are obvious issues with isolation, however. As a service
+% provider, I want to avoid downtime as much as possible. Thus, I cannot
+% easily move my virtual machine from one provider to another. I cannot
+% easily migrate existing VMs to new a hypervisor architecture or a
+% completely new virtualization solution. If hardware is failing, I
+% cannot simply migrate the VM to new hardware without taking it down.
 
-Virtual machine technology has been around for more than 40
-years~\cite{tanenbaum1992modern}. The technology to host multiple
-machines on a single system reduces the space and power requirements
-for data centers and represents enormous cost savings for companies
-like Amazon, Microsoft or Google, which deploy hundreds or thousands
-of servers for a variety of services. Unsurprisingly, virtualization
-for cost reduction and transparent scalability is becoming
-increasingly popular. Cloud providers such as Amazon, Rackspace or
-Engine Yard offer scalable hosting solutions for companies and
-individuals who cannot of do not want to maintain a private cloud.
+% Asger Jensen and Dr. Jacob Gorm Hansen proposed live VM migration as a
+% solution to these problems. They were the first to demonstrate live
+% migration of a running VM in 2002 on a research hypervisor called
+% NomadBIOS. Since then, HP has equipped it's HP-UX with live migration
+% capabilities, VMWare has implemented it in its vMotion product, the
+% open-source Xen project supports it and IBM is actively researching to
+% enable VM migration on a number of open-source virtualization
+% solutions.
+- Firmen sehen heutzutage so aus
+- Cloud könnte für sie interessant sein
+- Welche Rolle Live-Migration da für sie spielt, und wie es ihnen
+helfen kann, zeigen wir
 
-There are obvious issues with isolation, however. As a service
-provider, I want to avoid downtime as much as possible. Thus, I cannot
-easily move my virtual machine from one provider to another. I cannot
-easily migrate existing VMs to new a hypervisor architecture or a
-completely new virtualization solution. If hardware is failing, I
-cannot simply migrate the VM to new hardware without taking it down.
+\subsection{Mainframes und Cluster}
+- Derzeit Rechner im Rechenzentrum
+- Cluster
+- Grid
+- Probleme:
+  - Ungleichmäßige Auslastung
+  - Wartungskosten
+  - Downtime bei Upgrades/HW-Problemen
 
-Asger Jensen and Dr. Jacob Gorm Hansen proposed live VM migration as a
-solution to these problems. They were the first to demonstrate live
-migration of a running VM in 2002 on a research hypervisor called
-NomadBIOS. Since then, HP has equipped it's HP-UX with live migration
-capabilities, VMWare has implemented it in its vMotion product, the
-open-source Xen project supports it and IBM is actively researching to
-enable VM migration on a number of open-source virtualization
-solutions.
+\subsection{Die Cloud als Ziel}
+\label{sec:sota}
+- Public vs Private
+Für potentielle Nutzer einer Cloud Lösung präsentieren sich derzeit
+zwei Möglichkeiten: Eine eigene, business-interne Cloud Plattform zu
+installieren, oder 
 
+In this part we will explore the state of the art in live VM
+migration, both from a technical as from a use-case point of view.
+Ich will scalieren:
+\begin{itemize}
+\item Public Cloud
+\item Private Cloud
+\end{itemize}
+- Um zu entscheiden zunächst wissen, {\bf was} in die cloud geht
 
-\subsection{Def Virtualisierung Level}
+\subsubsection{Level der Virtualisierung}
 \label{sec:def-virtualisierung}
-
 \url{http://www.dcl.hpi.uni-potsdam.de/teaching/cloudIndustSem/slides/giesekus.pdf}
 \begin{itemize}
 \item Level der virualisierung
@@ -134,49 +158,39 @@ solutions.
   \end{itemize}
 \end{itemize}
 
+\subsubsection{Was geht in die Cloud?}
+Auf welchen Ebenen gibt es "`Clouds"', welche Ebene betrachten wir,
+PaaS vs IaaS.
 
-\section{Stand der Kunst}
-\label{sec:sota}
-
-In this part we will explore the state of the art in live VM
-migration, both from a technical as from a use-case point of view.
-Ich will scalieren:
-\begin{itemize}
-\item Public Cloud
-\item Private Cloud
-\end{itemize}
-
+\subsection{Neue Probleme in Clouds}
 Probleme:
 \begin{itemize}
 \item Public
   \begin{itemize}
   \item Bindung an Provider
-  \item Scalierbedarf unklar
-  \item SLAs über Verfügbarkeit - Abwägung zwischen Kosten und Nutzen
+  \item Scalierbedarf zunächst unklar -> Kostenfrage
+  \item Physikalischer Ort der Daten unbekannt -> VMs müssen in die
+    private Cloud oder in Rechenzentren verschoben werden können ->
+    gesetzl. Vorschriften, Intellectual Property, \ldots
   \end{itemize}
 \item Private
   \begin{itemize}
-  \item 
+  \item Scalierbedarf gegen Wartungsaufwand -> Menge der HW
+  \item Gleichmäßige Auslastung zunächst genauso schwierig wie vorher
+  \item Hardware-Wechsel soll nicht mehr zu Donwtime führen
   \end{itemize}
 \end{itemize}
 
-% In this part we will explore the state of the art in live VM
-% migration, both from a technical as from a use-case point of view.
-
-\subsection{VMWare Live-Migration}
+\section{Live-Migration als Teil der Lösung}
 \label{sec:livemigration}
-
 Dr. Jacob Gorm Hansen described the process of live migration
 as implemented in his NomadBIOS, which we will recapitulate here.
-
-\subsection{Anwendungsfälle für Live-Migration}
 
 The following sections summarize some of the real-world use cases for
 live migration and how it compares to the previous solutions which
 were applied to these problems.
 
-\subsubsection{Verlässlichkeit von Virtualisierung}
-
+\subsection{Verlässlichkeit von Virtualisierung}
 Running a large number of virtual machines (VMs) on very few physical
 nodes seems like betting all your money on one horse only. If one
 physical node fails a number of services will be unavailable all at
@@ -211,7 +225,7 @@ requests would be routed to the fresh VM, with the old VM kept online
 to serve low-level calls and dependencies of in-process requests,
 before shutting down\cite{clark2005live}.
 
-\subsubsection{Interoparibilität von Virtualisierungs-Lösungen}
+\subsection{Interoparibilität von Virtualisierungs-Lösungen}
 Several process migration systems were developed in the 1980s,
 examples are Sprite and MOSIX\cite{hansen2004self}. Such migration
 solutions depend on capabilities of the hypervisor as well as the
@@ -227,7 +241,7 @@ moving complete systems between different vendors usually involves
 shutting those systems down to allow various data conversions to take
 place.
 
-\subsubsection{Hardware-Aufstockung ohne Ausfallzeigen}
+\subsection{Hardware-Aufstockung ohne Ausfallzeigen}
 Modern businesses have to be able to react to market change quickly
 and with minimal cost. New services are first explored on cheap
 hardware\cite{tanenbaum1992modern}, but sudden bursts of customer
@@ -242,43 +256,28 @@ hardware requirements and carefully planned downtime.
 Using live migration, services can stay online and better hardware can
 be booted in parallel to the existing. A new 
 
-\subsubsection{Inter-Cloud Verschiebungen}
+\subsection{Inter-Cloud Verschiebungen}
 \label{sec:movclouds}
-
-
-\subsubsection{Uptime Despite Hardware Failure}
+\subsection{Uptime Despite Hardware Failure}
 \label{sec:hardfail}
-
-
-\subsubsection{Scaling through Replication}
-
-
-\section{Anwendungsfälle}
-\label{sec:anwendungsbeispiele}
-
+\subsection{Scaling through Replication}
+\label{sec:replication}
 \begin{itemize}
 \item Heroku
 \item App engines auf anderem scale (IaaS)
 \end{itemize}
-
-
 \subsection{keine Ausfallzeit}
 \label{sec:keine-ausfallzeit}
-
 Netzwerklast is hoeher, aber who cares.
 Yes: Github, heroku, engineyard.
-
 \subsection{Adaptive Auslastung}
 \label{sec:adaptive-auslastung}
-
 SLAs zwingen nicht zum idlen herumsitzenlassen von Servern um
 abzusichern, VMs können im Zweifel schnell umgezogen werden.
 -> Contra: Durchsatz, Netzlast, Umzugszeit
 -> Pro: Github uptime
-
 \subsection{Langzeit-Lauffähigkeit}
 \label{sec:langz-lauff}
-
 Cloud nutzlos wenn der Server dann weiterhin alle paar Monate down
 wegen:
 \begin{itemize}
@@ -286,6 +285,22 @@ wegen:
 \item Hardware-Upgrades
 \item Steigender Nachfrage
 \end{itemize}
+
+\section{Alternative Live-Migration-Systeme}
+Ziele/Einsatzgebiete, Verbreitung
+
+\subsection{IBM}
+\subsection{HP}
+\subsection{Sun/Solaris}
+
+\section{Vergleich}
+Vergleich der Eignung als Lösung für die oben genannten Probleme
+zwischen dem von Dr. Hansen vorgestellen System und den Alternativen.
+
+\section{Schlussfolgerungen, Zusammenfassung}
+Überblick über die Bewertung der Systeme
+Überblick über die Eignung für den Produktiveinsatz
+Ausblick für weitere Entwicklung der VM-Verschiebung
 
 % trigger a \newpage just before the given reference
 % number - used to balance the columns on the last page
