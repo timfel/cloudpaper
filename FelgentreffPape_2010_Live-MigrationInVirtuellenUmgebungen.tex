@@ -126,8 +126,9 @@ helfen kann, zeigen wir
 - Grid
 - Probleme:
   - Ungleichmäßige Auslastung
-  - Wartungskosten
+  - Wartungskosten (Admins)
   - Downtime bei Upgrades/HW-Problemen
+  - Operationskosten (Strom)
 
 \subsection{Die Cloud als Ziel}
 \label{sec:sota}
@@ -153,6 +154,18 @@ Ich will scalieren:
   \begin{itemize}
   \item hw (ldoms)
   \item hypervisoren !!
+    
+    Virtuelle Maschinen (VMs) laufen auf physikalischen Maschinen durch
+    einen \emph{Hypervisor}, ein minimales Betriebssystem, dass den
+    Zugriff auf die physikalische Hardware regelt und Routing zwischen dem
+    physikalischen und virtuellen Netzwerk
+    bereitstellt~\cite{tanenbaum1992modern}. Wenn eine VM ausfällt,
+    bleiben die anderen davon unbeeinflusst. Da des weiteren alle
+    Operationen innerhalb einer VM virtualiziert sind, kann der Hypervisor
+    den Zustand eines virtuellen Servers in regelmäßigen Abständen
+    sichern, und so bei Ausfall die VM von einer früheren Sicherung
+    wiederherstellen.
+
   \item Os-partitioning (Solaris Zones)
   \item Process VMs (JVM etc.pp.)
   \end{itemize}
@@ -191,39 +204,42 @@ live migration and how it compares to the previous solutions which
 were applied to these problems.
 
 \subsection{Verlässlichkeit von Virtualisierung}
-Running a large number of virtual machines (VMs) on very few physical
-nodes seems like betting all your money on one horse only. If one
-physical node fails a number of services will be unavailable all at
-once, probably much more than if a dedicated machine would
-crash. However, most server failures in data centers are due to buggy
-software, especially operating systems and servers, not hardware
-failure. Virtualization isolates such failures, because VMs run in an
-isolated environment atop a \emph{hypervisor}.
+In jedem verteilten System muss man mit der Realität umgehen, dass
+Hardware und Software Fehler enthält, die zu Ausfällen führen
+können. Da scheint die Idee, viele Virtuelle Maschinen auf wenigen
+physikalischen Systemen auszuführen zunächst wie ein Schritt in die
+falsche Richtung: Wenn dann ein physikalischer Server ausfällt, oder
+die Virtualisierungssoftware einen Fehler enthält, fallen potentiell
+eine ganze Reihe von Diensten auf einmal aus. In der Realität
+entstehen die meisten Fehler in Datencentern allerdings durch
+Softwarefehler~\cite{tanenbaum1992modern}. Softwarefehler können umso
+häufiger zutage treten, je mehr unterschiedliche Systeme miteinander
+interagieren müssen, und je größer die Code-Basis der einzelnen
+Systeme ist~\cite{zellerprograms}. Durch Virtualisierung kann man
+Softwaresysteme voneinander isolieren, ohne für jedes System einen
+eigenen, physikalischen Server mit eigenem Betriebssystem
+bereitzustellen. Der Hypervisor selbst ist in solch einem Fall die
+einzige Software, die im Kernel Modus läuft, und dieser hat um
+Größenordnungen weniger Zeilen Quelltext als ein aktuelles
+Betriebssystem~\cite{tanenbaum1992modern}. Folglich enthält der
+Hypervisor wahrscheinlich weniger Bugs~\cite{zellerprograms}.
 
-A hypervisor controls access to the physical hardware, provides
-routing from the physical network into the virtual network and
-isolates machines from one another. If any one machine should fail,
-all others will be unaffected. Because all of the operations within a
-VM are virtualized, the hypervisor can checkpoint virtual servers at
-regular intervals. Should a VM fail, it can be restored from an
-earlier checkpoint and resume operations.
+Kritische Dienste können so in kompletter Isolation ausgeführt um das
+Risiko eines Ausfalls durch inkompatible Software auf demselben Server
+zu minimieren.
 
-Critical services can be run in complete isolation to minimize the
-potential for failure due to faulty or incompatible software
-stacks. The hypervisor itself is the only software running in kernel
-mode on the physical machine and has orders of magnitude fewer lines
-of code than the average operating system. This means it is equally
-less likely to encounter a bug in it's programming.
-
-Still, hardware failures, while less likely than software bugs, are an
-issue that has to be considered. Before live migration of VMs was
-possible, an alarm state from a hardware monitor could be answered by
-migrating the relevant processes to new VMs\cite{hansen2004self}. For
-a given VM, another one similar to it would be booted on a another
-machine. The state of the services could be copied and new service
-requests would be routed to the fresh VM, with the old VM kept online
-to serve low-level calls and dependencies of in-process requests,
-before shutting down\cite{clark2005live}.
+Nichtsdestotrotz müssen auch Vorkehrungen gegen Hardwarefehler
+getroffen werden. In klassischen Hosting-Umgebungen konnte man bei
+immanenten Ausfällen von physikalischen Systemen relevante Prozesse
+auf neue VMs migrieren~\cite{hansen2004self}. Für eine gegebene VM
+konnte eine Ähnliche (z.B. aus einem früheren, gesicherten Zustand)
+auf einem neuen Server gestartet werden. Der Zustand der relevanten
+Prozesse wurde soweit als möglich gemäß den Gegebenheiten des
+Betriebssystems kopiert und neue Dienstanfragen wurden dann auf den
+neuen Server umgeleitet. Die alte VM musste allerdings zunächst online
+bleiben, um Abhängigkeiten von Dienstanfragen bereitzustellen, die
+sich noch in Ausführung befanden, als der Hardwarealarm ausgelöst
+wurde~\cite{clark2005live}.
 
 \subsection{Interoparibilität von Virtualisierungs-Lösungen}
 Several process migration systems were developed in the 1980s,
