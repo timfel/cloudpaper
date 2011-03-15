@@ -52,11 +52,10 @@
 \usepackage{blindtext}
 \bibliographystyle{IEEEtran}
 
-
-
-
 \begin{document}
-\title{Live-Migration in virtuellen Umgebungen}
+\title{Live-Migration in virtuellen Umgebungen\\
+  \large{Hypervisor - What have you done for me today?}
+}
 \author{Tim~Felgentreff und~Tobias~Pape%
 \thanks{%
   Tim Felgentreff und Tobias Pape studieren am
@@ -136,11 +135,33 @@ solutions.
 \end{itemize}
 
 
-\section{Stand der Technik}
+\section{Stand der Kunst}
 \label{sec:sota}
 
 In this part we will explore the state of the art in live VM
 migration, both from a technical as from a use-case point of view.
+Ich will scalieren:
+\begin{itemize}
+\item Public Cloud
+\item Private Cloud
+\end{itemize}
+
+Probleme:
+\begin{itemize}
+\item Public
+  \begin{itemize}
+  \item Bindung an Provider
+  \item Scalierbedarf unklar
+  \item SLAs über Verfügbarkeit - Abwägung zwischen Kosten und Nutzen
+  \end{itemize}
+\item Private
+  \begin{itemize}
+  \item 
+  \end{itemize}
+\end{itemize}
+
+% In this part we will explore the state of the art in live VM
+% migration, both from a technical as from a use-case point of view.
 
 \subsection{VMWare Live-Migration}
 \label{sec:livemigration}
@@ -244,18 +265,27 @@ be booted in parallel to the existing. A new
 \subsection{keine Ausfallzeit}
 \label{sec:keine-ausfallzeit}
 
-. Netzwerklast is hoeher, aber who cares.
+Netzwerklast is hoeher, aber who cares.
 Yes: Github, heroku, engineyard.
-
 
 \subsection{Adaptive Auslastung}
 \label{sec:adaptive-auslastung}
 
+SLAs zwingen nicht zum idlen herumsitzenlassen von Servern um
+abzusichern, VMs können im Zweifel schnell umgezogen werden.
+-> Contra: Durchsatz, Netzlast, Umzugszeit
+-> Pro: Github uptime
+
 \subsection{Langzeit-Lauffähigkeit}
 \label{sec:langz-lauff}
 
-
-
+Cloud nutzlos wenn der Server dann weiterhin alle paar Monate down
+wegen:
+\begin{itemize}
+\item Hardware-Ausfalls
+\item Hardware-Upgrades
+\item Steigender Nachfrage
+\end{itemize}
 
 % trigger a \newpage just before the given reference
 % number - used to balance the columns on the last page
