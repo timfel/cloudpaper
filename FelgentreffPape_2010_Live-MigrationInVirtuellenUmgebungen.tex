@@ -120,7 +120,7 @@
 - Welche Rolle Live-Migration da für sie spielt, und wie es ihnen
 helfen kann, zeigen wir
 
-\subsection{Mainframes und Cluster}
+\subsection{Der Status in Rechenzentren}
 - Derzeit Rechner im Rechenzentrum
 - Cluster
 - Grid
@@ -281,6 +281,9 @@ moving complete systems between different vendors usually involves
 shutting those systems down to allow various data conversions to take
 place.
 
+\subsection{Inter-Cloud Verschiebungen}
+\label{sec:movclouds}
+
 \subsection{Hardware-Aufstockung ohne Ausfallzeigen}
 Modern businesses have to be able to react to market change quickly
 and with minimal cost. New services are first explored on cheap
@@ -296,20 +299,16 @@ hardware requirements and carefully planned downtime.
 Using live migration, services can stay online and better hardware can
 be booted in parallel to the existing. A new 
 
-\subsection{Inter-Cloud Verschiebungen}
-\label{sec:movclouds}
-\subsection{Uptime Despite Hardware Failure}
-\label{sec:hardfail}
-\subsection{Scaling through Replication}
-\label{sec:replication}
 \begin{itemize}
 \item Heroku
 \item App engines auf anderem scale (IaaS)
 \end{itemize}
-\subsection{keine Ausfallzeit}
+
+\subsection{keine Ausfallzeit durch verschiebungen}
 \label{sec:keine-ausfallzeit}
 Netzwerklast is hoeher, aber who cares.
 Yes: Github, heroku, engineyard.
+
 \subsection{Adaptive Auslastung}
 \label{sec:adaptive-auslastung}
 SLAs zwingen nicht zum idlen herumsitzenlassen von Servern um
@@ -326,14 +325,18 @@ wegen:
 \item Steigender Nachfrage
 \end{itemize}
 
-\section{Alternative Live-Migration-Systeme}
+\section{Live-Migration-Systeme}
 Ziele/Einsatzgebiete, Verbreitung
+
+\subsection{NomadBIOS and VMWare}
+\label{sec:nomadbios--vmware}
+
 
 \subsection{IBM}
 \subsection{HP}
 \subsection{Sun/Solaris}
 
-\section{Vergleich}
+\subsection{Vergleich}
 Vergleich der Eignung als Lösung für die oben genannten Probleme
 zwischen dem von Dr. Hansen vorgestellen System und den Alternativen.
 
