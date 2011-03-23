@@ -110,11 +110,7 @@
 % Asger Jensen and Dr. Jacob Gorm Hansen proposed live VM migration as a
 % solution to these problems. They were the first to demonstrate live
 % migration of a running VM in 2002 on a research hypervisor called
-% NomadBIOS. Since then, HP has equipped it's HP-UX with live migration
-% capabilities, VMWare has implemented it in its vMotion product, the
-% open-source Xen project supports it and IBM is actively researching to
-% enable VM migration on a number of open-source virtualization
-% solutions.
+% NomadBIOS. 
 - Firmen sehen heutzutage so aus
 - Cloud könnte für sie interessant sein
 - Welche Rolle Live-Migration da für sie spielt, und wie es ihnen
@@ -458,7 +454,7 @@ Ertrag solcher Auftr"age auf.
 
 Durch die M"oglichkeit, ohne Verlust des aktuellen Dienstzustandes die
 Virtuelle Maschine umzuziehen, ist es jedoch m"oglich, solchen
-gesetzlichen Vorschriften trotzdem gerecht zu werden. Indem der
+gesetzlichen Vorschriften nichtsdestotrotz zu gen"ugen. Indem der
 Datenverarbeiter bei einem Cloud Hosting Service auf deutschem Boden
 Rechenzeit einkauft, kann er den gestzlichen Vorschriften gerecht
 werden. Die VMs, die f"ur den Auftrag bereitgestellt sind, k"onnen
@@ -519,17 +515,27 @@ Im Folgenden wollen wir einige konkrete Implementierungen der oben
 vorgestellten Techniken vorstellen, und deren Limitationen und
 Einsatzbarkeit f"ur die oben genannten Use-Cases betrachten.
 
-\subsection{NomadBIOS and VMWare}
+\subsection{NomadBIOS and vMotion}
 \label{sec:nomadbios--vmware}
 Wie im Vortrag von Dr. Gorm Hansen beschrieben, war die erste
 vollst"andige Implementierung zur Live-Migration einer kompletten VM
 der NomadBIOS Hypervisor.
 
+Das NomadBIOS bietet VM Migration auf dem Hypervisor Level.
+
+\ldots technischer "Uberblick, Diagramme, Netzwerklast, Hypervisor vs
+VM-Level, Fokus, Anwendungsbeispiel "`Cloudbewegung"' \ldots
+
 \subsection{IBM}
+Xen, active research to enable VM migration on a number of open-source
+virtualization solutions (VirtualBox, KVM + Qemu)
 
 \subsection{HP}
+HP-UX Migration
+OS-Level
 
 \subsection{Sun/Solaris}
+Solaris Container
 
 \subsection{Vergleich}
 Vergleich der Eignung als Lösung für die oben genannten Probleme
