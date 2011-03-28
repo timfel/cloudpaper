@@ -42,10 +42,10 @@
 
 \renewcommand*{\acsfont}[1]{{\MakeTextLowercase{\scshape #1}}}
 
-\providecommand\CITE{}
 \ifdraft{%
-\newcommand\CITE{!!\marginpar{<<CITE HERE>>}\xspace}
-}
+\newcommand{\CITE}{<<CITE HERE>>\xspace}
+}{}
+\providecommand{\CITE}{}
 
 %%% Local Variables: 
 %%% mode: latex
