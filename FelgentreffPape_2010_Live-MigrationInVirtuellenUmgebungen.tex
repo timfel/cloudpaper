@@ -161,7 +161,7 @@ Ich will scalieren:
     physikalischen und virtuellen Netzwerk
     bereitstellt~\cite{tanenbaum1992modern}. Wenn eine VM ausfällt,
     bleiben die anderen davon unbeeinflusst. Da des weiteren alle
-    Operationen innerhalb einer VM virtualiziert sind, kann der Hypervisor
+    Operationen innerhalb einer VM virtualisiert sind, kann der Hypervisor
     den Zustand eines virtuellen Servers in regelmäßigen Abständen
     sichern, und so bei Ausfall die VM von einer früheren Sicherung
     wiederherstellen.
@@ -253,7 +253,7 @@ TCP-Verbindungen zu mehreren Clients teilweise über Stunden aufrecht
 erhalten muss. Wenn ein Hardwareausfall kurz bevor steht, bleibt hier
 meist nichts anderes übrig, als das Spiel zu unterbrechen: Das kann
 bedeutet mindestens unzufriedene Kunden, und vielleicht sogar
-Umsatzverluste.
+verringerten Umsatz.
 
 Mit dem von Dr. Hansen vorgestellten NomadBIOS kann auf Hardwarefehler
 angemessener reagiert werden: Zuerst kann die VM bis aufs letzte
@@ -265,7 +265,11 @@ Beispiel der Spieleplattform bedeutet dies, dass Spiele nicht
 unterbrochen werden müssen, sondern, für den Nutzer transparent, auf
 den neuen Server migriert werden.
 
-\subsection{Interoparibilität von Virtualisierungs-Lösungen}
+\subsection{Interoperabilität von Virtualisierungslösungen}
+In den 80er Jahren wurden verschieden Prozessmigrationsverfahren
+entwickelt, Beispiele sind die Sprite und MOSIX
+Systeme~\cite{hansen2004self}.
+
 Several process migration systems were developed in the 1980s,
 examples are Sprite and MOSIX\cite{hansen2004self}. Such migration
 solutions depend on capabilities of the hypervisor as well as the
