@@ -1,0 +1,153 @@
+\section{Einführung}
+\label{sec:einfuehrung}
+% \IEEEPARstart{H}{eutzutage} gibt es zu viele Probleme
+% Today, many organizations deploy a multitude of services on a large
+% number of servers. In some cases, all these services run on different
+% machines not because one machine cannot handle the load, but for
+% reasons of reliability.  All software is faulty~\cite{zellerprograms},
+% and operating systems with thousands of lines of code, running servers
+% written by different software vendors simply cannot be trusted to
+% provide uptimes of 99.9 percent or more. Putting each service on a
+% separate machine will achieve reliability at the expense of
+% maintainability simply because a large number of physical machines is
+% involved.
+
+% Virtual machine technology has been around for more than 40
+% years~\cite{tanenbaum1992modern}. The technology to host multiple
+% machines on a single system reduces the space and power requirements
+% for data centers and represents enormous cost savings for companies
+% like Amazon, Microsoft or Google, which deploy hundreds or thousands
+% of servers for a variety of services. Unsurprisingly, virtualization
+% for cost reduction and transparent scalability is becoming
+% increasingly popular. Cloud providers such as Amazon, Rackspace or
+% Engine Yard offer scalable hosting solutions for companies and
+% individuals who cannot of do not want to maintain a private cloud.
+
+% There are obvious issues with isolation, however. As a service
+% provider, I want to avoid downtime as much as possible. Thus, I cannot
+% easily move my virtual machine from one provider to another. I cannot
+% easily migrate existing VMs to new a hypervisor architecture or a
+% completely new virtualization solution. If hardware is failing, I
+% cannot simply migrate the VM to new hardware without taking it down.
+
+% Asger Jensen and Dr. Jacob Gorm Hansen proposed live VM migration as a
+% solution to these problems. They were the first to demonstrate live
+% migration of a running VM in 2002 on a research hypervisor called
+% NomadBIOS. 
+- Firmen sehen heutzutage so aus
+- Cloud könnte für sie interessant sein
+- Welche Rolle Live-Migration da für sie spielt, und wie es ihnen
+helfen kann, zeigen wir
+
+\subsection{Der Status in Rechenzentren}
+- Derzeit Rechner im Rechenzentrum
+- Cluster
+- Grid
+- Probleme:
+  - Ungleichmäßige Auslastung
+  - Wartungskosten (Admins)
+  - Downtime bei Upgrades/HW-Problemen
+  - Operationskosten (Strom)
+
+\subsection{Die Cloud als Ziel}
+\label{sec:sota}
+- Public vs Private
+Für potentielle Nutzer einer Cloud Lösung präsentieren sich derzeit
+zwei Möglichkeiten: Eine eigene, business-interne Cloud Plattform zu
+installieren, oder 
+
+In this part we will explore the state of the art in live VM
+migration, both from a technical as from a use-case point of view.
+Ich will scalieren:
+\begin{itemize}
+\item Public Cloud
+\item Private Cloud
+\end{itemize}
+- Um zu entscheiden zunächst wissen, {\bf was} in die cloud geht
+
+\subsubsection{Level der Virtualisierung}
+\label{sec:def-virtualisierung}
+
+Virtualisierung kann auf verschiedenen Ebenen stattfinden. Je näher an
+der Hardware die Virtualisierung stattfindet, desto mehr kann die
+Hardware auch unterstützend wirken. Je ferner der Hardware, desto
+weniger ist die Virtualisierung von der unterliegenden Hardware abhängig.
+
+In der untersten Schicht kann die so genannte
+\emph{Systempartitionierung} betrachtet werden. Die "`Sun Fire Dynamic
+System Domains"'~\cite{Shoumack2007:Beginners-Guid-}, die auf Sun Fire
+Servern zur Verfügung steht, ist ein Beispiel für diesen
+Virtualisierungsansatz. Die Hardware dieser Server ist in der Lage,
+verschiedene Ausführungsumgebungen, das heißt, Betriebssysteme,
+elektronisch isoliert zu betreiben. Es bedarf keinerlei Unterstützung
+in den darüberliegenen Frimware- oder Softwareschichten. Diese Art
+Virtualisierung kommt der Ausführung auf physikalisch getrennten
+Rechnern am nächsten.
+
+Eine Ebene höher kann Virtualisierung mit Hilfe von
+\emph{Hypervisoren} betrieben werden. \acfp{VM} laufen auf
+physikalischen Maschinen durch einen \emph{Hypervisor}, ein minimales
+Betriebssystem, dass den Zugriff auf die physikalische Hardware regelt
+und Routing zwischen dem physikalischen und virtuellen Netzwerk
+bereitstellt~\cite{tanenbaum1992modern}. Wenn eine \ac{VM} ausfällt,
+bleiben die anderen davon unbeeinflusst. Da des weiteren alle
+Operationen innerhalb einer \ac{VM} virtualisiert sind, kann der Hypervisor
+den Zustand eines virtuellen Servers in regelmäßigen Abständen
+sichern, und so bei Ausfall die \ac{VM} von einer früheren Sicherung
+wiederherstellen.
+
+Ein Speziallfall der Virtualisierung mit Hypervisoren sind die
+\emph{\acfp{ldom}}, die auf Rechnern mit Prozessoren der SPARC T-Serie
+zur Verfügung stehen und unter dem Namen "`Oracle VM Server for
+SPARC"'~\cite{Corporation:Oracle-VM-Serve} von Oracle vermarktet
+werden. Dabei können die Ressourcen des Rechners in logische Bereiche
+(\aclp{ldom}) eingeteilt werden, die gleichzeitig jeweils ein
+Betriebssystem zur Verfügung stellen können. Damit ist es möglich,
+gänzlich ohne Software-Unterstützung eine virtualisierte Ausführung
+von Betriebssystemen zu haben: die Firmware der SPARC-Rechner stellt
+Überwachungs- und Steuerungsfunktionalität bereit, die Hypervisoren
+nicht unähnlich ist.
+%% ^^Genauer
+%%
+
+
+\url{http://www.dcl.hpi.uni-potsdam.de/teaching/cloudIndustSem/slides/giesekus.pdf}
+\ifdraft{\begin{itemize}
+\item Level der virualisierung
+  \begin{itemize}
+  \item hw (ldoms)
+  \item hypervisoren !!
+  \item Os-partitioning (Solaris Zones)
+ \item Process VMs (JVM etc.pp.)
+  \end{itemize}
+\end{itemize}
+}
+
+\subsubsection{Was geht in die Cloud?}
+Auf welchen Ebenen gibt es "`Clouds"', welche Ebene betrachten wir,
+PaaS vs IaaS.
+
+\subsection{Neue Probleme in Clouds}
+Probleme:
+\begin{itemize}
+\item Public
+  \begin{itemize}
+  \item Bindung an Provider
+  \item Scalierbedarf zunächst unklar -> Kostenfrage
+  \item Physikalischer Ort der Daten unbekannt -> VMs müssen in die
+    private Cloud oder in Rechenzentren verschoben werden können ->
+    gesetzl. Vorschriften, Intellectual Property, \ldots
+  \end{itemize}
+\item Private
+  \begin{itemize}
+  \item Scalierbedarf gegen Wartungsaufwand -> Menge der HW
+  \item Gleichmäßige Auslastung zunächst genauso schwierig wie vorher
+  \item Hardware-Wechsel soll nicht mehr zu Donwtime führen
+  \item Virtualisierung 
+  \end{itemize}
+\end{itemize}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "FelgentreffPape_2010_Live-MigrationInVirtuellenUmgebungen"
+%%% End: 
