@@ -1,0 +1,53 @@
+
+\makeatletter
+\def\markboth#1#2{\def\leftmark{\@IEEEcompsoconly{\sffamily}\MakeUppercase{\protect#1}}%
+\def\rightmark{\@IEEEcompsoconly{\sffamily}\MakeUppercase{\protect#2}}}
+\makeatother
+
+%%
+%% enable searchable PDFs
+%%
+\usepackage{cmap}
+%%
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp,textcase}
+\usepackage[ngerman]{babel}
+
+\usepackage{ifdraft}
+\usepackage{cite}
+\usepackage[caption=false,font=footnotesize]{subfig}
+\usepackage{graphicx}
+
+\usepackage{float,mparhack,fixltx2e,stfloats}
+
+\usepackage{hyperref}
+
+\usepackage{xspace}
+\usepackage{listings}
+\usepackage{url}
+\usepackage{acronym}
+\errorcontextlines=909
+
+%% setups
+\fnbelowfloat
+\usepackage[final]{microtype}
+\microtypesetup{babel,stretch=10,shrink=15,step=3,tracking=smallcaps,letterspace=25}
+
+\lstnewenvironment{code}[1][]%
+{\lstset{#1}\relax%
+}{%
+}
+
+
+\renewcommand*{\acsfont}[1]{{\MakeTextLowercase{\scshape #1}}}
+
+\providecommand\CITE{}
+\ifdraft{%
+\newcommand\CITE{!!\marginpar{<<CITE HERE>>}\xspace}
+}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "FelgentreffPape_2010_Live-MigrationInVirtuellenUmgebungen"
+%%% End: 

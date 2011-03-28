@@ -1,60 +1,14 @@
-%\documentclass[a4paper,conference,compsoc]{IEEEtran}
-\documentclass[draft,journal]{IEEEtran}
-%\documentclass[a4paper]{IEEEtran}
+%\def\runmode{draft}
+\providecommand{\runmode}{final}
+\edef\arglist{[\runmode,journal,ngerman]}
+\expandafter\documentclass\arglist{IEEEtran}
 
-\makeatletter
-\def\markboth#1#2{\def\leftmark{\@IEEEcompsoconly{\sffamily}\MakeUppercase{\protect#1}}%
-\def\rightmark{\@IEEEcompsoconly{\sffamily}\MakeUppercase{\protect#2}}}
-\makeatother
-
-%%
-%% enable searchable PDFs
-%%
-\usepackage{cmap}
-%%
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{textcomp,textcase}
-\usepackage[ngerman]{babel}
-
-\usepackage{cite}
-\usepackage[caption=false,font=footnotesize]{subfig}
-\usepackage{graphicx}
-
-\usepackage{float,mparhack,fixltx2e,stfloats}
-
-\usepackage{hyperref}
-
-\usepackage{xspace}
-\usepackage{listings}
-\usepackage{url}
-
-%%
-%% spaced (small) caps
-%% 
-\DeclareRobustCommand{\spacedallcaps}[1]{\textls[160]{\MakeTextUppercase{#1}}}%
-\DeclareRobustCommand{\spacedlowsmallcaps}[1]{{\MakeTextLowercase{\scshape #1}}}%
-\DeclareRobustCommand\Largespacedlowsmallcaps[1]{\spacedlowsmallcaps{\Large #1}}
-
-\errorcontextlines=909
-
-%% setups
-\fnbelowfloat
-\usepackage[final]{microtype}
-\microtypesetup{babel,stretch=10,shrink=15,step=3,tracking=smallcaps}
-
-\lstnewenvironment{code}[1][]%
-{\lstset{#1}\relax%
-}{%
-}
-
-%\usepackage{style}
-\usepackage{blindtext}
+\input{config}
+\input{macros}
 \bibliographystyle{IEEEtran}
-
 \begin{document}
-\title{Live-Migration in virtuellen Umgebungen\\
-  \large{Hypervisor - What have you done for me today?}
+\title{Live-Migration in virtuellen Umgebungen
+%\\  \large{Hypervisor - What have you done for me today?}
 }
 \author{Tim~Felgentreff und~Tobias~Pape%
 \thanks{%
@@ -65,7 +19,8 @@
 \markboth{Industrieseminar Cloud-Computing}{Felgentreff, Pape: Live-Migration}
 
 \maketitle
-\tableofcontents
+
+\ifdraft{\tableofcontents}{}
 
 \begin{abstract}
   
@@ -144,28 +99,51 @@ Ich will scalieren:
 
 \subsubsection{Level der Virtualisierung}
 \label{sec:def-virtualisierung}
+
+Virtualisierung kann auf verschiedenen Ebenen stattfinden. Je näher an
+der Hardware die Virtualisierung stattfindet, desto mehr kann die
+Hardware auch unterstützend wirken. Je ferner der Hardware, desto
+weniger ist die Virtualisierung von der unterliegenden Hardware abhängig.
+
+In der untersten Schicht kann die so genannte
+\emph{Hardware-Virtualisierung} betrachtet werden\footnote{von der
+  Möglichkeit einiger Prozessoren, andere Prozessortypen zu
+  emulieren, wird hier abgesehen\CITE}. Ein Beispiel für diese Art
+Virtualisierung sind die \emph{\acfp{ldom}}, die auf Sun XFire
+Servern\CITE zur Verfügung steht. Dabei können die Ressourcen des
+Rechners in logische Bereiche (\aclp{ldom}) eingeteilt werden, die
+gleichzeitig jeweils ein Betriebssystem zur Verfügung stellen können.
+Damit ist es möglich, gänzlich ohne Software-Unterstützung eine
+virtualisierte Ausführung von Betriebssystemen zu haben. Diese Art
+Virtualisierung kommt der Ausführung auf physikalisch getrennten
+Rechnern am nächsten.
+%% ^^Genauer
+%%
+
+Eine Ebene höher kann Virtualisierung mit Hilfe von
+\emph{Hypervisoren} betrieben werden. \acfp{VM} laufen auf
+physikalischen Maschinen durch einen \emph{Hypervisor}, ein minimales
+Betriebssystem, dass den Zugriff auf die physikalische Hardware regelt
+und Routing zwischen dem physikalischen und virtuellen Netzwerk
+bereitstellt~\cite{tanenbaum1992modern}. Wenn eine \ac{VM} ausfällt,
+bleiben die anderen davon unbeeinflusst. Da des weiteren alle
+Operationen innerhalb einer \ac{VM} virtualisiert sind, kann der Hypervisor
+den Zustand eines virtuellen Servers in regelmäßigen Abständen
+sichern, und so bei Ausfall die \ac{VM} von einer früheren Sicherung
+wiederherstellen.
+
+
 \url{http://www.dcl.hpi.uni-potsdam.de/teaching/cloudIndustSem/slides/giesekus.pdf}
-\begin{itemize}
+\ifdraft{\begin{itemize}
 \item Level der virualisierung
   \begin{itemize}
   \item hw (ldoms)
   \item hypervisoren !!
-    
-    Virtuelle Maschinen (VMs) laufen auf physikalischen Maschinen durch
-    einen \emph{Hypervisor}, ein minimales Betriebssystem, dass den
-    Zugriff auf die physikalische Hardware regelt und Routing zwischen dem
-    physikalischen und virtuellen Netzwerk
-    bereitstellt~\cite{tanenbaum1992modern}. Wenn eine VM ausfällt,
-    bleiben die anderen davon unbeeinflusst. Da des weiteren alle
-    Operationen innerhalb einer VM virtualiziert sind, kann der Hypervisor
-    den Zustand eines virtuellen Servers in regelmäßigen Abständen
-    sichern, und so bei Ausfall die VM von einer früheren Sicherung
-    wiederherstellen.
-
-  \item Os-partitioning (Solaris Zones)
+ \item Os-partitioning (Solaris Zones)
   \item Process VMs (JVM etc.pp.)
   \end{itemize}
 \end{itemize}
+}
 
 \subsubsection{Was geht in die Cloud?}
 Auf welchen Ebenen gibt es "`Clouds"', welche Ebene betrachten wir,
