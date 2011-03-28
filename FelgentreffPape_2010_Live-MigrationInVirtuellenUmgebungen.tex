@@ -106,19 +106,15 @@ Hardware auch unterstützend wirken. Je ferner der Hardware, desto
 weniger ist die Virtualisierung von der unterliegenden Hardware abhängig.
 
 In der untersten Schicht kann die so genannte
-\emph{Hardware-Virtualisierung} betrachtet werden\footnote{von der
-  Möglichkeit einiger Prozessoren, andere Prozessortypen zu
-  emulieren, wird hier abgesehen\CITE}. Ein Beispiel für diese Art
-Virtualisierung sind die \emph{\acfp{ldom}}, die auf Sun XFire
-Servern\CITE zur Verfügung steht. Dabei können die Ressourcen des
-Rechners in logische Bereiche (\aclp{ldom}) eingeteilt werden, die
-gleichzeitig jeweils ein Betriebssystem zur Verfügung stellen können.
-Damit ist es möglich, gänzlich ohne Software-Unterstützung eine
-virtualisierte Ausführung von Betriebssystemen zu haben. Diese Art
+\emph{Systempartitionierung} betrachtet werden. Die "`Sun Fire Dynamic
+System Domains"'~\cite{Shoumack2007:Beginners-Guid-}, die auf Sun Fire
+Servern zur Verfügung steht, ist ein Beispiel für diesen
+Virtualisierungsansatz. Die Hardware dieser Server ist in der Lage,
+verschiedene Ausführungsumgebungen, das heißt, Betriebssysteme,
+elektronisch isoliert zu betreiben. Es bedarf keinerlei Unterstützung
+in den darüberliegenen Frimware- oder Softwareschichten. Diese Art
 Virtualisierung kommt der Ausführung auf physikalisch getrennten
 Rechnern am nächsten.
-%% ^^Genauer
-%%
 
 Eine Ebene höher kann Virtualisierung mit Hilfe von
 \emph{Hypervisoren} betrieben werden. \acfp{VM} laufen auf
@@ -131,6 +127,20 @@ Operationen innerhalb einer \ac{VM} virtualisiert sind, kann der Hypervisor
 den Zustand eines virtuellen Servers in regelmäßigen Abständen
 sichern, und so bei Ausfall die \ac{VM} von einer früheren Sicherung
 wiederherstellen.
+
+Ein Speziallfall der Virtualisierung mit Hypervisoren sind die
+\emph{\acfp{ldom}}, die auf Rechnern mit Prozessoren der SPARC T-Serie
+zur Verfügung stehen und unter dem Namen "`Oracle VM Server for
+SPARC"'~\cite{Corporation:Oracle-VM-Serve} von Oracle vermarktet
+werden. Dabei können die Ressourcen des Rechners in logische Bereiche
+(\aclp{ldom}) eingeteilt werden, die gleichzeitig jeweils ein
+Betriebssystem zur Verfügung stellen können. Damit ist es möglich,
+gänzlich ohne Software-Unterstützung eine virtualisierte Ausführung
+von Betriebssystemen zu haben: die Firmware der SPARC-Rechner stellt
+Überwachungs- und Steuerungsfunktionalität bereit, die Hypervisoren
+nicht unähnlich ist.
+%% ^^Genauer
+%%
 
 
 \url{http://www.dcl.hpi.uni-potsdam.de/teaching/cloudIndustSem/slides/giesekus.pdf}
