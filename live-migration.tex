@@ -32,17 +32,17 @@ Risiko eines Ausfalls durch inkompatible Software auf demselben Server
 zu minimieren.
 
 Nichtsdestotrotz müssen auch Vorkehrungen gegen Hardwarefehler
-getroffen werden. In klassischen Hosting-Umgebungen konnte man bei
+getroffen werden. In klassischen Hosting-Umgebungen kann man bei
 immanenten Ausfällen von physikalischen Systemen relevante Prozesse
 auf neue VMs migrieren~\cite{hansen2004self}. Für eine gegebene VM
-konnte eine Ähnliche (z.B. aus einem früheren, gesicherten Zustand)
-auf einem neuen Server gestartet werden. Der Zustand der relevanten
-Prozesse wurde soweit als möglich gemäß den Gegebenheiten des
-Betriebssystems kopiert und neue Dienstanfragen wurden dann auf den
-neuen Server umgeleitet. Die alte VM musste allerdings zunächst online
+kann eine Ähnliche (z.B. aus einem früheren, gesicherten Zustand) auf
+einem neuen Server gestartet werden. Der Zustand der relevanten
+Prozesse wird soweit als möglich gemäß den Gegebenheiten des
+Betriebssystems kopiert und neue Dienstanfragen dann auf den neuen
+Server umgeleitet. Die alte VM muss allerdings zunächst online
 bleiben, um Abhängigkeiten von Dienstanfragen bereitzustellen, die
-sich noch in Ausführung befanden, als der Hardwarealarm ausgelöst
-wurde~\cite{clark2005live}.
+sich noch in Ausführung befinden, wenn der Hardwarealarm ausgelöst
+wird~\cite{clark2005live}.
 
 Diese Vorgehensweise zur Migration auf Prozessebene hat also den
 wesentlichen Nachteil, dass laufende Prozesse nicht verschoben werden
@@ -68,17 +68,18 @@ unterbrochen werden müssen, sondern, für den Nutzer transparent, auf
 den neuen Server migriert werden.
 
 \subsection{Interoparibilität von Virtualisierungs-Lösungen}
-Für Unternehmen, die mit öffentlichem Cloud-Hosting liebäugeln,
-kann die Bindung an ein bestimmtes System schwerwiegende Konsequenzen
-nach sich ziehen. Um mit der Flexibilität vom eigenen Rechenzentrum
+Für Unternehmen, die mit öffentlichem Cloud-Hosting liebäugeln, kann
+die Bindung an ein bestimmtes System schwerwiegende Konsequenzen nach
+sich ziehen. Um mit der Flexibilität vom eigenen Rechenzentrum
 mitzuhalten, darf die Virtualisierungstechnologie des Providers nicht
 die Verwendung des Systems innerhalb das Unternehmens
 einschränken. Insbesondere muss für den Kunden die Möglichkeit
-bestehen, auf eine andere Virtualisierungstechnologie umzusteigen,
-vorhandene VMs direkt in die Cloud zu bewegen oder auch VMs aus der
-Cloud wieder in das eigene Rechenzentrum oder auf die Rechner der
-Entwickler umzuziehen. Die Interoparibilität der verwendeten
-Virtualisierungslösungen spielt hier eine wichtige Rolle.
+bestehen, auf eine andere Virtualisierungstechnologie umzusteigen, um
+z.B. vorhandene VMs auf die Technologie eines Cloud Anbieters zu
+bewegen oder umgekehrt auch VMs aus der Cloud wieder in das eigene
+Rechenzentrum oder auf die Rechner der Entwickler umzuziehen. Die
+Interoparibilität der verwendeten Virtualisierungslösungen spielt hier
+eine wichtige Rolle.
 
 Virtuelle Maschinen variieren stark zwischen verschiedenen
 Virtualisierungslösungen. Das fängt mit den Formaten der virtuellen
@@ -105,49 +106,52 @@ sozusagen zur Laufzeit konvertiert werden.
 \label{sec:movclouds}
 Probleme durch inkompatible Virtualisierungen werden im Rahmen des
 Outsourcings in die \emph{Public Cloud} noch verstärkt, da die
-Entscheidung für einen Cloud-Provider unter Umständen bedeutet, dass
+Entscheidung für einen Cloudprovider unter Umständen bedeutet, dass
 die Dienste nur unter erheblichem Aufwand wieder in eine andere Cloud
 verschiebbar sind. Das bedeutet für den Cloud-Kunden eine starke
 Bindung an den Hosting Provider, eine Bindung die für Unternehmen so
 problematisch sein kann, dass auf das Hosting bei einem fremden
 Provider ganz verzichtet werden muss.
 
-Prozessmigrationssysteme, wie sie in den 1980er Jahren entwickelt
-wurden, wie z.B. das Sprite oder das MOSIX
-System~\cite{hansen2004self} benutzten Fähigkeiten des Hypervisors
-sowie der darauf laufenden Betriebssysteme in Konjunktion und waren
-damit per-se nicht auf beliebigen Kombinationen der beiden
-ausführbar. Desweiteren schränkte die Notwendigkeit von spezifischen
-Anpassungen and verschiedenen Teilen des Softwarestacks und
-proprietäre Protokolle die Verwendung derselben über die Grenzen von
-Unternehmen und Organisationen hinweg ein. Migration ganzer VMs bietet
-hier einen Ausweg durch kleinere Schnittstellen und Wegfallen der
-Kommunikation zwischen den migrierten Systemen nachdem die neue VM in
-Betrieb geht. Da kein kompliziertes Routing zwischen der neuen und der
-alten VM vonstatten gehen muss, beschränkt sich die Kommunikation
-(und damit der Anspruch an die Schnittstellen der Providers) auf die
-initiale Synchronisationsphase.
+Zur Migration von Systemen auf andere Maschinen können, wie bereits
+beschrieben, Prozessemigrationssystem, wie sie in den 1980er Jahren
+entwickelt wurden, verwendet werden. Dazu zählen z.B. das Sprite oder
+das MOSIX System~\cite{hansen2004self}. Diese benutzten Fähigkeiten
+des Hypervisors sowie der darauf laufenden Betriebssysteme in
+Konjunktion und sind damit per-se nicht auf beliebigen Kombinationen
+der beiden ausführbar. Die Notwendigkeit von spezifischen Anpassungen
+and verschiedenen Teilen des Softwarestacks und proprietäre Protokolle
+schränken machen die Anwendung von Prozessmigration über die Grenzen
+von Unternehmen und Organisationen hinweg de-facto unmöglich. Diese
+Art System skaliert folglich nicht auf Verschiebungen zwischen Clouds
+mit inkompatiblen Stacks.
+
+Migration ganzer VMs bietet hier einen Ausweg durch kleinere
+Schnittstellen und Wegfallen der Kommunikation zwischen den migrierten
+Systemen nachdem die neue VM in Betrieb geht. Da kein kompliziertes
+Routing zwischen der neuen und der alten VM vonstatten gehen muss,
+beschränkt sich die Kommunikation (und damit der Anspruch an die
+Schnittstellen der Providers) auf die initiale Synchronisationsphase.
 
 Selbst wenn der Migrationspfad zwischen Virtualisierungslösungen
 vorhanden ist, ist das Bewegen einer VM aus einer fremden Cloud
 trotzdem oft nicht trivial. Cloud Provider bieten derzeit noch
 verschiedene, teilweise inkompatible und in ihrer Mächtigkeit
 schwankende Zugriffsmöglichkeiten auf die gehosteten Systeme. Kleine
-Provider wie Heroku~\cite{none} bieten üblicherweise nur vollen
-Zugriff auf einen Teil der gehosteten Software und erlauben
-Maschinenkonfiguration nach dem Baukastenprinzip. Ein vollständiges
-VM Image ist so einfach nicht zu bekommen. Im Vergleich dazu bieten
-Engine Yard~\cite{none} und VMWare ausgefeilte Tools um VMs mit
-Meta-Konfigurationen~\cite{none} vollständig selbst einzurichten und
+Provider wie Heroku~\cite{none} bieten üblicherweise nur Zugriff auf
+einen Teil der gehosteten Software und erlauben Maschinenkonfiguration
+nach dem Baukastenprinzip. Ein vollständiges VM-Image ist nicht
+verfügbar. Im Vergleich dazu bieten Engine Yard~\cite{none} und
+VMWare~\cite{none} ausgefeilte Tools~\cite{none} um VMs mit
+Meta-Konfigurationen~\cite{chef} vollständig selbst einzurichten und
 bei Problemen auch komplette Images dieser Maschinen zu
 erhalten~\cite{none}. Wieder muss allerdings gesagt werden, dass diese
 Interfaces inkompatibel sind, und es nicht ohne Ausfallzeit möglich
-sein dürfte, Dienste von einer in
-die andere Cloud zu bewegen.\\
+sein dürfte, Dienste von einer in die andere Cloud zu bewegen.
 
-Es gibt Bemühungen diese Verschiedenen Aspekte des Cloud Hostings zu
+Es gibt Bemühungen diese Verschiedenen Aspekte des Cloud-Hostings zu
 standardisieren~\cite{cloudstandard}. Darin inbegriffen sind die
-Beschreibungen von VMs sowie die APIs die Hypervisoren
+Beschreibungen von VMs, sowie APIs, die die Hypervisoren
 bereitstellen. Dieser Prozess ist allerdings noch nicht abgeschlossen,
 und obwohl große Hosting-Anbieter wie Rackspace, VMWare und Engine
 Yard daran teilnehmen~\cite{none}, fehlt z.B. noch Amazon als der
@@ -157,7 +161,7 @@ Die Fortentwicklung der VM-Migrationstechnologie, wie sie
 Dr. Gorm Hansen beschrieben hat, könnte eine einfache Lösung für
 dieses Problem bieten, indem sie die Fähigkeiten zur Live-Migration
 vollständig in das Betriebssystem verschiebt. Mittels
-standardisierter Hypervisor APIs könnte dann vom virtuellen System
+standardisierter Hypervisor-APIs könnte dann vom virtuellen System
 aus der Migrationsprozess angestoßen werden, und der Umzug in eine
 neue Cloud auch ohne Mitwirken des Hosting-Providers möglich
 werden. Das bedeutet effektiv eine Reduzierung der Bindung an eine
@@ -173,28 +177,27 @@ Marktsegment als lukrativ erweist, muss man in der Lage sein, schnell
 die Anzahl und Menge der Server zu skalieren. Diese Fähigkeit ist
 entscheidend für den Erfolg eines modernen Web-Unternehmens. Studien
 zeigen, dass gerade am Anfang eines Online-Angebots lange Ladezeiten
-die Adoption beeinträchtigen~\cite{kohavi2007online}.
+die Annahmebereitschaft beeinträchtigen~\cite{kohavi2007online}.
 
-Oftmals können diese Vorrausetzungen nur durch großzügige Planung
-der kommendenen Hardwareanforderungen erfüllt werden, was mit einem
-größeren finanziellen Risiko einhergeht. Gerade kleine Unternehmen
-und \emph{Start-Ups} können sich dies oft nicht leisten. Die
-Fähigkeit, Services in der Cloud anzubieten und \emph{bei Bedarf}
-mehr gleichartige VMs zu starten, oder VMs auf stärkere physikalische
-Nodes zu verschieben, ohne dafür Downtime in Kauf nehmen zu müssen,
-kann den Unterschied zwischen einem erfolgreichen Service und einer
-Seite, zu der Kunden nicht mehr zurückkehren, weil sie zu langsam
-ist, machen.
+Oftmals können diese Vorrausetzungen nur durch großzügige Planung der
+kommendenen Hardwareanforderungen erfüllt werden, was mit einem
+größeren finanziellen Risiko einhergeht. Gerade kleine Unternehmen und
+\emph{Start-Ups} können sich dies oft nicht leisten. Die Fähigkeit,
+Services in der Cloud anzubieten und \emph{bei Bedarf} mehr
+gleichartige VMs zu starten, oder VMs auf stärkere physikalische Nodes
+zu verschieben, ohne dafür Ausfallzeit in Kauf nehmen zu müssen, kann
+den Unterschied zwischen einem erfolgreichen Service und einer Seite,
+zu der Kunden nicht mehr zurückkehren, weil sie zu langsam ist,
+machen. Der Cloud-Hosting Provider \emph{Heroku} hat sich auf ebenso
+solche, kleine, Webdienste spezialisiert, und versteckt den Prozess
+des Skalierens für den Kunden vollständig hinter einem einfach
+Schieberegler im Web-Interface: Der benötigte Leistungsindex wird
+erhöht und Heroku kümmert sich um das Spawning und Verschieben von
+VMs innerhalb seines Grids.
 
-Der Cloud-Hosting Provider \emph{Heroku} hat sich auf ebenso solche,
-kleine, Webdienste spezialisiert, und versteckt den Prozess des
-Skalierens für den Kunden vollständig hinter einem einfach
-Schieberegler im Web-Interface: Der Leistungsindex wird hochgeschraubt
-und Heroku kümmert sich um das Spawning und Verschieben von VMs.
-
-In Relation hierzu sind auch Services wie die Google-App Engine zu
-nennen, wenngleich sie eher \emph{Infra-Structure as a Service}
-(IaaS) zuzurechnen sind, bieten auch sie kleineren Unternehmen die
+Verwandt hierzu sind auch Services wie die Google-App Engine zu
+nennen, wenngleich sie eher \emph{Infra-Structure as a Service} (IaaS)
+zuzurechnen sind, bieten auch sie kleineren Unternehmen die
 Möglichkeit, nur den Umfang an Leistung zu zahlen, der auch
 tatsächlich genutzt wird, und bei Bedarf mehr Leistung
 "`einzukaufen"'.
@@ -216,7 +219,7 @@ verlieren. In klassischen Rechenzentren kann man, wie im Vortrag von
 die erwarteten Maximalauslastungen optimieren. Das ist jedoch
 tendentiell teuer und gerade in Situationen, wo die maximale
 Abweichung von der durchschnittlichen Auslastung sehr groß ist, oder
-Spikes sehr selten auftreten, ist die Investition oft nicht
+Lastspitzen sehr selten auftreten, ist die Investition oft nicht
 gerechtfertigt.
 
 VM-Live-Migration kann auch hier zum schnellen Verschieben von
@@ -225,52 +228,50 @@ Nodes genutzt werden.
 
 Ein Gegenargument, dass man für diesen Use-Case im Besonderen
 hervorbringen kann, ist, dass VM-Migration mit hoher Netzwerklast
-einhergeht. In Situationen, in denen der Durchsatz eh gefärdet ist,
-kann man argumentieren, dass die zusätzliche Netzwerklast durch eine
-laufende Migration den Dienst vorübergehend ganz zum Erliegen bringen
-könnte. Die erhöhte Last liegt, je nach Anwendung, für mehrere
+einhergeht. In Situationen, in denen der Durchsatz ohnehin gefärdet
+ist, kann man argumentieren, dass die zusätzliche Netzwerklast durch
+eine laufende Migration den Dienst vorübergehend ganz zum Erliegen
+bringen könnte. Die erhöhte Last liegt, je nach Anwendung, für mehrere
 Minuten auf dem Netzwerk, da die Umzugszeiten von der Netzwerklatenz
-zwischen den Servern abhängen. Zu lösen wäre dieses Problem durch
-ein komplett parallel betriebenes Netzwerk, dass speziell für diesen
+zwischen den Servern abhängen. Zu lösen wäre dieses Problem durch ein
+komplett parallel betriebenes Netzwerk, dass speziell für diesen
 Anwendungsfall freigehalten wird.
 
-Wir argumentieren, dass die Kosten für einen solchen Parallelbetrieb
-zweier Netzwerke weit hinter den Kosten für das vorhalten von
-ausreichender, aber meist ungenutzter, Rechenkapazität
+Es steht zu vermuten, dass die Kosten für einen solchen
+Parallelbetrieb zweier Netzwerke weit hinter den Kosten für das
+vorhalten von ausreichender, aber meist ungenutzter, Rechenkapazität
 zurückbleiben.
 
 \subsection{Keine Ausfallzeit durch Verschiebungen}
 \label{sec:keine-ausfallzeit}
-Neben den Use-Cases zur Skalierung und Aufrechterhaltung von
+Neben den Anwendungsfällen zur Skalierung und Aufrechterhaltung von
 (Cloud-)Services, gibt es ein weiteres Problem, mit dem international
 agierende Anbieter umgehen müssen, und das sind die sich wandelnden
 gesetzlichen Vorschriften zur Datenverarbeitung, die gerade in
 Deutschland noch vielfach in Veränderung begriffen
-sind~\cite{bdsg-2009}.
-
-Ein Beispiel ist die von~\cite{MrBlah} im Vortrag zu~\cite{foo}
-genannte Vorschrift, dass personenbezogene Daten von deutschen
-Behörden nur auf deutschem Boden verarbeitet werden dürfen. Diese
-Art von Gesetz schließt Dienst, die in anderen Ländern große
-Datenverarbeitungsdienste bieten, oft von Aufträgen deutscher
+sind~\cite{bdsg-2009}. Ein Beispiel ist die von~\cite{MrBlah} im
+Vortrag zu~\cite{foo} genannte Vorschrift, dass personenbezogene Daten
+von deutschen Behörden nur auf deutschem Boden verarbeitet werden
+dürfen. Diese Art von Gesetz schließt Dienste, die in anderen Ländern
+große Datenverarbeitungsdienste bieten, oft von Aufträgen deutscher
 Behörden aus. Rechenleistung in anderen Ländern als Deutschland ist
 unter Umständen wesentlich billiger für ein Unternehmen mit einem
 hohen Leistungsbedarf. Dauerhaft ein Rechenzentrum in Deutschland zu
 betreiben, für die Möglichkeit, ab und an einen Auftrag von einer
-deutschen Behörde zu erhalten, wiegt unter Umständen nicht den
-Ertrag solcher Aufträge auf.
+deutschen Behörde zu erhalten, wiegt unter Umständen nicht den Ertrag
+solcher Aufträge auf.
 
 Durch die Möglichkeit, ohne Verlust des aktuellen Dienstzustandes die
 Virtuelle Maschine umzuziehen, ist es jedoch möglich, solchen
-gesetzlichen Vorschriften nichtsdestotrotz zu genügen. Indem der
+gesetzlichen Vorschriften nichtsdestoweniger zu genügen. Indem der
 Datenverarbeiter bei einem Cloud Hosting Service auf deutschem Boden
 Rechenzeit einkauft, kann er den gestzlichen Vorschriften gerecht
 werden. Die VMs, die für den Auftrag bereitgestellt sind, können
 einfach in die Cloud auf deutschem Boden migriert werden. Migrationen
 über Ländergrenzen hinweg, z.B. durch den Atlantik, sind zwar
 notwendigerweise langsamer als zwischen Rechenzentren mit höherer
-Lokalität, bei großen, lang laufenden Aufträgen ist das jedoch
-unter Umständen zu vernachlässigen. 
+Lokalität, bei großen, lang laufenden Aufträgen ist das jedoch unter
+Umständen zu vernachlässigen.
 
 Auf diese Weise ist es Datenverarbeitungsdiensten möglich,
 landesspezifischen Einschränkungen bezüglich der geografischen Lage
@@ -294,7 +295,7 @@ einzelner physikalischer Server oder (Teil-)Netzwerke. Der Aufwand und
 damit die Kosten, die durch die Umstellung bestehender Systeme (und
 der zugehörigen Prozesse) entstehen, werden gerechtfertigt dadurch,
 dass der Zugang zu kritischen Diensten und Informationen nicht alle
-paar Monate unterbrochen wird, um umzugehen mit den Folgen von:
+paar Monate unterbrochen wird, um mit den Folgen von
 \begin{itemize}
 \item Hardware-Ausfällen
 \item Turnus-mäßigen Hardware-Upgrades
@@ -302,21 +303,22 @@ paar Monate unterbrochen wird, um umzugehen mit den Folgen von:
 \item Ausweitung des Kerngeschäfts
 \item Hosting Wechsel
 \end{itemize}
+umzugehen.
 
-Wie wir gezeigt haben, kann diesen Problemen mit VM-Level
+In den obigen Anwendungsbeispielen kann diesen Problemen mit VM-Level
 Live-Migration Technologie begegnet werden. Folglich ist die
 Flexibilität von Cloud Hosting in Kombination mit dieser Technologie,
-im Vergleich zum klassischen Rechenzentrum, in diesen Bereichen
-höher, und besser an wechselnde Gegebenheiten anzupassen. Ein
-Anbieter kann daher längerfristig davon ausgehen, dass Dienste und
-Informationen verfügbar sind. Das vermindert den Druck und die
-Kosten, Dienste "`In-House"' und Datensicherungen auschließlich "`vor
-Ort"' vornehmen zu müssen. Geschäftsmodelle können daraufhin für
-größere Marktschwankungen ausgelegt werden, ohne die Kosten für
-Hosting und Hardware unnötig in die Höhe zu treiben. Weiterhin
-können strategische Entscheidungen langfristiger getroffen werden, da
-die dauerhafte Verfügbarkeit einfacher zu gewährleisten ist, und
-nicht mit längerer Laufzeit rapide schwieriger und damit teurer wird.
+im Vergleich zum klassischen Rechenzentrum, in diesen Bereichen höher,
+und besser an wechselnde Gegebenheiten anzupassen. Ein Anbieter kann
+daher längerfristig davon ausgehen, dass Dienste und Informationen
+verfügbar sind. Das vermindert den Druck und die Kosten, Dienste
+"`In-House"' und Datensicherungen auschließlich "`vor Ort"' vornehmen
+zu müssen. Geschäftsmodelle können daraufhin für größere
+Marktschwankungen ausgelegt werden, ohne die Kosten für Hosting und
+Hardware unnötig in die Höhe zu treiben. Weiterhin können strategische
+Entscheidungen langfristiger getroffen werden, da die dauerhafte
+Verfügbarkeit einfacher zu gewährleisten ist, und nicht mit längerer
+Laufzeit rapide schwieriger und damit teurer wird.
 
 
 %%% Local Variables: 
