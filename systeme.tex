@@ -1,4 +1,5 @@
 \section{Live-Migration-Systeme}
+\label{sec:live-migr-syst}
 Im Folgenden wollen wir einige konkrete Implementierungen der oben
 vorgestellten Techniken vorstellen, und deren Limitationen und
 Einsatzbarkeit für die oben genannten Use-Cases betrachten.
@@ -43,8 +44,9 @@ Für die eigentliche Migration implementiert das NomadBIOS ein
 ist~\cite{hansen2002nomadic}. Initial ist der Zustand allen Speichers
 auf dem Zielsystem unbekannt (in der Grafik durch helles Grau
 dargestellt), und der gesamte Speicher vom Ursprungssystem muss zum
-Kopieren ausgewählt werden~\ref{fig:nomad_stage1} (in der Grafik rot).
-\begin{figure}[h]
+Kopieren ausgewählt werden (Fig.~\ref{fig:nomad_stage1}) (in der
+Grafik rot).
+\begin{figure}[tb]
   \centering
   \includegraphics[width=0.7\linewidth]{images/nomad_stage1}
   \caption{NomadBIOS: 1. Migrationsphase}
@@ -61,7 +63,7 @@ geschrieben.
 Nach einem ersten Kopierdurchlauf werden so eine Reihe von
 Speicherseiten noch zum Kopieren markiert worden sein. Es ist nicht
 klar ob diese Seiten vor oder nach der letzten Manipulation zum
-Zielsystem kopiert wurden~\ref{fig:nomad_stage2}.
+Zielsystem kopiert wurden (Fig.~\ref{fig:nomad_stage2}).
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.7\linewidth]{images/nomad_stage2}
@@ -76,8 +78,8 @@ Delta zwischen dem Gast und Zielsystem so weit geschrumpft, dass die
 verbleibende Differenz in wenigen Millisekunden kopiert werden
 kann. In diesem Moment wird der Gastprozess auf dem Ursprungssystem
 eingefroren, die restlichen Seiten kopiert, und auf dem Zielsystem
-gestartet\ref{fig:nomad_stage3}.
-\begin{figure}[h]
+gestartet (Fig.~\ref{fig:nomad_stage3}).
+\begin{figure}[b]
   \centering
   \includegraphics[width=0.7\linewidth]{images/nomad_stage3}
   \caption{NomadBIOS: 3. Migrationsphase}
@@ -87,7 +89,7 @@ Wenn im gleichen Moment auch das Routing angepasst wird, so
 kann die VM direkt weiterarbeiten, ohne das Benutzer mehr als einen
 kurzen Latenzanstieg bemerken.
 
-vMotion \ldots
+Dr. Hansen arbeitet seit 2007 bei VMWare. vMotion \ldots
 
 \subsection{IBM}
 Xen, active research to enable VM migration on a number of open-source
@@ -127,8 +129,28 @@ eingesetzt werden kann~\cite{hp2010integrity}.
 Solaris Container
 
 \subsection{Vergleich}
+Wir kehren nun zurück zu den zuvor beschriebenen Anwendungsfällen für
+VM-Live-Migration~\ref{sec:livemigration}. Die Fähigkeiten und Ziele
+der in Abschnitt~\ref{sec:live-migr-syst} beschriebenen Lösungen
+machen sie unterschiedlich gut für die beschriebenen Zwecke
+einsetzbar (Tab.~\ref{tab:anw-anb-matrix}).
 Vergleich der Eignung als Lösung für die oben genannten Probleme
 zwischen dem von Dr. Jacob Gorm Hansen vorgestellen System und den Alternativen.
+
+\begin{table}[tb]
+  \centering
+  \begin{tabular}[h]{c|c c c c}
+    & VMWare & IBM & HP & Solaris \\
+    Verlässlichkeit & & \checked & & \\
+    Interoperabilität & \checked & \checked & & \checked \\
+    Inter-Cloud Verschiebungen & & & & \\
+    Hardware Maintenance & \checked & \checked & \checked & \\
+    Adaptive Auslastung & \checked & & & \checked \\
+    Erzwungene Verschiebungen & \checked & \checked & \checked & \\
+  \end{tabular}
+  \caption{Anwendung --- Anbieter Matrix}
+  \label{tab:anw-anb-matrix}
+\end{table}
 
 
 %%% Local Variables: 
