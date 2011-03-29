@@ -42,14 +42,20 @@ Betriebssystems kopiert und neue Dienstanfragen dann auf den neuen
 Server umgeleitet. Die alte VM muss allerdings zunächst online
 bleiben, um Abhängigkeiten von Dienstanfragen bereitzustellen, die
 sich noch in Ausführung befinden, wenn der Hardwarealarm ausgelöst
-wird~\cite{clark2005live}.
+wird~\cite{clark2005live}. Das ist bekannt als "`residual
+dependencies problem"' (Problem mit verbleibenden Abhängigkeiten).
 
 Diese Vorgehensweise zur Migration auf Prozessebene hat also den
 wesentlichen Nachteil, dass laufende Prozesse nicht verschoben werden
 können, sondern noch auf der bestehenden Hardware zum Ende laufen
-müssen. Im Falle eines Web-Servers, bei dem jeder Request auch an
-einen neuen Prozess gehen kann, ist das nicht weiter
-problematisch. Schwieriger ist die Situation bei Diensten wie
+müssen. Die meisten Applikationen verlassen sich auf viele
+verschiedene Weisen auf die Fähigkeiten des Betriebsystems, die
+Hardware anzusteueren und in geeignete Zustände zu überführen, die den
+Ablauf der Applikation erst möglich machen. Das heißt, dass ein
+laufender Prozess meistens nicht einzeln verschoben werden
+kann~\cite{hansen2002nomadic}. Im Falle eines Web-Servers, bei dem
+jeder Request auch an einen neuen Prozess gehen kann, ist das nicht
+weiter problematisch. Schwieriger ist die Situation bei Diensten wie
 z.B. Online-Spieleplattformen, bei denen ein Serverprozess
 TCP-Verbindungen zu mehreren Clients teilweise über Stunden aufrecht
 erhalten muss. Wenn ein Hardwareausfall kurz bevor steht, bleibt hier
@@ -57,12 +63,13 @@ meist nichts anderes übrig, als das Spiel zu unterbrechen: Das kann
 bedeutet mindestens unzufriedene Kunden, und vielleicht sogar
 verringerten Umsatz.
 
-Mit dem von Dr. Gorm Hansen vorgestellten NomadBIOS kann auf Hardwarefehler
-angemessener reagiert werden: Zuerst kann die VM bis aufs letzte
-Detail vom aktuellen Stand kopiert werden, das heißt, dass Änderungen,
-die seit der letzten Checkpoint-Sicherung geschehen sind, nicht
-verloren gehen. Wichtiger, allerdings, ist, dass auch Prozesse, die
-sich gerade in Ausführung befinden, migriert werden können. Im
+Wenn man aber stattdessen den Prozess und die virtuelle Maschine als
+Einheit betrachtet, und geschlossen live migriert, kann auf
+Hardwarefehler angemessener reagiert werden: Zuerst kann die VM bis
+aufs letzte Detail vom aktuellen Stand kopiert werden, das heißt, dass
+Änderungen, die seit der letzten Checkpoint-Sicherung geschehen sind,
+nicht verloren gehen. Wichtiger, allerdings, ist, dass auch Prozesse,
+die sich gerade in Ausführung befinden, migriert werden können. Im
 Beispiel der Spieleplattform bedeutet dies, dass Spiele nicht
 unterbrochen werden müssen, sondern, für den Nutzer transparent, auf
 den neuen Server migriert werden.
@@ -118,9 +125,9 @@ beschrieben, Prozessemigrationssystem, wie sie in den 1980er Jahren
 entwickelt wurden, verwendet werden. Dazu zählen z.B. das Sprite oder
 das MOSIX System~\cite{hansen2004self}. Diese benutzten Fähigkeiten
 des Hypervisors sowie der darauf laufenden Betriebssysteme in
-Konjunktion und sind damit per-se nicht auf beliebigen Kombinationen
-der beiden ausführbar. Die Notwendigkeit von spezifischen Anpassungen
-and verschiedenen Teilen des Softwarestacks und proprietäre Protokolle
+Konjunktion und sind damit nicht auf beliebigen Kombinationen der
+beiden ausführbar. Die Notwendigkeit von spezifischen Anpassungen and
+verschiedenen Teilen des Softwarestacks und proprietäre Protokolle
 schränken machen die Anwendung von Prozessmigration über die Grenzen
 von Unternehmen und Organisationen hinweg de-facto unmöglich. Diese
 Art System skaliert folglich nicht auf Verschiebungen zwischen Clouds
