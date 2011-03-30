@@ -93,10 +93,10 @@ ist~\cite{hansen2002nomadic}.
 Dr. Hansen arbeitet seit 2007 bei VMWare. VMWare bietet inzwischen ein
 kommerzielles Produkt zur Live-Migration names \emph{vMotion}. Der
 primäre Fokus dieses Produktes liegt, ähnlich wie beim NomadBIOS,
-darin \ac{VM}s innerhalb eines Netzwerkes mit gemeinsamem Speicher wandern
+darin \acp{VM} innerhalb eines Netzwerkes mit gemeinsamem Speicher wandern
 zu lassen, um größtmögliche Ressourcennutzung zu erzielen. Dazu bietet
 VMWare vMotion die Möglichkeit, sog. \emph{Resource Pools} zu
-definieren, in denen \ac{VM}s fortwährend automatisiert wandern
+definieren, in denen \acp{VM} fortwährend automatisiert wandern
 können. 
 
 Um höhere Verfügbarkeit zu gewährleisten, weicht vMotion vom oben
@@ -119,7 +119,7 @@ VMWare unterstützten) Hardware Architekturen
 unterstützt~\cite{nelson2005fast}. Dafür wird Netzwerkhardware voll
 virtualisiert, außerdem wird davon ausgegangen, dass Verbindungen zu
 Speicher ausschließlich über \ac{SAN} oder \ac{NAS} bereitgestellt
-werden, und dass alle \ac{VM}s mit denselben \ac{SAN}-
+werden, und dass alle \acp{VM} mit denselben \ac{SAN}-
 bzw. \ac{NAS}-Servern verbunden sind.
 
 \subsection{IBM}
@@ -135,18 +135,18 @@ benötigte Infrastruktur (wie z.B. \ac{SAN}-/\ac{NAS}-Server) senken
 und die Skalierbarkeit über die Grenzen eines einzelnen Cluster
 Netzwerks hinweg erhöhen.
 
-Die Lösung hierfür sind \ac{VEEM}s. Ein \ac{VEEM} verteilt \ac{VM}s
-(in diesem Kontext \ac{VEE}s genannt) über verfügbare Host-Systeme,
+Die Lösung hierfür sind \acp{VEEM}. Ein \ac{VEEM} verteilt \acp{VM}
+(in diesem Kontext \acp{VEE} genannt) über verfügbare Host-Systeme,
 unter Berücksichtigung bestimmter Einschränkungen, dazu können
-z.B. auch gesetzliche Bedingungen oder \ac{SLA}s zählen. Außerdem
-können mehrere \ac{VEE}s zu einer \ac{VEE}-Gruppe zusammengefasst
+z.B. auch gesetzliche Bedingungen oder \acp{SLA} zählen. Außerdem
+können mehrere \acp{VEE} zu einer \ac{VEE}-Gruppe zusammengefasst
 werden, um bestimmte Dienste nah beieinander zu halten und nur
 gemeinsam zu verwalten. IBM hat hierbei speziell darauf geachtet,
 offene Protokolle zu erstellen, um die Struktur der Lösung unabhängig
-von den verwendeten Virtualisierungsplatformen (e.g. Hypervisoren) zu
+von den verwendeten Virtualisierungsplatformen (\zB Hypervisoren) zu
 machen. Auf diese Weise wird ein Migrationspfad für Cloud Anbieter
 geöffnet, der es ermöglicht, bestehende Infrastruktur inkrementell mit
-den nötigen \ac{API}s auszustatten und so interoperabel mit vielen
+den nötigen \acp{API} auszustatten und so interoperabel mit vielen
 verschiedenen Cloud-Lösungen zu werden.
 
 \subsection{HP}
@@ -161,7 +161,7 @@ beim Umziehen zwischen geografisch entfernten Orten oft nicht
 gewährleistet werden. HP hat hierfür sein \ac{CLX} Produkt
 erweitert. \ac{CLX} ist zunächst eine Software zur Replikation von Daten
 über große Distanzen. Mit den HyperV spezifischen Erweiterungen kann
-\ac{CLX} nun dazu genutzt werden, den Zustand von \ac{VM}s zwischen
+\ac{CLX} nun dazu genutzt werden, den Zustand von \acp{VM} zwischen
 verschiedenen Rechenzentren zu synchronisieren. Dabei ist \ac{CLX} voll in
 den HyperV Live-Migration Prozess integriert. Mit der \ac{CLX}---HyperV
 Kombination kann sichergestellt werden, das Replikation über
