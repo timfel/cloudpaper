@@ -213,7 +213,13 @@ genutzt, auch die Hardware muss in Prozessortyp und -frequenz
 Auslastungsgrenzen zu bestimmen, ab denen eine Live-Migration
 vorgenommen wird. Vielmehr wird bei Auslastungsändereungen direkt auf
 dem Server reagiert, indem \zB Prozessoren dazu- oder abgeschaltet
-werden oder der für die Domäne verfügbarer Speicher verändert wird.~\cite{2010:Oracle-VM-Serve}
+werden oder der für die Domäne verfügbarer Speicher verändert
+wird~\cite{2010:Oracle-VM-Serve}. Als Betriebssystem in den \acp{ldom}
+sind praktisch nur Solaris (und -- dank Linux-Kern-Emulation in
+bestimmten Solaris Zones -- ältere Linux) bekannt, theoretisch ist es
+aber möglich, beliebige Betriebssystem, die SPARC-Tx-Prozessoren
+unterstützen, zu nutzen; so \zB natives Linux~\cite{Chartre:Linux-with-LDom}.
+
 
 
 \subsection{Vergleich}
@@ -221,9 +227,14 @@ Wir kehren nun zurück zu den zuvor beschriebenen Anwendungsfällen für
 \ac{VM}-Live-Migration (\autoref{sec:livemigration}). Die Fähigkeiten und Ziele
 der in \autoref{sec:live-migr-syst} beschriebenen Lösungen
 machen sie unterschiedlich gut für die beschriebenen Zwecke
-einsetzbar (\autoref{tab:anw-anb-matrix}).
+einsetzbar (\autoref{tab:anw-anb-matrix}). \emph{Notabene: } Für
+Oracle wurde nur die \ac{ldom}-Variante betrachtet.
+
+\onlydraft{
 Vergleich der Eignung als Lösung für die oben genannten Probleme
 zwischen dem von Dr. Jacob Gorm Hansen vorgestellen System und den Alternativen.
+}
+
 
 \begin{table}[tb] 
   \caption{Anwendung --- Anbieter Matrix}
