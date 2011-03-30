@@ -43,6 +43,44 @@
 }
 
 
+\long\def\onlydraft#1{\ifdraft{#1}{}}
+
+\newcommand*{\acroshortsuffixfont}[1]{{\upshape #1}}
+
+%patch acronym
+\makeatletter
+\newcommand*\newacronym[1]{%
+ \@ifnextchar[%] 
+  {\mynewacronymi{#1}}{\mynewacronymii{#1}}%
+}
+
+\providecommand\acroshortsuffixfont[1]{{#1}}
+\providecommand\acrolongsuffixfont[1]{{#1}}
+
+\newcommand\mynewacronymi{}
+\def\mynewacronymi#1[#2]#3{%
+  \@ifnextchar[%] 
+  {\mynewacronymiii{#1}[#2]{#3}}{\mynewacronymiv{#1}[#2]{#3}}%
+}
+\newcommand\mynewacronymii{}
+\def\mynewacronymii#1#2{%
+  \@ifnextchar[%] 
+  {\mynewacronymiii{#1}[s]{#2}}{\mynewacronymiv{#1}[s]{#2}}%
+}
+\newcommand\mynewacronymiv{}
+\def\mynewacronymiv#1[#2]#3{%
+  \mynewacronymiii{#1}[#2]{#3}[s]%
+}
+
+\newcommand\mynewacronymiii{}
+\def\mynewacronymiii#1[#2]#3[#4]{%
+ \newacro{#1}{#3}%
+ \newacroplural{#1}[{#1\acroshortsuffixfont{#2}}]{{#3\acrolongsuffixfont{#4}}}%
+}
+
+\makeatother
+
+
 \renewcommand*{\acsfont}[1]{{\MakeTextLowercase{\scshape #1}}}
 
 \ifdraft{%
