@@ -7,12 +7,12 @@ Einsatzbarkeit für die oben genannten Use-Cases betrachten.
 \subsection{NomadBIOS and vMotion}
 \label{sec:nomadbios--vmware}
 Wie im Vortrag von Dr. Jacob Gorm Hansen beschrieben, war die erste
-vollständige Implementierung zur Live-Migration einer kompletten VM
+vollständige Implementierung zur Live-Migration einer kompletten \ac{VM}
 der NomadBIOS Hypervisor. Asger Jensen und Dr. Jacob Gorm Hansen
 entwickelten diesen Hypervisor auf dem L4 Microkernel und
 demonstrierten als erste erfolgreich Live-Migration von virtuellen
 Maschinen über ein lokales Netzwerk. Die Motivation dieser Arbeit kam
-aus dem Grid-Computing: Für jeden Job sollte eine VM gestartet werden,
+aus dem Grid-Computing: Für jeden Job sollte eine \ac{VM} gestartet werden,
 die dann, mit Prioritäten ausgestattet, durch das Grid verschoben
 werden konnte, auf der Suche nach freien Ressourcen. Daher rührt auch
 der Name \emph{NomadBIOS}, ein "`nomadisches"' System.
@@ -74,7 +74,7 @@ ist~\cite{hansen2002nomadic}.
   Gastprozess auf dem Ursprungssystem eingefroren, die restlichen
   Seiten kopiert, und auf dem Zielsystem gestartet
   (Abb.~\ref{fig:nomad_stage3}). Wenn im gleichen Moment auch das
-  Routing angepasst wird, so kann die VM direkt weiterarbeiten, ohne
+  Routing angepasst wird, so kann die \ac{VM} direkt weiterarbeiten, ohne
   das Benutzer mehr als einen kurzen Latenzanstieg bemerken.
 \end{enumerate}
 \begin{figure}[t]
@@ -93,22 +93,22 @@ ist~\cite{hansen2002nomadic}.
 Dr. Hansen arbeitet seit 2007 bei VMWare. VMWare bietet inzwischen ein
 kommerzielles Produkt zur Live-Migration names \emph{vMotion}. Der
 primäre Fokus dieses Produktes liegt, ähnlich wie beim NomadBIOS,
-darin VMs innerhalb eines Netzwerkes mit gemeinsamem Speicher wandern
+darin \ac{VM}s innerhalb eines Netzwerkes mit gemeinsamem Speicher wandern
 zu lassen, um größtmögliche Ressourcennutzung zu erzielen. Dazu bietet
 VMWare vMotion die Möglichkeit, sog. \emph{Resource Pools} zu
-definieren, in denen VMs fortwährend automatisiert wandern
+definieren, in denen \ac{VM}s fortwährend automatisiert wandern
 können. 
 
 Um höhere Verfügbarkeit zu gewährleisten, weicht vMotion vom oben
 etablierten Precopy-Schema ab~\cite{nelson2005fast}. Im letzten
-Schritt wird die Ziel-VM direkt gestartet, wenn die Ursprungs-VM
+Schritt wird die Ziel-\ac{VM} direkt gestartet, wenn die Ursprungs-\ac{VM}
 eingefroren wird. Damit wird vermieden, dass beim Übertragen des
 letzten Deltas eventuell offene TCP Verbindungen einen Timeout
 erfahren. Die noch zum Kopieren ausstehenden Speicherseiten sind
-markiert, und werden noch in die Ziel-VM kopiert. Wenn
+markiert, und werden noch in die Ziel-\ac{VM} kopiert. Wenn
 zwischenzeitlich darauf zugegriffen werden soll, werden sie als
 nächstes über das Netzwerk zum Ziel übertragen. Das bedeutet, dass zu
-Beginn der Laufzeit der Ziel-VM noch eine Abhängigkeit zum
+Beginn der Laufzeit der Ziel-\ac{VM} noch eine Abhängigkeit zum
 Ursprungssystem besteht, und die Verbindung zwischen beiden Systemen
 noch kurze Zeit weiterbestehen muss.
 
@@ -120,19 +120,34 @@ unterstützt~\cite{nelson2005fast}. Dafür wird Netzwerkhardware voll
 virtualisiert, außerdem wird davon ausgegangen, dass Verbindungen zu
 Speicher ausschließlich über \emph{Storage Area Networks} (SAN) oder
 \emph{Network Attached Storage} (NAS) bereitgestellt werden, und dass
-alle VMs mit denselben SAN- bzw. NAS-Servern verbunden sind.
+alle \ac{VM}s mit denselben SAN- bzw. NAS-Servern verbunden sind.
 
 \subsection{IBM}
 IBM unterstützt die Linux Community in großem
 Umfang~\cite{kroahhartman2007linux}. IBM hat zur Live-Migration von
-Linux VMs hat IBM sowohl beim Xen Projekt, als auch dem Kernel
-Virtualisierungsmodul KVM (\emph{Kernel Virtual Machine}) wesentliche
-Beiträge geleistet~\cite{rochwerger2009reservoir}. Dabei lag der Fokus
-der angestrebten Lösung explizit auf Interoperabilität zwischen
-verschiedenen Providern und der Möglichkeit, Migration über Distanzen
-hinweg zu ermöglichen. Beides zusammen soll die Kosten für benötigte
-Infrastruktur (wie z.B. SAN-/NAS-Server) senken und die Skalierbarkeit
-über die Grenzen eines einzelnen Cluster Netzwerks hinweg erhöhen. 
+Linux \ac{VM}s hat IBM sowohl beim Xen Projekt, als auch dem Kernel
+Virtualisierungsmodul \ac{KVM} im Rahmen des RESERVOIR Projektes
+wesentliche Beiträge geleistet~\cite{rochwerger2009reservoir}. Dabei
+lag der Fokus der angestrebten Lösung explizit auf Interoperabilität
+zwischen verschiedenen Providern und der Möglichkeit, Migration über
+Distanzen hinweg zu ermöglichen. Beides zusammen soll die Kosten für
+benötigte Infrastruktur (wie z.B. SAN-/NAS-Server) senken und die
+Skalierbarkeit über die Grenzen eines einzelnen Cluster Netzwerks
+hinweg erhöhen.
+
+Die Lösung hierfür sind \ac{VEEM}s. Ein \ac{VEEM} verteilt \ac{VM}s
+(in diesem Kontext \ac{VEE}s genannt) über verfügbare Host-Systeme,
+unter Berücksichtigung bestimmter Einschränkungen, dazu können
+z.B. auch gesetzliche Bedingungen oder \ac{SLA}s zählen. Außerdem
+können mehrere \ac{VEE}s zu einer \ac{VEE}-Gruppe zusammengefasst
+werden, um bestimmte Dienste nah beieinander zu halten und nur
+gemeinsam zu verwalten. IBM hat hierbei speziell darauf geachtet,
+offene Protokolle zu erstellen, um die Struktur der Lösung unabhängig
+von den verwendeten Virtualisierungsplatformen (e.g. Hypervisoren) zu
+machen. Auf diese Weise wird ein Migrationspfad für Cloud Anbieter
+geöffnet, der es ermöglicht, bestehende Infrastruktur inkrementell mit
+den nötigen \ac{API}s auszustatten und so interoperabel mit vielen
+verschiedenen Cloud-Lösungen zu werden.
 
 \subsection{HP}
 HP bietet Virtualisierungsdienste auf Basis von Microsoft's
@@ -141,27 +156,27 @@ bereits Live-Migration von virtuellen Maschinen, der Migrationsprozess
 läuft dabei analog zum NomadBIOS ab. Eine wesentliche Limitierung des
 HyperV ist, dass alle physikalischen Maschinen Zugriff auf gemeinsamen
 Speicher, z.B. Network-Attached-Storage oder ein Netzwerkdateisystem,
-haben müssen, um VM Daten auszutauschen~\cite{hp2010hyperV}. Das kann
+haben müssen, um \ac{VM} Daten auszutauschen~\cite{hp2010hyperV}. Das kann
 beim Umziehen zwischen geografisch entfernten Orten oft nicht
-gewährleistet werden. HP hat hierfür sein \emph{Cluster Extension}
-(CLX) Produkt erweitert. CLX ist zunächst eine Software zur
-Replikation von Daten über große Distanzen. Mit den HyperV
-spezifischen Erweiterungen kann CLX nun dazu genutzt werden, den
-Zustand von VMs zwischen verschiedenen Rechenzentren zu
-synchronisieren. Dabei ist CLX voll in den HyperV Live-Migration
-Prozess integriert. Mit der CLX---HyperV Kombination kann
-sichergestellt werden, das Replikation über Datencenter hinweg
-VM-Migrationen unterstützt, und nicht behindert, indem während der
-Migration dieser mehr Bandbreite zugestanden wird, damit die finale
-Speicherseitensynchronisation (während der die Ursprungs-VM
-eingefroren ist) so schnell wie möglich vonstatten geht. Wenn die
-Migration abgeschlossen ist, macht CLX den neuen physikalischen
-Standort der VM automatisch zum Master für die weitere Replikation.
+gewährleistet werden. HP hat hierfür sein \ac{CLX} Produkt
+erweitert. \ac{CLX} ist zunächst eine Software zur Replikation von Daten
+über große Distanzen. Mit den HyperV spezifischen Erweiterungen kann
+\ac{CLX} nun dazu genutzt werden, den Zustand von \ac{VM}s zwischen
+verschiedenen Rechenzentren zu synchronisieren. Dabei ist \ac{CLX} voll in
+den HyperV Live-Migration Prozess integriert. Mit der \ac{CLX}---HyperV
+Kombination kann sichergestellt werden, das Replikation über
+Datencenter hinweg \ac{VM}-Migrationen unterstützt, und nicht behindert,
+indem während der Migration dieser mehr Bandbreite zugestanden wird,
+damit die finale Speicherseitensynchronisation (während der die
+Ursprungs-\ac{VM} eingefroren ist) so schnell wie möglich vonstatten
+geht. Wenn die Migration abgeschlossen ist, macht \ac{CLX} den neuen
+physikalischen Standort der \ac{VM} automatisch zum Master für die weitere
+Replikation.
 
 Im März 2010 aktualisierte außerdem seine UNIX Distribution
 \emph{HP-UX}. Teil dieses Updates war die Version 4.2 des hauseigenen
 \emph{Integrity Virtual Machines} Hypervisors. Dieser enthält eine
-\emph{Online Migration} Funktion, die ebenso mit CLX zusammen
+\emph{Online Migration} Funktion, die ebenso mit \ac{CLX} zusammen
 eingesetzt werden kann~\cite{hp2010integrity}.
 
 \subsection{Sun/Solaris}
@@ -169,7 +184,7 @@ Solaris Container
 
 \subsection{Vergleich}
 Wir kehren nun zurück zu den zuvor beschriebenen Anwendungsfällen für
-VM-Live-Migration~\ref{sec:livemigration}. Die Fähigkeiten und Ziele
+\ac{VM}-Live-Migration~\ref{sec:livemigration}. Die Fähigkeiten und Ziele
 der in Abschnitt~\ref{sec:live-migr-syst} beschriebenen Lösungen
 machen sie unterschiedlich gut für die beschriebenen Zwecke
 einsetzbar (Tab.~\ref{tab:anw-anb-matrix}).
