@@ -39,65 +39,100 @@ Hostbetriebssystem zu ermöglichen. Letzteres wird genutzt, um
 Unterstützung für den Migrationsvorgang im Gastsystem implementieren
 zu können.
 
-Für die eigentliche Migration implementiert das NomadBIOS ein
-\emph{Precopy} Scheme, wie es bereits aus der Prozessmigration bekannt
-ist~\cite{hansen2002nomadic}. Initial ist der Zustand allen Speichers
-auf dem Zielsystem unbekannt (in der Grafik durch helles Grau
-dargestellt), und der gesamte Speicher vom Ursprungssystem muss zum
-Kopieren ausgewählt werden (Fig.~\ref{fig:nomad_stage1}) (in der
-Grafik rot).
-\begin{figure}[tb]
+\begin{figure}[b]
   \centering
   \includegraphics[width=0.7\linewidth]{images/nomad_stage1}
   \caption{NomadBIOS: 1. Migrationsphase}
   \label{fig:nomad_stage1}
 \end{figure}
-Der Speicher auf dem Ursprung, der dem Gastsystem gehört, wird
-zunächst für Schreibzugriffe gesperrt und der Kopiervorgang auf den
-neuen Host wird gestartet. Wenn währenddessen Speicher geschrieben
-wird, wird ein Page-fault ausgelöst, und das NomadBIOS kann die
-entsprechende Speicherseite erneut zum Kopieren markieren. Danach wird
-die Seite als für das Gastsystem beschreibbar markiert und
-geschrieben.
-
-Nach einem ersten Kopierdurchlauf werden so eine Reihe von
-Speicherseiten noch zum Kopieren markiert worden sein. Es ist nicht
-klar ob diese Seiten vor oder nach der letzten Manipulation zum
-Zielsystem kopiert wurden (Fig.~\ref{fig:nomad_stage2}).
-\begin{figure}[h]
+Für die eigentliche Migration implementiert das NomadBIOS ein
+\emph{Precopy} Scheme, wie es bereits aus der Prozessmigration bekannt
+ist~\cite{hansen2002nomadic}.
+\begin{enumerate}
+\item In Abbildung~\ref{fig:nomad_stage1} ist der Startzustand der
+  Migration dargestellt. Initial ist der Zustand allen Speichers auf
+  dem Zielsystem unbekannt (helles Grau). Der gesamte Speicher vom
+  Ursprungssystem muss zum Kopieren ausgewählt werden (rot). Der
+  Speicher auf dem Ursprung, der dem Gastsystem gehört, wird zunächst
+  für Schreibzugriffe gesperrt und der Kopiervorgang auf den neuen
+  Host wird gestartet. Wenn währenddessen Speicher geschrieben wird,
+  wird ein Page-fault ausgelöst, und das NomadBIOS kann die
+  entsprechende Speicherseite erneut zum Kopieren markieren. Danach
+  wird die Seite als für das Gastsystem beschreibbar markiert und
+  geschrieben.
+\item Nach einem ersten Kopierdurchlauf werden so eine Reihe von
+  Speicherseiten noch zum Kopieren markiert worden sein. Es ist nicht
+  klar ob diese Seiten vor oder nach der letzten Manipulation zum
+  Zielsystem kopiert wurden (Abb.~\ref{fig:nomad_stage2}). Diese
+  können nun in einem weiteren, kürzeren Kopierdurchlauf mit dem
+  Zielsystem synchronisiert werden. Da dieser zweite Kopiervorgang
+  schneller vonstatten geht, werden währenddessen weniger Seiten
+  wieder vom Gastsystem beschrieben werden.
+\item Nach mehreren Iterationen ist das Delta zwischen dem Gast und
+  Zielsystem so weit geschrumpft, dass die verbleibende Differenz in
+  wenigen Millisekunden kopiert werden kann. In diesem Moment wird der
+  Gastprozess auf dem Ursprungssystem eingefroren, die restlichen
+  Seiten kopiert, und auf dem Zielsystem gestartet
+  (Abb.~\ref{fig:nomad_stage3}). Wenn im gleichen Moment auch das
+  Routing angepasst wird, so kann die VM direkt weiterarbeiten, ohne
+  das Benutzer mehr als einen kurzen Latenzanstieg bemerken.
+\end{enumerate}
+\begin{figure}[t]
   \centering
   \includegraphics[width=0.7\linewidth]{images/nomad_stage2}
   \caption{NomadBIOS: 2. Migrationsphase}
   \label{fig:nomad_stage2}
 \end{figure}
-Diese können nun in einem weiteren, kürzeren Kopierdurchlauf mit dem
-Zielsystem synchronisiert werden. Da dieser zweite Kopiervorgang
-schneller vonstatten geht, werden währenddessen weniger Seiten wieder
-vom Gastsystem beschrieben werden. Nach mehreren Iterationen ist das
-Delta zwischen dem Gast und Zielsystem so weit geschrumpft, dass die
-verbleibende Differenz in wenigen Millisekunden kopiert werden
-kann. In diesem Moment wird der Gastprozess auf dem Ursprungssystem
-eingefroren, die restlichen Seiten kopiert, und auf dem Zielsystem
-gestartet (Fig.~\ref{fig:nomad_stage3}).
 \begin{figure}[b]
   \centering
   \includegraphics[width=0.7\linewidth]{images/nomad_stage3}
   \caption{NomadBIOS: 3. Migrationsphase}
   \label{fig:nomad_stage3}
 \end{figure}
-Wenn im gleichen Moment auch das Routing angepasst wird, so
-kann die VM direkt weiterarbeiten, ohne das Benutzer mehr als einen
-kurzen Latenzanstieg bemerken.
 
 Dr. Hansen arbeitet seit 2007 bei VMWare. VMWare bietet inzwischen ein
 kommerzielles Produkt zur Live-Migration names \emph{vMotion}. Der
 primäre Fokus dieses Produktes liegt, ähnlich wie beim NomadBIOS,
 darin VMs innerhalb eines Netzwerkes mit gemeinsamem Speicher wandern
-zu lassen, um größtmögliche Ressourcennutzung zu erzielen.
+zu lassen, um größtmögliche Ressourcennutzung zu erzielen. Dazu bietet
+VMWare vMotion die Möglichkeit, sog. \emph{Resource Pools} zu
+definieren, in denen VMs fortwährend automatisiert wandern
+können. 
+
+Um höhere Verfügbarkeit zu gewährleisten, weicht vMotion vom oben
+etablierten Precopy-Schema ab~\cite{nelson2005fast}. Im letzten
+Schritt wird die Ziel-VM direkt gestartet, wenn die Ursprungs-VM
+eingefroren wird. Damit wird vermieden, dass beim Übertragen des
+letzten Deltas eventuell offene TCP Verbindungen einen Timeout
+erfahren. Die noch zum Kopieren ausstehenden Speicherseiten sind
+markiert, und werden noch in die Ziel-VM kopiert. Wenn
+zwischenzeitlich darauf zugegriffen werden soll, werden sie als
+nächstes über das Netzwerk zum Ziel übertragen. Das bedeutet, dass zu
+Beginn der Laufzeit der Ziel-VM noch eine Abhängigkeit zum
+Ursprungssystem besteht, und die Verbindung zwischen beiden Systemen
+noch kurze Zeit weiterbestehen muss.
+
+Eine weitere Besonderheit an der VMWare Lösung ist, dass der VMWare
+ESX Hypervisor über Para-Virtualisierung hinausgeht, und deshalb die
+Migration von beliebigen Betriebsystemen zwischen beliebigen (von
+VMWare unterstützten) Hardware Architekturen
+unterstützt~\cite{nelson2005fast}. Dafür wird Netzwerkhardware voll
+virtualisiert, außerdem wird davon ausgegangen, dass Verbindungen zu
+Speicher ausschließlich über \emph{Storage Area Networks} (SAN) oder
+\emph{Network Attached Storage} (NAS) bereitgestellt werden, und dass
+alle VMs mit denselben SAN- bzw. NAS-Servern verbunden sind.
 
 \subsection{IBM}
-Xen, active research to enable VM migration on a number of open-source
-virtualization solutions (VirtualBox, KVM + Qemu)
+IBM unterstützt die Linux Community in großem
+Umfang~\cite{kroahhartman2007linux}. IBM hat zur Live-Migration von
+Linux VMs hat IBM sowohl beim Xen Projekt, als auch dem Kernel
+Virtualisierungsmodul KVM (\emph{Kernel Virtual Machine}) wesentliche
+Beiträge geleistet~\cite{rochwerger2009reservoir}. Dabei lag der Fokus
+der angestrebten Lösung explizit auf Interoperabilität zwischen
+verschiedenen Providern und der Möglichkeit, Migration über Distanzen
+hinweg zu ermöglichen. Beides zusammen soll die Kosten für benötigte
+Infrastruktur (wie z.B. SAN-/NAS-Server) senken und die Skalierbarkeit
+über die Grenzen eines einzelnen Cluster Netzwerks hinweg erhöhen. 
 
 \subsection{HP}
 HP bietet Virtualisierungsdienste auf Basis von Microsoft's
@@ -147,7 +182,7 @@ zwischen dem von Dr. Jacob Gorm Hansen vorgestellen System und den Alternativen.
     & VMWare & IBM & HP & Solaris \\
     Verlässlichkeit & & \checked & & \\
     Interoperabilität & \checked & \checked & & \checked \\
-    Inter-Cloud Verschiebungen & & & & \\
+    Inter-Cloud Verschiebungen & & \checked & & \\
     Hardware Maintenance & \checked & \checked & \checked & \\
     Adaptive Auslastung & \checked & & & \checked \\
     Erzwungene Verschiebungen & \checked & \checked & \checked & \\
