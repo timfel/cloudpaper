@@ -68,6 +68,13 @@ Ich will scalieren:
 \subsubsection{Level der Virtualisierung}
 \label{sec:def-virtualisierung}
 
+\begin{figure*}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{images/Virtualisierungslevel}
+  \caption{Virtualisierung kann auf verschiedenen Ebenen angesetzt werden. Im Kontext von Live-Migration sind die vertikal eingezeichneten Elemente, das heißt, die zu virtualisierenden Betriebssysteme oder Applikationen von Interesse. }
+  \label{fig:levels}
+\end{figure*}
+
 Virtualisierung kann auf verschiedenen Ebenen stattfinden. Je näher an
 der Hardware die Virtualisierung stattfindet, desto mehr kann die
 Hardware auch unterstützend wirken. Je ferner der Hardware, desto
@@ -80,8 +87,9 @@ Ausführungsumgebungen auf ein und derselben physischen Recheneinheit
 ohne (oder mit minimaler) gegenseitige(r) Kenntnis.}
 
 In der untersten Schicht kann die so genannte
-\emph{Systempartitionierung} betrachtet werden. Die "`Sun Fire Dynamic
-System Domains"'~\cite{Shoumack2007:Beginners-Guid-}, die auf Sun Fire
+\emph{Systempartitionierung} betrachtet werden (Siehe zu den Ebenen
+\autoref{fig:levels}). Die "`Sun Fire Dynamic System
+Domains"'~\cite{Shoumack2007:Beginners-Guid-}, die auf Sun Fire
 Servern zur Verfügung steht, ist ein Beispiel für diesen
 Virtualisierungsansatz. Die Hardware dieser Server ist in der Lage,
 verschiedene Ausführungsumgebungen, das heißt, Betriebssysteme,
@@ -117,15 +125,27 @@ nicht unähnlich ist.
 Auf Betriebssystemebene ist ebenfalls eine Art Virtualisierung
 möglich. Dabei ist das Ziel, mehrere Exemplare der selben
 Betriebssysteminstallation auszuführen. Ein Beispiel für diese
-\emph{Betriebssystempartitionierung} sind die "`Solaris Zones"'~\cite{price2004solaris}.
-Sie erlauben, eine Solaris-Installation mehrfach ausführen zu lassen,
-und zu einem gewissen, einstellbaren Grad die installierten
+\emph{Betriebssystempartitionierung} (auch \emph{Servervirtualisierung
+  auf Betriebssystemebene}) sind die "`Solaris
+Zones"'~\cite{price2004solaris}. Sie erlauben, eine
+Solaris-Installation mehrfach ausführen zu lassen, und zu einem
+gewissen, einstellbaren Grad die installierten
 Betriebssystemkomponenten nachzunutzen respektive zu ersetzen. Dabei
 wird der Betriebssystemkern einmal ausgeführt, trägt aber Sorge dafür,
-den einzelnen Zonen als "`ihr"' Kern zu erscheinen.
+den einzelnen Zonen als "`ihr"' Kern zu erscheinen. Eine vergleichbare
+Technologie für Linux-System ist das
+OpenVZ-Projekt~\cite{ahmed2008server}.
 
-
-Eine vergleichbare Technologie für Linux-System ist das OpenVZ-Projekt
+Auf Applikationsebene gibt es zwei unterschiedliche
+Virtualisierungsansätze. Während \emph{Desktopvirtualisierung},
+vergleichbar zur Hypervisorvirtualisierung, Betriebssysteme
+virtualisiert und somit innerhalb eines anderen Betriebssystem bereit
+stellt, haben Prozess-\acp{VM} das Ziel, eine Ausführungsumgebung für
+bestimmte Programmiersprachen oder Applikationen bereit zu stellen.
+Beispiele für ersteres sind VMWare
+Workstation~\cite{VMWare-Inc:VMware-Workstat} oder Oracle
+VirtualBox~\cite{Oracle-Corporation:VirtualBox} (vormals Sun xVM), für
+letzteres \acp{VM} wie die JVM~\cite{Sun-Developer-Network2003:The-Java-Virtua} oder Smalltalk-Implementierungen~\cite{ansiSmalltalk}.
 
 \ifdraft{\begin{itemize}
 \item Level der virualisierung
