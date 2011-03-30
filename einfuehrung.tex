@@ -108,7 +108,8 @@ bleiben die anderen davon unbeeinflusst. Da des weiteren alle
 Operationen innerhalb einer \ac{VM} virtualisiert sind, kann der Hypervisor
 den Zustand eines virtuellen Servers in regelmäßigen Abständen
 sichern, und so bei Ausfall die \ac{VM} von einer früheren Sicherung
-wiederherstellen.
+wiederherstellen. Beispiele für Hypervisorvirtualisierung sind VMWare
+ESXi und damit auch vSphere~\cite{:Free-VMware-vSp} und Xen~\cite{Barham:2003:XAV:945445.945462}.
 
 Ein Speziallfall der Virtualisierung mit Hypervisoren sind die
 \emph{\acfp{ldom}}, die auf Rechnern mit Prozessoren der SPARC T-Serie
@@ -202,7 +203,7 @@ davon sich als "`Cloud-Ebene"' eignen.~\cite{Gebhart2010:Virtualization-}
   können ein Interesse daran haben, den Ort, an dem der Dienst /das
   Betriebssystem, ausgeführt wird, zu wechseln. Damit kann einerseits
   die Hardware gemeint sein, auf der das Betriebssystem läuft,
-  andererseits auch der wirkliche Ort an dem die Hardware steht.
+  andererseits auch der geographische Ort an dem die Hardware steht.
   Anforderungen wie
   \begin{itemize}
   \item schnelles Bereitstellen von neuen Betriebssysteminstanzen,
@@ -211,6 +212,14 @@ davon sich als "`Cloud-Ebene"' eignen.~\cite{Gebhart2010:Virtualization-}
   \end{itemize}
   machen \ac{IaaS} zur eigentlichen Schnittstelle zwischen
   Virtualisierung und Cloud-Computing.
+
+  Interessanterweise ist für das Bereitstellen von \ac{IaaS}-Diensten
+  mit Hilfe von virtualisierten Betriebssystemen vom Ansatz her nicht
+  relevant, welches Virtualisierungslevel (vgl.
+  \autoref{fig:levels}) dafür genutzt wird. Praktisch hat es jedoch
+  schon Auswirkungen, ob ein \ac{IaaS}-Dienst auf Grundlage von
+  VirtualBox, VMWare ESXi oder Oracle Dynamic System Domains betrieben wird.
+
 \end{description}
 
 
