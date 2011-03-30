@@ -1,7 +1,7 @@
 \section{Live-Migration-Systeme}
 \label{sec:live-migr-syst}
 Im Folgenden wollen wir einige konkrete Implementierungen der oben
-vorgestellten Techniken vorstellen, und deren Limitationen und
+vorgestellten Techniken vorstellen, und deren Grenzen und
 Einsatzbarkeit für die oben genannten Use-Cases betrachten.
 
 \subsection{NomadBIOS und vMotion}
@@ -125,7 +125,7 @@ bzw. \ac{NAS}-Servern verbunden sind.
 \subsection{IBM}
 IBM unterstützt die Linux Community in großem
 Umfang~\cite{kroahhartman2007linux}. IBM hat zur Live-Migration von
-Linux \ac{VM}s hat IBM sowohl beim Xen Projekt, als auch dem Kernel
+Linux-\acp{VM} sowohl beim Xen Projekt, als auch dem Kernel
 Virtualisierungsmodul \ac{KVM} im Rahmen des RESERVOIR Projektes
 wesentliche Beiträge geleistet~\cite{rochwerger2009reservoir}. Dabei
 lag der Fokus der angestrebten Lösung explizit auf Interoperabilität
@@ -179,31 +179,66 @@ Im März 2010 aktualisierte außerdem seine UNIX Distribution
 \emph{Online Migration} Funktion, die ebenso mit \ac{CLX} zusammen
 eingesetzt werden kann~\cite{hp2010integrity}.
 
-\subsection{Sun/Solaris}
-Solaris Container
+\subsection{Oracle}
+
+Oracle (vormals Sun) biete in Solaris eine betriebssystemintegrierte
+Form der Virtualisierung an: Solaris Zones. Im Gegensatz zu den vorher
+vorgestellten Lösungen werden in den Zones keine vollständigen
+Betriebsysteme ausgeführt, vielmehr gibt es eine
+Betribessysteminstanz, gennant \emph{global zone}, in der der
+Betriebssystemkern läuft und mehrere \emph{non-global zones}, die
+diesen Kern mitbenutzen. Den \emph{non-global zones} erscheint der
+Kern jedoch als ihr "`eigener"'. Solaris Zones werden zumeist zur
+Separierung von Applikationen genutzt und mit Resourcenmanagement
+verbunden; die Kombination wird \emph{Solaris Container} genannt~\cite{price2004solaris}.
+
+Im Kontext von Live-Migration sind Solaris Zones (und damit auch
+Container) jedoch ungeeignet. Es existieren keinerlei Vorrichtungen
+dafür im Kern von Solaris, geschweige denn Werkzeuge. Auch
+nicht-Live-Migrationen sind mit hohem Manuellen aufwand verbunden und
+entsprechen eher dem Prozess "`Herunterfahren, exportieren, kopieren,
+importieren, hochfahren"'~\cite{Kimchi:Solaris-Zones-m}. Die Migration
+von Zones als Standard-Anwendungsfall ist in Solaris nicht vorgesehen.
+
+Oracle \acfp{ldom} (jetzt VM Server for SPARC), die auf SPARC-Servern
+der T-Serie und einigen anderen Systemen zur Verfügung stehen,
+unterstützen sein der Version 1.2 aus dem Jahr 2009
+Live-Migration~\cite{Laurent:Answering-a-cus}. Diese
+hardware-gestützte Virtualisierungsvariante bietet physisch getrennte
+Gast-Systeme (Domänen) und dabei die Rekonfigurierbarkeit dieser im
+eingeschalteten Zustand. Zur Live-Migration von Domänen wird auf
+beiden Seiten nicht nur die selbe Software (in dem Fall auch Firmware)
+genutzt, auch die Hardware muss in Prozessortyp und -frequenz
+übereinstimmen. Es ist auch nicht möglich, von Vornherein bestimmte
+Auslastungsgrenzen zu bestimmen, ab denen eine Live-Migration
+vorgenommen wird. Vielmehr wird bei Auslastungsändereungen direkt auf
+dem Server reagiert, indem \zB Prozessoren dazu- oder abgeschaltet
+werden oder der für die Domäne verfügbarer Speicher verändert wird.~\cite{2010:Oracle-VM-Serve}
+
 
 \subsection{Vergleich}
 Wir kehren nun zurück zu den zuvor beschriebenen Anwendungsfällen für
-\ac{VM}-Live-Migration~\ref{sec:livemigration}. Die Fähigkeiten und Ziele
-der in Abschnitt~\ref{sec:live-migr-syst} beschriebenen Lösungen
+\ac{VM}-Live-Migration (\autoref{sec:livemigration}). Die Fähigkeiten und Ziele
+der in \autoref{sec:live-migr-syst} beschriebenen Lösungen
 machen sie unterschiedlich gut für die beschriebenen Zwecke
-einsetzbar (Tab.~\ref{tab:anw-anb-matrix}).
+einsetzbar (\autoref{tab:anw-anb-matrix}).
 Vergleich der Eignung als Lösung für die oben genannten Probleme
 zwischen dem von Dr. Jacob Gorm Hansen vorgestellen System und den Alternativen.
 
-\begin{table}[tb]
+\begin{table}[tb] 
+  \caption{Anwendung --- Anbieter Matrix}
   \centering
   \begin{tabular}[h]{c|c c c c}
-    & VMWare & IBM & HP & Solaris \\
-    Verlässlichkeit & & \checked & & \\
-    Interoperabilität & \checked & \checked & & \checked \\
+    & VMWare & IBM & HP & Oracle \\
+    Verlässlichkeit & & \checked & &  \\
+    Interoperabilität & \checked & \checked & &  \\
     Inter-Cloud Verschiebungen & & \checked & & \\
     Hardware Maintenance & \checked & \checked & \checked & \\
-    Adaptive Auslastung & \checked & & & \checked \\
-    Erzwungene Verschiebungen & \checked & \checked & \checked & \\
+    Adaptive Auslastung & \checked & & & (\checked) \\
+    Erzwungene Verschiebungen & \checked & \checked & \checked &
+    \checked \\
   \end{tabular}
-  \caption{Anwendung --- Anbieter Matrix}
-  \label{tab:anw-anb-matrix}
+ \label{tab:anw-anb-matrix}
 \end{table}
 
 
