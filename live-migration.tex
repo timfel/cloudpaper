@@ -64,15 +64,15 @@ bedeutet mindestens unzufriedene Kunden, und vielleicht sogar
 verringerten Umsatz.
 
 Wenn man aber stattdessen den Prozess und die virtuelle Maschine als
-Einheit betrachtet, und geschlossen live migriert, kann auf
-Hardwarefehler angemessener reagiert werden: Zuerst kann die VM bis
-aufs letzte Detail vom aktuellen Stand kopiert werden, das heißt, dass
-Änderungen, die seit der letzten Checkpoint-Sicherung geschehen sind,
-nicht verloren gehen. Wichtiger, allerdings, ist, dass auch Prozesse,
-die sich gerade in Ausführung befinden, migriert werden können. Im
-Beispiel der Spieleplattform bedeutet dies, dass Spiele nicht
-unterbrochen werden müssen, sondern, für den Nutzer transparent, auf
-den neuen Server migriert werden.
+Einheit betrachtet~\cite{nelson2005fast}, und geschlossen live
+migriert, kann auf Hardwarefehler angemessener reagiert werden: Zuerst
+kann die VM bis aufs letzte Detail vom aktuellen Stand kopiert werden,
+das heißt, dass Änderungen, die seit der letzten Checkpoint-Sicherung
+geschehen sind, nicht verloren gehen. Wichtiger, allerdings, ist, dass
+auch Prozesse, die sich gerade in Ausführung befinden, migriert werden
+können. Im Beispiel der Spieleplattform bedeutet dies, dass Spiele
+nicht unterbrochen werden müssen, sondern, für den Nutzer transparent,
+auf den neuen Server migriert werden.
 
 \subsection{Interoparibilität von Virtualisierungs-Lösungen}
 Für Unternehmen, die mit öffentlichem Cloud-Hosting liebäugeln, kann
