@@ -133,7 +133,7 @@ gewissen, einstellbaren Grad die installierten
 Betriebssystemkomponenten nachzunutzen respektive zu ersetzen. Dabei
 wird der Betriebssystemkern einmal ausgeführt, trägt aber Sorge dafür,
 den einzelnen Zonen als "`ihr"' Kern zu erscheinen. Eine vergleichbare
-Technologie für Linux-System ist das
+Technologie für Linux-Systeme ist das
 OpenVZ-Projekt~\cite{ahmed2008server}.
 
 Auf Applikationsebene gibt es zwei unterschiedliche
@@ -145,12 +145,31 @@ bestimmte Programmiersprachen oder Applikationen bereit zu stellen.
 Beispiele für ersteres sind VMWare
 Workstation~\cite{VMWare-Inc:VMware-Workstat} oder Oracle
 VirtualBox~\cite{Oracle-Corporation:VirtualBox} (vormals Sun xVM), für
-letzteres \acp{VM} wie die JVM~\cite{Sun-Developer-Network2003:The-Java-Virtua} oder Smalltalk-Implementierungen~\cite{ansiSmalltalk}.
+letzteres \acp{VM} wie die
+JVM~\cite{Sun-Developer-Network2003:The-Java-Virtua} oder
+Smalltalk-Implementierungen~\cite{ansiSmalltalk}.
 
 \subsubsection{Was geht in die Cloud?}
 
 \onlydraft{Auf welchen Ebenen gibt es "`Clouds"', welche Ebene betrachten wir,
 PaaS vs IaaS.}
+
+Bei Betrachtung der verschiedenen Ebenen, auf denen Virtualisierung
+von Ausführungsumgebungen möglich ist, stellt sich die Frage, welche
+davon sich als "`Cloud-Ebene"' eignen.
+\begin{description}
+\item[SaaS] Auf Applikationsebene können Anwendungen in
+  "`Cloud-Manier"' bereit gestellt werden. Der Anbieter der
+  \acfi{SaaS}-Lösung hält dafür (zumeist mehrere) Installationen einer
+  Anwendung bereit, die von Kunden genutzt werden können, ohne
+  irgendeinen Installationsaufwand für die Anwendung beim Kunden zu
+  haben. Ein Beispiel für solche Clouds ist
+  Google~Apps~\cite{Google-Apps}, womit \zB Büroapplikationen (neben
+  anderen) als Service angeboten werden.
+\item[PaaS] 
+\item[IaaS]
+\end{description}
+
 
 
 
