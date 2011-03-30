@@ -157,7 +157,7 @@ PaaS vs IaaS.}
 Bei Betrachtung der verschiedenen Ebenen, auf denen Virtualisierung
 von Ausführungsumgebungen möglich ist, stellt sich die Frage, welche
 davon sich als "`Cloud-Ebene"' eignen.~\cite{Gebhart2010:Virtualization-}
-\begin{description}
+\begin{description}[\IEEEsetlabelwidth{PaaS}]
 \item[SaaS] Auf Applikationsebene (vgl. \autoref{fig:levels}) können
   Anwendungen in "`Cloud-Manier"' bereit gestellt werden. Der Anbieter
   der \acfi{SaaS}-Lösung hält dafür (zumeist mehrere) Installationen
@@ -165,13 +165,35 @@ davon sich als "`Cloud-Ebene"' eignen.~\cite{Gebhart2010:Virtualization-}
   irgendeinen Installationsaufwand für die Anwendung beim Kunden zu
   haben. Ein Beispiel für solche Clouds ist
   Google~Apps~\cite{Google-Apps}, womit \zB Büroapplikationen (neben
-  anderen) als Service angeboten werden.
+  anderen) als Dienst angeboten werden.
 
   Im Zusammenhang mit \ac{SaaS} ist Live-Migration zumeist
   uninteressant; wo eine Anwendung läuft spielt in diesem Zusammenhang
-  eine untergeordnete Rolle.
-\item[PaaS] 
+  eine untergeordnete Rolle. Auf Anbieterseite kann Migration und
+  Live-Migration ein Thema sein, ist aber von Anwendung zu Anwendung
+  gesondert zu Betrachten. Für einzelne Anwendungen kommt
+  gegebenenfalls Prozessmigration in Frage, bei komplexeren, viele
+  Prozesse umspannenden Anwendungen wird zumeist die Migration der
+  unterliegenden Ausführungsumgebung, insbesondere Betriebssystem,
+  vorgezogen (vgl.~IaaS).
+\item[PaaS] Auch auf Applikationsebene, ist bei \acfi{PaaS} nicht eine
+  Anwendung, sondern eine Platform Gegenstand. Nutzer dieser Clouds
+  bekommen so eine Art Middleware oder Ausführungsumgebungen
+  bestimmter Programmiersprachen bereit gestellt, zum Teil auch
+  Entwicklungsumgebungen. Beispielsweise stellt Google mit
+  App~Engine~\cite{Google-App-Engi} eine JVM-basierte
+  Ausführungsumgebung bereit, auf die die Nutzer ihre eigenen
+  Webanwendungen ausliefern können.
   
+  An sich ist \ac{PaaS} eine spezialisierte Form von \ac{SaaS}, nur
+  der bereitgestellte Dienst ist insbesondere eine
+  Ausführungsumgebung. Auch hier ist Live-Migration weniger relevant;
+  Nutzer, die ihre Anwendungen bei einem \ac{PaaS}-Anbieter laufen
+  lassen, unterscheiden sich kaum von Nutzern, die eine
+  \ac{SaaS}-Anwendung nutzen: wo die Anwendung läuft ist kaum
+  interessant. Für Anbieter bietet sich wieder Prozessmigration an
+  oder, je nach angebotener Platform, traditionelle ausfalltolerante,
+  lastverteilungsbasierte Konfigurationen der Platform.
 \item[IaaS]
 
 \end{description}
