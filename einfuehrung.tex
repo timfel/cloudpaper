@@ -37,11 +37,58 @@ ohne herunterfahren auf einen anderen Server migriert wurde.
 - Derzeit Rechner im Rechenzentrum
 - Cluster
 - Grid
-- Probleme:
+
+\paragraph*{Mögliche Probleme}
+\label{sec:mogliche-probleme}
+
+\onlydraft{- Probleme:
   - Ungleichmäßige Auslastung
   - Wartungskosten (Admins)
   - Downtime bei Upgrades/HW-Problemen
   - Operationskosten (Strom)
+}
+
+Beim traditionellen Betrieb eines Rechenzentrums können jedoch
+wirtschaftliche Probleme auftreten. 
+
+Das Aufstocken von Hardware oder reagieren auf Hardware-Probleme ist
+Tagesgeschäft in Rechenzentren. Nichtsdestoweniger sind
+\emph{Ausfallzeiten} bei solchen Arbeiten unvermeidbar, sofern man
+nicht mit Grid- oder Clustertechnologie arbeitet. 
+
+Ein Server ist dann für den Betreiber am effizientesten, wenn er
+möglichst ausgelastet ist~\cite{Schwarzer2010:Cloud-Hype-Tren}. Nun
+ist bei vielen Anwendungen, die auf solchen Servern laufen mit
+Lastspitzen aus den verschiedensten Gründen zu rechnen, wie das
+Verarbeiten von Batch-Jobs am Monatsende, das bei vielen
+\ac{ERP}-Systemen üblich ist. Auch das plötzliche Bekanntwerden vorher
+eher unbekannter Anwendungen (insbesondere Webseiten), bekannt als
+\emph{Slashdot effect}~\cite{halavais2001slashdot}, kann solche
+Lastspitzen auslösen. Während erstere planbar sind, können letztere
+unerwartet auftreten. Aus diesem Grund muss dafür Sorge getragen
+werden, dass für Lastspitzen ausreichend Pufferkapazitäten vorhanden
+sind. Eine \emph{gleichmäßig hohe Auslastung} ist damit traditionell
+kaum möglich, selbst wenn Anwendungen in einem Cluster betrieben
+werden.
+
+Das Betreiben von Servern zieht neben den Beschaffungskosten noch
+\emph{laufende Kosten} nach sich, abgesehen von Software sind das
+insbesondere Strom und gegebenenfalls Kosten aus Wartungsverträgen.
+Auch das Personal, das die Server betreibt, ist zu bezahlen.
+\medskip
+
+Anbieter von Cloud-Computing-Platformen argumentieren, dass die
+genannten Probleme durch ihre Platformen zumindest in großen Teilen
+gelöst wird\cite{heroku,engineyard,openstack}. Insbesondere wenn es um
+Infrastruktur, also Betriebssysteme etc., als Dienst geht, ist die
+Virtualisierung dieser Infrastruktur die Grundlage, um einen solchen
+Cloud-Dienst bereitzustellen.\cite{nomadbioslivemigration-cloudseminar}.
+
+
+
+
+
+
 
 \subsection{Cloud-Computing und Virtualisierung}
 \label{sec:ziel}
