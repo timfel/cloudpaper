@@ -217,7 +217,7 @@ werden oder der für die Domäne verfügbarer Speicher verändert
 wird~\cite{2010:Oracle-VM-Serve}. Als Betriebssystem in den \acp{ldom}
 sind praktisch nur Solaris (und -- dank Linux-Kern-Emulation in
 bestimmten Solaris Zones -- ältere Linux) bekannt, theoretisch ist es
-aber möglich, beliebige Betriebssystem, die SPARC-Tx-Prozessoren
+aber möglich, beliebige Betriebssysteme, die SPARC-Tx-Prozessoren
 unterstützen, zu nutzen; so \zB natives
 Linux~\cite{Chartre:Linux-with-LDom}.
 
@@ -233,7 +233,24 @@ gemäß ihrer Ziele und Beschreibungen kurz mit den entsprechenden
 Beispielanwendungen in Beziehung setzen. Dieser Vergleich basiert zum
 größten Teil auf den Informationen der Hersteller.
 
-\paragraph{Verlässlichkeit}
+\begin{table*}[htbp]
+  \caption{Anwendung-Anbieter-Matrix}
+  \centering
+  \normalsize
+  \begin{tabular}[h]{r|c c c c}
+    & VMWare & IBM & HP & Oracle \\
+    Verlässlichkeit & \checked & \checked & \checked &  \\
+    Interoperabilität & \checked & \checked & &  \\
+    Inter-Cloud Verschiebungen & & \checked & (\checked) & \\
+    Hardware Maintenance & \checked & (\checked) & \checked & (\checked) \\
+    Adaptive Auslastung & \checked & \checked & \checked & (\checked) \\
+    Erzwungene Verschiebungen & & (\checked) & (\checked) & \\
+  \end{tabular}
+ \label{tab:anw-anb-matrix}
+\end{table*}
+
+
+\paragraph*{Verlässlichkeit}
 Hardware-Fehler sind ein Problem das sich nicht in absehbarer Zeit
 lösen lässt. Virtualisierung bietet allerdings die Möglichkeit,
 angebotene Dienste von physikalischer Hardware zu entkoppeln. Mit
@@ -256,7 +273,7 @@ APIs wurden ebenfalls explizit mit dem Gedanken erstellt, Migration
 geeignet, um Dienste gegen weitreichende Hardware-Ausfälle
 abzusichern.
 
-\paragraph{Interoperabilität}
+\paragraph*{Interoperabilität}
 Virtualisierungslösungen existieren unabhängig von der Cloud
 (\autoref{sec:def-virtualisierung}) und es besteht Interesse, die
 Abhängigkeit von einem bestimmten Hersteller so gering wie möglich zu
@@ -286,7 +303,7 @@ dem verwendeten Speicher wird es ermöglichen, zwischen zu den
 beschriebenen Schnittstellen kompatiblen Systemen dynamisch zu
 migrieren.
 
-\paragraph{Inter-Cloud Verschiebungen}
+\paragraph*{Inter-Cloud Verschiebungen}
 Ebenso wie die Abhängigkeit von einer Virtualisierungslösung, soll die
 Bindung an einen Cloud-Anbieter möglichst schwach bleiben. Deshalb
 sollte es möglich sein, Dienste auch zwischen Clouds zu verschieben.
@@ -304,7 +321,7 @@ möglich wird auch das allerdings erst, wenn die \reservoir
 Schnittstellen oder die vorgeschlagenen Cloudstandards von vielen
 Lösungen implementiert werden.
 
-\paragraph{Hardware-Maintenance}
+\paragraph*{Hardware-Maintenance}
 Die Kosten alte Hardware am Laufen zu halten übersteigen nach einiger
 Zeit immer die Anschaffungskosten für neue, bessere Hardware. Deshalb
 ist es im Interesse eines Unternehmens, neue Hardware nutzen zu
@@ -324,7 +341,7 @@ zu müssen, allerdings ist eine Live-Migration auf einen komplett neuen
 Server nicht möglich. Deshalb ist auch die Oracle Lösung nur bis zu
 einem gewissen Punkt für diesen Anwendungsfall geeignet.
 
-\paragraph{Adaptive Auslastung}
+\paragraph*{Adaptive Auslastung}
 Dienste, die sich auf bestimmte Zielgruppen, Länder oder Themengebiete
 spezialisieren, sehen oft stark schwankende Nutzerzahlen, sei es, weil
 bestimmte Ereignisse Zugriffe in die Höhe treiben, oder schlicht weil
@@ -349,7 +366,7 @@ Lastspitzen können vom System schlicht nicht kompensiert werden, bei
 zu geringer Auslastung kann jedoch auch nicht Hardware abgestellt
 werden, um Stromkosten zu sparen.
 
-\paragraph{Erzwungene Verschiebungen}
+\paragraph*{Erzwungene Verschiebungen}
 In manchem Anwendungsgebieten müssen Dienste an bestimmten
 geografischen Orten ausgeführt werden, sei es aus Sicherheitsgründen
 oder weil ein Gesetz es vorschreibt. Ein Anbieter von
@@ -370,20 +387,6 @@ geeignet, da sie, laut Spezifikation, die Möglichkeit bieten sollen,
 derlei Einschränkungen an den Ort der VM-Daten zu konfigurieren. Damit
 ließe sich eine allgemeine Lösung auch automatisieren.
 
-\begin{table}[tb]
-  \caption{Anwendung --- Anbieter Matrix}
-  \centering
-  \begin{tabular}[h]{c|c c c c}
-    & VMWare & IBM & HP & Oracle \\
-    Verlässlichkeit & \checked & \checked & \checked &  \\
-    Interoperabilität & \checked & \checked & &  \\
-    Inter-Cloud Verschiebungen & & \checked & (\checked) & \\
-    Hardware Maintenance & \checked & (\checked) & \checked & (\checked) \\
-    Adaptive Auslastung & \checked & \checked & \checked & (\checked) \\
-    Erzwungene Verschiebungen & & (\checked) & (\checked) & \\
-  \end{tabular}
- \label{tab:anw-anb-matrix}
-\end{table}
 
 %%% Local Variables:
 %%% mode: latex

@@ -1,5 +1,9 @@
 \newcommand*\hairspace{\penalty10000\hspace{0.04em}}
 \newcommand*\zB{z.\hairspace{}B.\xspace}
+\addto\extrasngerman{%
+\let\subsectionautorefname\sectionautorefname
+\let\subsubsectionautorefname\sectionautorefname
+}
 
 \newacronym{ldom}{Logical Domain}
 \newacronym{VM}[s]{Virtuelle Maschine}[n]
@@ -14,7 +18,7 @@
 \newacronym{VEE}{Virtual Execution Environment}
 \newacronym{SLA}{Service Level Agreement}
 \newacronym{API}{Application Programming Interface}
-\newcommand\reservoir{{\small\sc RESERVOIR}\xspace}
+\newcommand\reservoir{{\MakeTextLowercase{\scshape RESERVOIR}}\xspace}
 
 %%% Local Variables:
 %%% mode: latex

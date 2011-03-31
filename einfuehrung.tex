@@ -49,9 +49,10 @@ helfen kann, zeigen wir
   - Downtime bei Upgrades/HW-Problemen
   - Operationskosten (Strom)
 
-\subsection{Die Cloud als Ziel}
-\label{sec:sota}
-- Public vs Private
+\subsection{Cloud-Computing und Virtualisierung}
+\label{sec:ziel}
+
+\onlydraft{- Public vs Private
 Für potentielle Nutzer einer Cloud Lösung präsentieren sich derzeit
 zwei Möglichkeiten: Eine eigene, business-interne Cloud Plattform zu
 installieren, oder 
@@ -64,6 +65,14 @@ Ich will scalieren:
 \item Private Cloud
 \end{itemize}
 - Um zu entscheiden zunächst wissen, {\bf was} in die cloud geht
+}
+
+Wenn es um Cloud-Computing und Virtualisierung geht, stellt sich die
+Frage, was an sich Virtualisiert werden soll und überhaupt mit
+Cloud-Computing unterstützbar ist. Neben der Frage nach dem Was, ist
+auch interessant, wo zwischen Systemplatine und Endbenutzeranwendung
+Virtualisierung stattfinden kann. Dies soll im Folgenden beleuchtet werden.
+
 
 \subsubsection{Level der Virtualisierung}
 \label{sec:def-virtualisierung}
@@ -150,7 +159,7 @@ letzteres \acp{VM} wie die
 JVM~\cite{Sun-Developer-Network2003:The-Java-Virtua} oder
 Smalltalk-Implementierungen~\cite{ansiSmalltalk}.
 
-\subsubsection{Virtualisierung und die Cloud}
+\subsubsection{Cloud-Computingansätze}
 
 \onlydraft{Auf welchen Ebenen gibt es "`Clouds"', welche Ebene betrachten wir,
 PaaS vs IaaS.}
@@ -221,14 +230,13 @@ davon sich als "`Cloud-Ebene"' eignen.~\cite{Gebhart2010:Virtualization-}
   VirtualBox, VMWare ESXi oder Oracle Dynamic System Domains betrieben wird.
 \end{description}
 
-
-
-
-
+Live-Migration im Kontext von Cloud-Computing ist somit hauptsächlich
+bei \ac{IaaS}  anzutreffen. Entsprechend wird im Folgenden vorrangig
+\ac{IaaS} besprochen.
 
 
 \subsection{Herausforderungen des Cloud-Computing}
-Probleme:
+\onlydraft{Probleme:
 \begin{itemize}
 \item Public
   \begin{itemize}
@@ -246,6 +254,102 @@ Probleme:
   \item Virtualisierung 
   \end{itemize}
 \end{itemize}
+}
+
+Oft wird in letzter Zeit, wenn der Begriff Cloud-Computing benutzt
+wird, zwischen \emph{public cloud} und \emph{private cloud}
+unterschieden. Zur \emph{public cloud} gehören alle Anbieter von
+Cloud-Diensten, von \ac{SaaS} bis \ac{IaaS}, die auf dem Markt
+auftreten; im Gegensatz dazu sind \emph{private clouds} an ein
+Unternehmen -- oder Betreiber -- gebunden und im Normalfall der
+Öffentlichkeit nicht zugänglich ~\cite{Wagener2010:Cloud-Computing}.
+Zumeist geht es bei dieser Weise, Cloud-Computing zu betreiben, um
+\ac{IaaS}. Die Idee der \emph{private cloud} hat sich in den letzten
+Jahren aus dem bis dahin im Allgemeinen öffentlichen, das heißt, durch
+nich-unternehmenseigene Firmen betrieben, Cloud-Computing gebildet:
+Unternehmen, die die Vorteile davon nutzen wollten, hatten gewisse
+Herausforderungen zu bewältigen.
+
+\paragraph*{Anbieterbindung}
+\label{sec:anbieterbindung}
+
+Wählt ein Unternehmen einen bestimmten Cloud-Computing-Anbieter, heißt
+das bis dato, sich langfristig an diesen zu binden. Proprietäre oder
+zumindest inkompatible Cloud-Computing-Platformen machen ein
+zukünftiges Wechseln schwierig, von Live-Migration von Anbieter zu
+Anbieter ganz zu Schweigen. 
+
+\paragraph*{Anforderungen an den Standort}
+\label{sec:anforderungen-an-den}
+
+Aufgrund gesetzlicher Bestimmungen ist es bisweilen notwendig,
+sicherzustellen, das die Verarbeitung bestimmter Daten an einem
+gestimmten geographischen Ort stattfindet, \zB einem bestimmten
+Staatsgebiet. Bei \emph{public cloud}-Betreibern ist es zumeist nicht
+möglich das zu gewährleisten. Sollte das doch der Fall sein, kann ein
+Unternehmen trotzdem Interesse daran haben, das zumindest bestimmte
+Teile der Datenverarbeitung "`innerhalb"' des Unternehmens
+stattfinden.
+
+\medskip
+
+Das einrichten von in Cloud-Manier betriebenen Rechenzentren in
+Unternehmen, führt nun dazu, dass diese beiden Probleme angegangen
+werden können, das Unternehmen betreibt nun eine \emph{private cloud}.
+Es bleiben jedoch noch Herausforderungen, die der privaten und der
+öffentlichen Variante gemein sind oder gar durch das private Betreiben
+hinzukommen.~\cite{Schwarzer2010:Cloud-Hype-Tren}
+
+\paragraph*{Skalierungsplanung}
+\label{sec:skalierungsplanung}
+
+Bei den meist als Entwicklungsprojekte betriebenen
+Cloud-Computing-Projekten ist für Unternehmen oft im Vorhinein nicht
+klar, wie stark eine Skalierung später notwendig ist. Zumeist
+\ac{IaaS}-Projekte, birgt eine zu sparsame Konfiguration das Risiko,
+potentiell nicht schnell genug auf Lastspitzen reagieren zu können,
+wenn das Projekt plötzlich sehr stark Genutzt wird~\cite{whoever1}.
+Andersherum kann eine zu großzügige Konfiguration zu kostenintensiv
+sein, ob nun \emph{private} oder \emph{public}. Anpassbare
+\ac{IaaS}-Konfigurationen sind daher wünschenswert. Im Rahmen von
+Betriebssystemvirtualisierung mit \acfp{VM} ist das auch durchführbar,
+stößt aber auch an seine Grenzen: benötigt eine \ac{VM} plötzlich weit
+mehr Speicher als vorher, weil \zB die Datenbank des betriebenen
+Projektes stark vergrößert wurde, ist die Grenze der Speicher, der
+physisch verfügbar ist. Wachsen die Anforderungen darüber hinaus, kann
+das Verschieben der \ac{VM} auf Hardware mit mehr Speicher Abhilfe
+schaffen. Live-Migration kann hier helfen, Ausfallzeiten gering zu
+halten.
+
+
+\paragraph*{Auslastungsplanung}
+\label{sec:auslastungsplanung}
+
+Eine Herausforderung, auf die Cloud-Computing konzeptuell überhaupt
+reagieren sollte, ist, die vorhandene Hardware bestmöglich, das heißt,
+gleichmäßig hoch auszulasten. Nutz man öffentliche Cloud-Anbieter, ist
+das für ein Unternehmen als Kunden kein Problem, bei privat
+betriebenen Clouds muss das jedoch bedacht werden. Das Konsolidieren
+von sonst einzelnen Betriebssystem auf einen Server mittels
+Virtualisierung ist eine Möglichkeit, eine verbesserte Auslastung von
+Hardware zu ermöglichen. Auslastungsplanung und Konsolidierung ist
+jedoch auch im Kontext von Skalierungsplanung zu betrachten. Das
+heißt, dass hier normalerweise eine Abwägung zwischen guter Auslastung
+und Lastspitzensicherheit geschehen muss. Live-Migration von \acp{VM}
+kann helfen, beides in gewisser Weise zu ermöglichen: Wird eine
+\ac{VM} unter Normalbedingungen zusammen mit anderen auf einer
+Hardware betrieben, ist es doch möglich, bei Lastspitzen die \ac{VM}
+auf eine andere, gegebenenfalls eigene, Hardware zu verschieben.
+
+\paragraph*{Wartung}
+\label{sec:wartung}
+
+In jedem Rechenzentrum gehört der Ausfall von Hardware, aber auch das
+Aufstocken oder Austauschen dieser zum Tagesgeschäft. Dies ist im
+Normalfall mit Ausfallzeiten verbunden. Das Verschieben von \acp{VM}
+auf andere Hardware und nachfolgende Wartungsarbeiten an der
+Vorherigen hilft, Ausfallzeiten zu minimieren.
+
 
 %%% Local Variables: 
 %%% mode: latex
