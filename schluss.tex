@@ -1,7 +1,40 @@
-\section{Schlussfolgerungen, Zusammenfassung}
+\section{Schlussfolgerungen}
+\onlydraft{
 Überblick über die Bewertung der Systeme
 Überblick über die Eignung für den Produktiveinsatz
 Ausblick für weitere Entwicklung der VM-Verschiebung
+}
+
+Keines der betrachteten Systeme kann die gestellen Anforderungen in
+vollem Umfang erfüllen. Gleichwohl bietet die Kombination der von IBM
+vorgestellten Techniken, insbesondere durch die Implementierung der
+vorgeschlagenen Standards, schon ein hohes Maß gut handhabbarer und
+konfigurierbarer Live-Migration von \acp{VM}. Während sich die
+Lösungen von VMWare eher in Richtung dynamischer Anpassung von
+\ac{VM}-Infrastruktur orientieren, sind die von HP bereitgestellten
+Techniken eher auf Ausfallsicherheit und eine sehr hohe Verfügbarkeit
+ausgelegt. Beide lassen aber bei der Interoperabilität miteinander und
+auch mit anderen Live-Migrationssystemen noch Spielraum. Es
+ist zu wünschen, dass sich auf Standards dafür geeinigt wird,
+gegebenenfalls auch die von IBM vorgeschlagenen. Die \ac{ldom}-Lösung von
+Oracle hat einen hohen Hardwarebezug, wodurch der Vergleich mit
+anderen Anbietern schwierig ist. 
+
+Momentan bietet es sich an, wenn schon eine Virtualisieungslösung
+einer der Anbieter im Einsatz ist, dessen Live-Migrationsfähigkeiten
+zu prüfen und zu nutzen. Zum aktuellen Zeitpunkt ist es jedoch nicht
+möglich, eine allgemeine Empfehlung für oder gegen eine bestimmte
+Lösung auszusprechen. Das Wechseln der Virtualisierungslösung nur zum
+Zweck, die entsprechende Live-Migrationsfähigkeit zu nutzen, lohnt
+momentan nicht.
+
+In Zukunft ist mit einer weitergehenden Standardisierung der an
+Live-Migration beteiligten Techniken zu Rechnen, die Anbieter scheinen
+auch daran Interesse zu haben. Es ist damit zu rechnen, dass
+Live-Migration, genau wie Virtualisierung, eine Normalität beim
+Serverbetrieb werden wird.
+
+
 
 %%% Local Variables: 
 %%% mode: latex

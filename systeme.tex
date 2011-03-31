@@ -48,7 +48,7 @@ Für die eigentliche Migration implementiert das NomadBIOS ein
 \emph{Precopy} Scheme, wie es bereits aus der Prozessmigration bekannt
 ist~\cite{hansen2002nomadic}.
 \begin{enumerate}
-\item In Abbildung~\ref{fig:nomad_stage1} ist der Startzustand der
+\item In \autoref{fig:nomad_stage1} ist der Startzustand der
   Migration dargestellt. Initial ist der Zustand allen Speichers auf
   dem Zielsystem unbekannt (helles Grau). Der gesamte Speicher vom
   Ursprungssystem muss zum Kopieren ausgewählt werden (rot). Der
@@ -62,7 +62,7 @@ ist~\cite{hansen2002nomadic}.
 \item Nach einem ersten Kopierdurchlauf werden so eine Reihe von
   Speicherseiten noch zum Kopieren markiert worden sein. Es ist nicht
   klar ob diese Seiten vor oder nach der letzten Manipulation zum
-  Zielsystem kopiert wurden (Abb.~\ref{fig:nomad_stage2}). Diese
+  Zielsystem kopiert wurden (\autoref{fig:nomad_stage2}). Diese
   können nun in einem weiteren, kürzeren Kopierdurchlauf mit dem
   Zielsystem synchronisiert werden. Da dieser zweite Kopiervorgang
   schneller vonstatten geht, werden währenddessen weniger Seiten
@@ -72,7 +72,7 @@ ist~\cite{hansen2002nomadic}.
   wenigen Millisekunden kopiert werden kann. In diesem Moment wird der
   Gastprozess auf dem Ursprungssystem eingefroren, die restlichen
   Seiten kopiert, und auf dem Zielsystem gestartet
-  (Abb.~\ref{fig:nomad_stage3}). Wenn im gleichen Moment auch das
+  (\autoref{fig:nomad_stage3}). Wenn im gleichen Moment auch das
   Routing angepasst wird, so kann die \ac{VM} direkt weiterarbeiten, ohne
   das Benutzer mehr als einen kurzen Latenzanstieg bemerken.
 \end{enumerate}
@@ -327,7 +327,7 @@ Zeit immer die Anschaffungskosten für neue, bessere Hardware. Deshalb
 ist es im Interesse eines Unternehmens, neue Hardware nutzen zu
 können, ohne Verfügbarkeit einschränken zu müssen.
 
-Hier punkten die Integrierten Lösungen von HP, Oracle und VMWare, da
+Hier punkten die integrierten Lösungen von HP, Oracle und VMWare, da
 sie bereits die Abstraktion von Ressourcen ermöglichen, und Verwaltung
 von Hardware als \emph{Resource Pools} vereinheitlichen. Dabei kann
 neue Hardware hinzugefügt und alte entfernt werden, und das System
@@ -384,7 +384,7 @@ wenn es eine Replikation der Daten an verschiedenen Orten
 gibt. Trotzdem scheint das derzeit die einzige verfügbare Lösung zu
 sein.  Einzig die von IBM vorgeschlagenen \acp{VEEM} wären hier besser
 geeignet, da sie, laut Spezifikation, die Möglichkeit bieten sollen,
-derlei Einschränkungen an den Ort der VM-Daten zu konfigurieren. Damit
+derlei Einschränkungen an den Ort der \ac{VM}-Daten zu konfigurieren. Damit
 ließe sich eine allgemeine Lösung auch automatisieren.
 
 
