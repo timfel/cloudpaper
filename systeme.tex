@@ -97,7 +97,7 @@ darin \acp{VM} innerhalb eines Netzwerkes mit gemeinsamem Speicher wandern
 zu lassen, um größtmögliche Ressourcennutzung zu erzielen. Dazu bietet
 VMWare vMotion die Möglichkeit, sog. \emph{Resource Pools} zu
 definieren, in denen \acp{VM} fortwährend automatisiert wandern
-können. 
+können.
 
 Um höhere Verfügbarkeit zu gewährleisten, weicht vMotion vom oben
 etablierten Precopy-Schema ab~\cite{nelson2005fast}. Im letzten
@@ -224,36 +224,163 @@ unterstützen, zu nutzen; so \zB natives Linux~\cite{Chartre:Linux-with-LDom}.
 
 \subsection{Vergleich}
 Wir kehren nun zurück zu den zuvor beschriebenen Anwendungsfällen für
-\ac{VM}-Live-Migration (\autoref{sec:livemigration}). Die Fähigkeiten und Ziele
-der in \autoref{sec:live-migr-syst} beschriebenen Lösungen
-machen sie unterschiedlich gut für die beschriebenen Zwecke
-einsetzbar (\autoref{tab:anw-anb-matrix}). \emph{Notabene: } Für
-Oracle wurde nur die \ac{ldom}-Variante betrachtet.
+\ac{VM}-Live-Migration (\autoref{sec:livemigration}). Die Fähigkeiten
+und Ziele der in \autoref{sec:live-migr-syst} beschriebenen Lösungen
+machen sie unterschiedlich gut für die beschriebenen Zwecke einsetzbar
+(\autoref{tab:anw-anb-matrix}). Im Folgenden werden wir die Systeme
+gemäß ihrer Ziele und Beschreibungen kurz mit den entsprechenden
+Beispielanwendungen in Beziehung setzen. Dieser Vergleich basiert zum
+größten Teil auf den Informationen der Hersteller.
 
-\onlydraft{
-Vergleich der Eignung als Lösung für die oben genannten Probleme
-zwischen dem von Dr. Jacob Gorm Hansen vorgestellen System und den Alternativen.
-}
+\paragraph{Verlässlichkeit}
+Hardware-Fehler sind ein Problem das sich nicht in absehbarer Zeit
+lösen lässt. Virtualisierung bietet allerdings die Möglichkeit,
+angebotene Dienste von physikalischer Hardware zu entkoppeln. Mit
+Live-Migration kann mit einigen Hardwarefehlern umgegangen werden,
+ohne dass deshalb der oder die Dienste, die gerade auf der Hardware
+laufen, abgeschaltet werden müssen.
 
+Mit Ausnahme der Solaris basierten Lösung können alle vorgestellten
+Systeme mit diesem Szenario umgehen. VMWare hat mit vMotion
+out-of-the-box hier wohl die engsten Begrenzungen, da \ac{SAN}
+bzw. \ac{NAS} Server gemeinsam von Quell- und Zielsystemen erreichbar
+sein müssen. Das heißt, dass der Ausfall eines gesamten Rechenzentrums
+nicht ohne Mehraufwand kompensierbar ist, da hierfür Replikation des
+Netzwerkspeichers getrennt gelöst werden muss. Hier bietet HP mit
+\ac{CLX} \& HyperV die integrierte Lösung, und macht sogar explizit
+Werbung mit der Migration von Streaming-Services sogar bei
+katastrophalen Fehlern in einem Rechenzentrum. Die von IBM erstellten
+APIs wurden ebenfalls explizit mit dem Gedanken erstellt, Migration
+über große Entfernungen zu ermöglichen, und sind deshalb per-se
+geeignet, um Dienste gegen weitreichende Hardware-Ausfälle
+abzusichern.
+\paragraph{Interoperabilität}
+Virtualisierungslösungen existieren unabhängig von der Cloud
+(\autoref{sec:def-virtualisierung}) und es besteht Interesse, die
+Abhängigkeit von einem bestimmten Hersteller so gering wie möglich zu
+halten, indem bei den verwendeten Systemen auf Interoperabilität
+geachtet wird. Live-Migration ist hier interessant, damit beim Wechsel
+der Virtualisierungslösung nicht Dienste offline gehen müssen.
 
-\begin{table}[tb] 
+Hier sind die para-virtualisierenden Systeme (Xen, \ac{KVM})
+eingeschränkter, da am Gast-System Anpassungen vorgenommen werden
+müssen, die u.U. nicht im Betrieb zu ändern sind, weshalb man nicht
+einfach ein System in ein anderes übertragen kann. Bei Solaris Zones
+ist ein Gastsystem meist gar kein vollständiges System, sondern teilt
+wesentliche Teile der POSIX Umgebung mit den anderen Gästen und dem
+Host. Ein Extrahieren eines einzelnen Gastes ist gar nicht ohne
+weiteres möglich. VMWare ESX, als das vorgestellte System mit dem
+höchsten Level der Virtualisierung, macht das Umwandeln in andere
+Systeme derzeit am leichtesten, da Speicher im Netzwerk liegt und
+weite Teile der Hardware virtualisiert sind, weshalb Gastssysteme hier
+auch ohne Anpassungen laufen können. Aber auch hier ist eine
+Live-Migration in ein anderes System unseres Wissens nicht möglich.
+
+Auf Dauer ist das RESERVOIR Projekt von IBM am ehesten geeignet, die
+Beschränkungen beim Umstieg von einem System auf das andere
+Aufzuheben, und tatsächlich Live-Migration zwischen den Systemen zu
+bieten. Die Abstraktion von verwendeten Hypervisor-Technologien und
+dem verwendeten Speicher wird es ermöglichen, zwischen zu den
+beschriebenen Schnittstellen kompatiblen Systemen dynamisch zu
+migrieren.
+\paragraph{Inter-Cloud Verschiebungen}
+Ebenso wie die Abhängigkeit von einer Virtualisierungslösung, soll die
+Bindung an einen Cloud-Anbieter möglichst schwach bleiben. Deshalb
+sollte es möglich sein, Dienste auch zwischen Clouds zu verschieben.
+
+Derzeit gibt es keinen einheitlichen Standard für Live-Migration und
+die verwendeten Protokolle. Wie bereits angemerkt unterstützen mit
+Ausnahme von HP und IBM die Systeme von sich aus gar keine
+Verschiebung zwischen Netzwerken mit getrenntem Speicher. Weiterhin
+sind die Schnittstellen und APIs der Hypervisoren nicht einheitlich,
+was eine Migration zwischen Clouds mit verschiedenen
+Virtualisierungstechnologien erschwert. Derzeit ist u.U. möglich über
+Umwege wie selbst eingerichtete Replikation zwischen Cloud-Anbietern
+mit denselben Technologien Live-Migration durchzuführen. Wirklich
+möglich wird auch das allerdings erst, wenn die RESERVOIR
+Schnittstellen oder die vorgeschlagenen Cloudstandards von vielen
+Lösungen implementiert werden.
+\paragraph{Hardware-Maintenance}
+Die Kosten alte Hardware am Laufen zu halten übersteigen nach einiger
+Zeit immer die Anschaffungskosten für neue, bessere Hardware. Deshalb
+ist es im Interesse eines Unternehmens, neue Hardware nutzen zu
+können, ohne Verfügbarkeit einschränken zu müssen.
+
+Hier punkten die Integrierten Lösungen von HP, Oracle und VMWare, da
+sie bereits die Abstraktion von Ressourcen ermöglichen, und Verwaltung
+von Hardware als \emph{Resource Pools} vereinheitlichen. Dabei kann
+neue Hardware hinzugefügt und alte entfernt werden, und das System
+konfiguriert sich selbst neu und verteilt die Last automatisch auf die
+neu verfügbaren Nodes. Auch IBM kennt diese Abstraktion in Form von
+\acp{VEE}, allerdings muss diese Lösung noch entsprechend weitreichend
+implementiert werden.  Bei der Solaris basierten Lösung ist wieder die
+Einschränkung zu beachten, dass zwar Hardware eines Systems
+aufgestockt und ausgetauscht werden kann, ohne Gast-VMs herunterfahren
+zu müssen, allerdings ist eine Live-Migration auf einen komplett neuen
+Server nicht möglich. Deshalb ist auch die Oracle Lösung nur bis zu
+einem gewissen Punkt für diesen Anwendungsfall geeignet.
+\paragraph{Adaptive Auslastung}
+Dienste, die sich auf bestimmte Zielgruppen, Länder oder Themengebiete
+spezialisieren, sehen oft stark schwankende Nutzerzahlen, sei es, weil
+bestimmte Ereignisse Zugriffe in die Höhe treiben, oder schlicht weil
+die Zielgruppe generell im selben Land zu finden ist, und tendenziell
+zu ähnlichen Zeiten den Dienst in Anspruch nimmt. Als Anbieter hat man
+hier ein Interesse daran, nur die Menge an Hosting-Kosten zu zahlen,
+die zu einem gegebenen Zeitpunkt benötigt wird. Dazu kann
+Live-Migration beitragen, indem Dienste je nach Last auf schnellere
+oder langsamere Systeme verschoben werden, und so mehr oder weniger
+CPU Zeit bekommen.
+
+Hier sind alle vorgestellten Systeme einsetzbar, der Umfang der
+Schwankungen sollte über die Auswahl entscheiden. Bei vMotion und
+\ac{CLX} sind relativ weitreichende Änderungen der physikalischen
+Hardware beim Migrieren möglich, was in bei einer hohen Varianz der
+verwendeten Hardware nützlich ist. Bei den von IBM unterstützten
+Lösungen Xen und \ac{KVM} müssen die unterliegenden Systeme relativ
+ähnlich sein, was die Hardwareauswahl einschränkt. Bei Solaris
+basierten Lösungen, schließlich, ist lediglich die Ressourcenzuteilung
+variabel. Das wiederum schränkt Schwankungen stark ein, zu hohe
+Lastspitzen können vom System schlicht nicht kompensiert werden, bei
+zu geringer Auslastung kann jedoch auch nicht Hardware abgestellt
+werden, um Stromkosten zu sparen.
+
+\paragraph{Erzwungene Verschiebungen}
+In manchem Anwendungsgebieten müssen Dienste an bestimmten
+geografischen Orten ausgeführt werden, sei es aus Sicherheitsgründen
+oder weil ein Gesetz es vorschreibt. Ein Anbieter von
+Datenverarbeitungsdiensten möchte nicht jedes mal, wenn eine solche
+Einschränkung in Kraft tritt, bestehende, und möglicherweise lang
+laufende Jobs abbrechen, um sie an einem anderen Ort neu zu starten.
+
+Die Solaris Lösung fällt hier durch, da Migration über geografische
+Entfernungen nicht möglich sind. Auch vMotion ist ungeeignet, da nicht
+ohne weiteres zwischen entfernten Netzwerken migriert werden kann. HP
+bietet hier zwar mit der \ac{CLX} eine Lösung, allerdings steht
+zumindest zu vermuten, dass die reine Ausführung an anderer Stelle
+nicht eventuellen Sicherheits- oder Gesetzesrichtlinien entspricht,
+wenn es eine Replikation der Daten an verschiedenen Orten
+gibt. Trotzdem scheint das derzeit die einzige verfügbare Lösung zu
+sein.  Einzig die von IBM vorgeschlagenen \acp{VEEM} wären hier besser
+geeignet, da sie, laut Spezifikation, die Möglichkeit bieten sollen,
+derlei Einschränkungen an den Ort der VM-Daten zu konfigurieren. Damit
+ließe sich eine allgemeine Lösung auch automatisieren.
+
+\begin{table}[tb]
   \caption{Anwendung --- Anbieter Matrix}
   \centering
   \begin{tabular}[h]{c|c c c c}
     & VMWare & IBM & HP & Oracle \\
-    Verlässlichkeit & & \checked & &  \\
+    Verlässlichkeit & \checked & \checked & \checked &  \\
     Interoperabilität & \checked & \checked & &  \\
     Inter-Cloud Verschiebungen & & \checked & & \\
-    Hardware Maintenance & \checked & \checked & \checked & \\
-    Adaptive Auslastung & \checked & & & (\checked) \\
-    Erzwungene Verschiebungen & \checked & \checked & \checked &
-    \checked \\
+    Hardware Maintenance & \checked & (\checked) & \checked & (\checked) \\
+    Adaptive Auslastung & \checked & \checked & \checked & (\checked) \\
+    Erzwungene Verschiebungen & & (\checked) & (\checked) & \\
   \end{tabular}
  \label{tab:anw-anb-matrix}
 \end{table}
 
-
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "FelgentreffPape_2010_Live-MigrationInVirtuellenUmgebungen"
-%%% End: 
+%%% End:
