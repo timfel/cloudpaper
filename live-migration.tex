@@ -1,10 +1,11 @@
 \section{Live-Migration als Teil der Lösung}
 \label{sec:livemigration}
-Dr. Jacob Gorm Hansen präsentierte das NomadBIOS~\cite{needed} als
-Live-Migrations-Lösung als Teil der Lösung für oben genannte
-Probleme der Clouds. Im Folgenden werden wir auf die von ihm
-vorgestellte Lösung technische rekapitulieren und dabei den
-Lösungsbeitrag aufzeigen.
+Dr. Jacob Gorm Hansen präsentierte das
+NomadBIOS~\cite{nomadbioslivemigration-cloudseminar} als
+Live-Migrations-Lösung als Teil der Lösung für oben genannte Probleme
+der Clouds. Im Folgenden werden wir auf die von ihm vorgestellte
+Lösung technische rekapitulieren und dabei den Lösungsbeitrag
+aufzeigen.
 
 \subsection{Verlässlichkeit von Virtualisierung}
 In jedem verteilten System muss man mit der Realität umgehen, dass
@@ -90,8 +91,8 @@ eine wichtige Rolle.
 
 Virtuelle Maschinen variieren stark zwischen verschiedenen
 Virtualisierungslösungen. Das fängt mit den Formaten der virtuellen
-Dateisysteme an~\cite{none} und geht bis hinunter zu den spezifischen
-Arten der virtualisierten Hardwarekomponenten~\cite{none}. Das
+Dateisysteme an und geht bis hinunter zu den spezifischen Arten der
+virtualisierten Hardwarekomponenten~\cite{nelson2005fast}. Das
 bedeutet im Einzelnen, dass der Wechsel zwischen Hypervisor
 Technologien von außen eine Konvertierung zwischen den (oft
 proprietären) Formaten bedeutet, aber auch im virtualisierten Host
@@ -103,11 +104,11 @@ allein durch die Auswahl seiner Virtualisierungslösung die
 Möglichkeit, Kunden sehr stark zu binden.
 
 Live-Migration verspricht hier Abhilfe, wenn nur die
-Migrationsprotokolle der Hypervisoren kompatibel
-sind~\cite{none}. Dann nämlich kann, ohne Umweg über die
-serialisierten Formate der Virtualisierungslösungen, das
-virtualisierte System direkt zwischen zwei VMs kopiert werden, und
-sozusagen zur Laufzeit konvertiert werden.
+Migrationsprotokolle der Hypervisoren kompatibel sind. Dann nämlich
+kann, ohne Umweg über die serialisierten Formate der
+Virtualisierungslösungen, das virtualisierte System direkt zwischen
+zwei VMs kopiert werden, und sozusagen zur Laufzeit konvertiert
+werden.
 
 \subsection{Inter-Cloud Verschiebungen}
 \label{sec:movclouds}
@@ -145,35 +146,38 @@ vorhanden ist, ist das Bewegen einer VM aus einer fremden Cloud
 trotzdem oft nicht trivial. Cloud Provider bieten derzeit noch
 verschiedene, teilweise inkompatible und in ihrer Mächtigkeit
 schwankende Zugriffsmöglichkeiten auf die gehosteten Systeme. Kleine
-Provider wie Heroku~\cite{none} bieten üblicherweise nur Zugriff auf
+Provider wie Heroku~\cite{heroku} bieten üblicherweise nur Zugriff auf
 einen Teil der gehosteten Software und erlauben Maschinenkonfiguration
 nach dem Baukastenprinzip. Ein vollständiges VM-Image ist nicht
-verfügbar. Im Vergleich dazu bieten Engine Yard~\cite{none} und
-VMWare~\cite{none} ausgefeilte Tools~\cite{none} um VMs mit
-Meta-Konfigurationen~\cite{chef} vollständig selbst einzurichten und
-bei Problemen auch komplette Images dieser Maschinen zu
-erhalten~\cite{none}. Wieder muss allerdings gesagt werden, dass diese
-Interfaces inkompatibel sind, und es nicht ohne Ausfallzeit möglich
-sein dürfte, Dienste von einer in die andere Cloud zu bewegen.
+verfügbar. Im Vergleich dazu bieten Engine Yard~\cite{engineyard} und
+VMWare ausgefeilte Tools~\cite{engineyard-cli} um VMs mit
+Meta-Konfigurationen~\cite{opscode-chef} vollständig selbst
+einzurichten und bei Problemen auch komplette Images dieser Maschinen
+zu erhalten. Wieder muss allerdings gesagt werden, dass diese
+Interfaces inkompatibel sind, und es unseres Wissens nicht ohne
+Ausfallzeit möglich ist, Dienste von einer in die andere Cloud zu
+bewegen. Zwar bieten die meisten Provider eine VM-Import Funktion,
+dazu muss die VM am Ursprung aber natürlich erst heruntergefahren
+werden~\cite{amazon-import}.
 
 Es gibt Bemühungen diese Verschiedenen Aspekte des Cloud-Hostings zu
 standardisieren~\cite{cloudstandard}. Darin inbegriffen sind die
 Beschreibungen von VMs, sowie APIs, die die Hypervisoren
 bereitstellen. Dieser Prozess ist allerdings noch nicht abgeschlossen,
 und obwohl große Hosting-Anbieter wie Rackspace, VMWare und Engine
-Yard daran teilnehmen~\cite{none}, fehlt z.B. noch Amazon als der
-größte Hosting-Provider in Europa.
+Yard ihre Unterstützung bekennen~\cite{openstack}, fehlt z.B. noch
+Amazon als der größte Hosting-Provider in Europa.
 
-Die Fortentwicklung der VM-Migrationstechnologie, wie sie
-Dr. Gorm Hansen beschrieben hat, könnte eine einfache Lösung für
-dieses Problem bieten, indem sie die Fähigkeiten zur Live-Migration
-vollständig in das Betriebssystem verschiebt. Mittels
-standardisierter Hypervisor-APIs könnte dann vom virtuellen System
-aus der Migrationsprozess angestoßen werden, und der Umzug in eine
-neue Cloud auch ohne Mitwirken des Hosting-Providers möglich
-werden. Das bedeutet effektiv eine Reduzierung der Bindung an eine
-bestimmte Cloud und vermindert das Risiko von \emph{Public Clouds} aus
-Sicht des Unternehmes~\cite{none}.
+Die Fortentwicklung der VM-Migrationstechnologie, wie sie Dr. Gorm
+Hansen beschrieben hat, könnte eine einfache Lösung für dieses Problem
+bieten, indem sie die Fähigkeiten zur Live-Migration vollständig in
+das Betriebssystem verschiebt. Mittels standardisierter
+Hypervisor-APIs könnte dann vom virtuellen System aus der
+Migrationsprozess angestoßen werden, und der Umzug in eine neue Cloud
+auch ohne Mitwirken des Hosting-Providers möglich werden. Das bedeutet
+effektiv eine Reduzierung der Bindung an eine bestimmte Cloud und
+vermindert das Risiko von \emph{Public Clouds} aus Sicht des
+Unternehmes.
 
 \subsection{Hardware-Aufstockung ohne Ausfallzeigen}
 Moderne IT-Unternehmen müssen auf Marktänderungen, die Skalierung
@@ -263,17 +267,16 @@ Neben den Anwendungsfällen zur Skalierung und Aufrechterhaltung von
 agierende Anbieter umgehen müssen, und das sind die sich wandelnden
 gesetzlichen Vorschriften zur Datenverarbeitung, die gerade in
 Deutschland noch vielfach in Veränderung begriffen
-sind~\cite{bdsg-2009}. Ein Beispiel ist die von~\cite{MrBlah} im
-Vortrag zu~\cite{foo} genannte Vorschrift, dass personenbezogene Daten
-von deutschen Behörden nur auf deutschem Boden verarbeitet werden
-dürfen. Diese Art von Gesetz schließt Dienste, die in anderen Ländern
-große Datenverarbeitungsdienste bieten, oft von Aufträgen deutscher
-Behörden aus. Rechenleistung in anderen Ländern als Deutschland ist
-unter Umständen wesentlich billiger für ein Unternehmen mit einem
-hohen Leistungsbedarf. Dauerhaft ein Rechenzentrum in Deutschland zu
-betreiben, für die Möglichkeit, ab und an einen Auftrag von einer
-deutschen Behörde zu erhalten, wiegt unter Umständen nicht den Ertrag
-solcher Aufträge auf.
+sind~\cite{bdsg-2009}. Ein Beispiel ist Vorschrift, dass
+personenbezogene Daten von deutschen Behörden nur auf deutschem Boden
+verarbeitet werden dürfen. Diese Art von Gesetz schließt Dienste, die
+in anderen Ländern große Datenverarbeitungsdienste bieten, oft von
+Aufträgen deutscher Behörden aus. Rechenleistung in anderen Ländern
+als Deutschland ist unter Umständen wesentlich billiger für ein
+Unternehmen mit einem hohen Leistungsbedarf. Dauerhaft ein
+Rechenzentrum in Deutschland zu betreiben, für die Möglichkeit, ab und
+an einen Auftrag von einer deutschen Behörde zu erhalten, wiegt unter
+Umständen nicht den Ertrag solcher Aufträge auf.
 
 Durch die Möglichkeit, ohne Verlust des aktuellen Dienstzustandes die
 Virtuelle Maschine umzuziehen, ist es jedoch möglich, solchen
@@ -294,12 +297,11 @@ anzubieten, ohne die Flexibilität von lokal vorbereiteten Maschinen
 aufzugeben.
 
 Die Amazon EC2 bietet diese Möglichkeit bereits zum Teil, indem man
-solche Einschränkungen beim Kauf der Rechenzeit
-angibt~\cite{none}. Derzeit müssen dazu allerdings die VMs neu
-gestartet werden. Mithilfe von Live-Migration könnte man hier einen
-Service anbieten, bei dem es möglich ist, zur Laufzeit solche
-Einschränkungen zu konfigurieren, ohne Downtime in Kauf nehmen zu
-müssen.
+solche Einschränkungen beim Kauf der Rechenzeit angibt. Derzeit müssen
+dazu allerdings die VMs neu gestartet werden. Mithilfe von
+Live-Migration könnte man hier einen Service anbieten, bei dem es
+möglich ist, zur Laufzeit solche Einschränkungen zu konfigurieren,
+ohne Downtime in Kauf nehmen zu müssen.
 
 \subsection{Langzeit-Lauffähigkeit}
 \label{sec:langz-lauff}
