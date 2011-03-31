@@ -2,14 +2,14 @@
 \label{sec:live-migr-syst}
 Im Folgenden wollen wir einige konkrete Implementierungen der oben
 vorgestellten Techniken vorstellen, und deren Grenzen und
-Einsatzbarkeit für die oben genannten Use-Cases betrachten.
+Anwendbarkeit für die oben genannten Anwendugsfälle betrachten.
 
 \subsection{NomadBIOS und vMotion}
 \label{sec:nomadbios--vmware}
 Wie im Vortrag von Hansen beschrieben, war die erste vollständige
 Implementierung zur Live-Migration einer kompletten \ac{VM} der
-NomadBIOS Hypervisor. Asger Jensen und Hansen entwickelten diesen
-Hypervisor auf dem L4 Microkernel und demonstrierten als erste
+NomadBIOS-Hypervisor. Asger Jensen und Jacob Gorm Hansen entwickelten diesen
+Hypervisor auf dem L4-Mikrokern und demonstrierten als erste
 erfolgreich Live-Migration von virtuellen Maschinen über ein lokales
 Netzwerk. Die Motivation dieser Arbeit kam aus dem Grid-Computing: Für
 jeden Job sollte eine \ac{VM} gestartet werden, die dann, mit
@@ -17,10 +17,10 @@ Prioritäten ausgestattet, durch das Grid verschoben werden konnte, auf
 der Suche nach freien Ressourcen. Daher rührt auch der Name
 \emph{NomadBIOS}, ein "`nomadisches"' System.
 
-Im Rahmen ihrer Master-Arbeit implementierten Hansen und Asger Kahl
-Henriksen den Hypervisor zunächst auf dem L4 Kernel. Gastsysteme
+Im Rahmen ihrer Masterarbeit implementierten Hansen und
+Jensen den Hypervisor zunächst auf dem L4-Kern. Gastsysteme
 mussten angepasst werden, um auf diesem teilvirtualisierten System als
-Userspace Prozess ausgeführt zu werden. Im Umkehrschluss konnten viele
+Userspace-Prozess ausgeführt zu werden. Im Umkehrschluss konnten viele
 der Prinzipien hinter Prozessmigration verwendet werden, um
 Betriebssystemprozesse zu verschieben. Außerdem verwendet das
 NomadBIOS \emph{Checkpointing}, den Akt, den Speicherzustand von
@@ -36,7 +36,7 @@ Prozessen einzufrieren um sie später fortsetzen zu können.
 
 \subsubsection{Implementierungsdetails des NomadBIOS}
 \label{sec:impl-des-nomadb}
-Im NomadBIOS werden mehrere Userspace Module für den L4 Kernel
+Im NomadBIOS werden mehrere Userspace-Module für den L4-Kern
 implementiert, die dazu dienen, Gastbetriebssysteme von der Hardware
 zu isolieren~\cite{hansen2002nomadic}. Dazu gehören \emph{Paging}, für
 die Isolation des Speichermanagements, \emph{Interrupt Multiplexing}
@@ -60,7 +60,7 @@ zu können.
 \end{figure}
 
 Für die eigentliche Migration implementiert das NomadBIOS ein
-\emph{Precopy} Scheme, wie es bereits aus der Prozessmigration bekannt
+\emph{Precopy}-Schema, wie es bereits aus der Prozessmigration bekannt
 ist~\cite{hansen2002nomadic}.
 \begin{enumerate}
 \item In \autoref{fig:nomad_stage1} ist der Startzustand der
@@ -70,7 +70,7 @@ ist~\cite{hansen2002nomadic}.
   Speicher auf dem Ursprung, der dem Gastsystem gehört, wird zunächst
   für Schreibzugriffe gesperrt und der Kopiervorgang auf den neuen
   Host wird gestartet. Wenn währenddessen Speicher geschrieben wird,
-  wird ein Page-fault ausgelöst, und das NomadBIOS kann die
+  wird ein Page-Fault ausgelöst, und das NomadBIOS kann die
   entsprechende Speicherseite erneut zum Kopieren markieren. Danach
   wird die Seite als für das Gastsystem beschreibbar markiert und
   geschrieben.
@@ -99,7 +99,7 @@ primäre Fokus dieses Produktes liegt, ähnlich wie beim NomadBIOS,
 darin \acp{VM} innerhalb eines Netzwerkes mit gemeinsamem Speicher
 wandern zu lassen, um größtmögliche Ressourcennutzung zu
 erzielen. Dazu bietet VMWare vMotion die Möglichkeit,
-sog. \emph{Resource Pools} zu definieren, in denen \acp{VM}
+sogenannte \emph{Resource Pools} zu definieren, in denen \acp{VM}
 fortwährend automatisiert wandern können.
 
 Um höhere Verfügbarkeit zu gewährleisten, weicht vMotion vom oben
@@ -116,9 +116,9 @@ Ursprungssystem besteht, und die Verbindung zwischen beiden Systemen
 noch kurze Zeit weiterbestehen muss.
 
 Eine weitere Besonderheit an der VMWare Lösung ist, dass der VMWare
-ESX Hypervisor über Para-Virtualisierung hinausgeht, und deshalb die
+ESXi-Hypervisor über Para-Virtualisierung hinausgeht, und deshalb die
 Migration von beliebigen Betriebsystemen zwischen beliebigen (von
-VMWare unterstützten) Hardware Architekturen
+VMWare unterstützten) Hardware-Architekturen
 unterstützt~\cite{nelson2005fast}. Dafür wird Netzwerkhardware voll
 virtualisiert, außerdem wird davon ausgegangen, dass Verbindungen zu
 Speicher ausschließlich über \ac{SAN} oder \ac{NAS} bereitgestellt
@@ -128,11 +128,11 @@ bzw. \ac{NAS}-Servern verbunden sind.
 \subsection{IBM}
 IBM unterstützt die Linux Community in großem
 Umfang~\cite{kroahhartman2007linux}. IBM hat zur Live-Migration von
-Linux-\acp{VM} sowohl beim Xen Projekt, als auch dem Kernel
-Virtualisierungsmodul \ac{KVM} im Rahmen des \reservoir Projektes
+Linux-\acp{VM} sowohl beim Xen-Projekt, als auch dem
+Kernvirtualisierungsmodul \ac{KVM} im Rahmen des \reservoir-Projektes
 wesentliche Beiträge geleistet~\cite{rochwerger2009reservoir}. Dabei
 lag der Fokus der angestrebten Lösung explizit auf Interoperabilität
-zwischen verschiedenen Providern und der Möglichkeit, Migration über
+zwischen verschiedenen Anbietern und der Möglichkeit, Migration über
 Distanzen hinweg zu ermöglichen. Beides zusammen soll die Kosten für
 benötigte Infrastruktur (wie z.B. \ac{SAN}-/\ac{NAS}-Server) senken
 und die Skalierbarkeit über die Grenzen eines einzelnen Cluster
@@ -141,7 +141,7 @@ Netzwerks hinweg erhöhen.
 Die Lösung hierfür sind \acp{VEEM}. Ein \ac{VEEM} verteilt \acp{VM}
 (in diesem Kontext \acp{VEE} genannt) über verfügbare Host-Systeme,
 unter Berücksichtigung bestimmter Einschränkungen, dazu können
-z.B. auch gesetzliche Bedingungen oder \acp{SLA} zählen. Außerdem
+\zB auch gesetzliche Bedingungen oder \acp{SLA} zählen. Außerdem
 können mehrere \acp{VEE} zu einer \ac{VEE}-Gruppe zusammengefasst
 werden, um bestimmte Dienste nah beieinander zu halten und nur
 gemeinsam zu verwalten. IBM hat hierbei speziell darauf geachtet,
@@ -158,23 +158,23 @@ HP bietet Virtualisierungsdienste auf Basis von Microsoft's
 bereits Live-Migration von virtuellen Maschinen, der Migrationsprozess
 läuft dabei analog zum NomadBIOS ab. Eine wesentliche Limitierung des
 HyperV ist, dass alle physikalischen Maschinen Zugriff auf gemeinsamen
-Speicher, z.B. Network-Attached-Storage oder ein Netzwerkdateisystem,
-haben müssen, um \ac{VM} Daten auszutauschen~\cite{hp2010hyperV}. Das kann
-beim Umziehen zwischen geografisch entfernten Orten oft nicht
-gewährleistet werden. HP hat hierfür sein \ac{CLX} Produkt
-erweitert. \ac{CLX} ist zunächst eine Software zur Replikation von Daten
-über große Distanzen. Mit den HyperV spezifischen Erweiterungen kann
-\ac{CLX} nun dazu genutzt werden, den Zustand von \acp{VM} zwischen
-verschiedenen Rechenzentren zu synchronisieren. Dabei ist \ac{CLX} voll in
-den HyperV Live-Migration Prozess integriert. Mit der \ac{CLX}---HyperV
+Speicher (\ac{NAS}\,/\,\ac{SAN}) haben müssen, um \ac{VM}-Daten
+auszutauschen~\cite{hp2010hyperV}. Das kann beim Umziehen zwischen
+geografisch entfernten Orten oft nicht gewährleistet werden. HP hat
+hierfür sein \ac{CLX}-Produkt erweitert. \ac{CLX} ist zunächst eine
+Software zur Replikation von Daten über große Distanzen. Mit den
+HyperV spezifischen Erweiterungen kann \ac{CLX} nun dazu genutzt
+werden, den Zustand von \acp{VM} zwischen verschiedenen Rechenzentren
+zu synchronisieren. Dabei ist \ac{CLX} voll in den
+HyperV-Migrationsprozess integriert. Mit der \ac{CLX}-HyperV
 Kombination kann sichergestellt werden, das Replikation über
-Datencenter hinweg \ac{VM}-Migrationen unterstützt, und nicht behindert,
-indem während der Migration dieser mehr Bandbreite zugestanden wird,
-damit die finale Speicherseitensynchronisation (während der die
-Ursprungs-\ac{VM} eingefroren ist) so schnell wie möglich vonstatten
-geht. Wenn die Migration abgeschlossen ist, macht \ac{CLX} den neuen
-physikalischen Standort der \ac{VM} automatisch zum Master für die weitere
-Replikation.
+Datencenter hinweg \ac{VM}-Migrationen unterstützt, und nicht
+behindert, indem während der Migration dieser mehr Bandbreite
+zugestanden wird, damit die finale Speicherseitensynchronisation
+(während der die Ursprungs-\ac{VM} eingefroren ist) so schnell wie
+möglich vonstatten geht. Wenn die Migration abgeschlossen ist, macht
+\ac{CLX} den neuen physikalischen Standort der \ac{VM} automatisch zum
+Master für die weitere Replikation.
 
 Im März 2010 aktualisierte HP außerdem seine UNIX Distribution
 \emph{HP-UX}. Teil dieses Updates war die Version 4.2 des hauseigenen
@@ -184,7 +184,7 @@ eingesetzt werden kann~\cite{hp2010integrity}.
 
 \subsection{Oracle}
 
-Oracle (vormals Sun) bietet in Solaris eine betriebssystemintegrierte
+Oracle bietet in Solaris (vormals bei Sun) eine betriebssystemintegrierte
 Form der Virtualisierung an: Solaris Zones. Im Gegensatz zu den vorher
 vorgestellten Lösungen werden in den Zones keine vollständigen
 Betriebsysteme ausgeführt, vielmehr gibt es eine
@@ -246,7 +246,7 @@ größten Teil auf den Informationen der Hersteller.
     Verlässlichkeit & \checked & \checked & \checked &  \\
     Interoperabilität & \checked & \checked & &  \\
     Inter-Cloud Verschiebungen & & \checked & (\checked) & \\
-    Hardware Maintenance & \checked & (\checked) & \checked & (\checked) \\
+    Hardware Maintenance & \checked & (\checked) & \checked & \checked \\
     Adaptive Auslastung & \checked & \checked & \checked & (\checked) \\
     Erzwungene Verschiebungen & & (\checked) & (\checked) & \\
   \end{tabular}
@@ -287,7 +287,7 @@ der Virtualisierungslösung nicht Dienste offline gehen müssen.
 
 Hier sind die para-virtualisierenden Systeme (Xen, \ac{KVM})
 eingeschränkter, da am Gast-System Anpassungen vorgenommen werden
-müssen, die u.U. nicht im Betrieb zu ändern sind, weshalb man nicht
+müssen, die unter Umständen nicht im Betrieb zu ändern sind, weshalb man nicht
 einfach ein System in ein anderes übertragen kann. Bei Solaris Zones
 ist ein Gastsystem meist gar kein vollständiges System, sondern teilt
 wesentliche Teile der POSIX Umgebung mit den anderen Gästen und dem
@@ -295,14 +295,14 @@ Host. Ein Extrahieren eines einzelnen Gastes ist gar nicht ohne
 weiteres möglich. Bei den \acp{ldom} besteht wiederum das Problem,
 dass die virtualisierten System zwar volle Betriebssysteme sind, die
 Virtualisierung jedoch zu weiten Teilen aus der Firmware kommt und
-damit unportabel ist. VMWare ESX, als das vorgestellte System mit dem
+damit unportabel ist. VMWare ESXi, als das vorgestellte System mit dem
 höchsten Level der Virtualisierung, macht das Umwandeln in andere
 Systeme derzeit am leichtesten, da Speicher im Netzwerk liegt und
 weite Teile der Hardware virtualisiert sind, weshalb Gastssysteme hier
 auch ohne Anpassungen laufen können. Aber auch hier ist eine
 Live-Migration in ein anderes System unseres Wissens nicht möglich.
 
-Auf Dauer ist das \reservoir Projekt von IBM am ehesten geeignet, die
+Auf Dauer ist das \reservoir-Projekt von IBM am ehesten geeignet, die
 Beschränkungen beim Umstieg von einem System auf das andere
 Aufzuheben, und tatsächlich Live-Migration zwischen den Systemen zu
 bieten. Die Abstraktion von verwendeten Hypervisor-Technologien und
@@ -319,7 +319,7 @@ Derzeit gibt es keinen einheitlichen Standard für Live-Migration und
 die verwendeten Protokolle. Wie bereits angemerkt unterstützen mit
 Ausnahme von HP und IBM die Systeme von sich aus gar keine
 Verschiebung zwischen Netzwerken mit getrenntem Speicher. Weiterhin
-sind die Schnittstellen und APIs der Hypervisoren nicht einheitlich,
+sind die Schnittstellen der Hypervisoren nicht einheitlich,
 was eine Migration zwischen Clouds mit verschiedenen
 Virtualisierungstechnologien erschwert. Derzeit ist unter Umständen
 möglich über Umwege wie selbst eingerichtete Replikation zwischen
@@ -329,7 +329,7 @@ die \reservoir-Schnittstellen oder die vorgeschlagenen Cloud-Standards
 von vielen Lösungen implementiert werden.
 
 \paragraph*{Hardware-Maintenance}
-Die Kosten alte Hardware am Laufen zu halten übersteigen nach einiger
+Die Kosten, alte Hardware am Laufen zu halten, übersteigen nach einiger
 Zeit immer die Anschaffungskosten für neue, bessere Hardware. Deshalb
 ist es im Interesse eines Unternehmens, neue Hardware nutzen zu
 können, ohne Verfügbarkeit einschränken zu müssen.
@@ -339,14 +339,11 @@ sie bereits die Abstraktion von Ressourcen ermöglichen, und Verwaltung
 von Hardware als \emph{Resource Pools} vereinheitlichen. Dabei kann
 neue Hardware hinzugefügt und alte entfernt werden, und das System
 konfiguriert sich selbst neu und verteilt die Last automatisch auf die
-neu verfügbaren Nodes. Auch IBM kennt diese Abstraktion in Form von
+neu verfügbare Hardware. Auch IBM kennt diese Abstraktion in Form von
 \acp{VEE}, allerdings muss diese Lösung noch entsprechend weitreichend
-implementiert werden.  Bei der \ac{ldom}-basierten Lösung ist wieder die
-Einschränkung zu beachten, dass zwar Hardware eines Systems
-aufgestockt und ausgetauscht werden kann, ohne Gast-\ac{VM}s herunterfahren
-zu müssen, allerdings ist eine Live-Migration auf einen komplett neuen
-Server nicht möglich. Deshalb ist auch die Oracle Lösung nur bis zu
-einem gewissen Punkt für diesen Anwendungsfall geeignet.
+implementiert werden. Auch bei der \ac{ldom}-basierten Lösung ist es
+möglich, dass zwar Hardware eines Systems aufgestockt und ausgetauscht
+werden kann, ohne Gast-\ac{VM}s herunterfahren zu müssen.
 
 \paragraph*{Adaptive Auslastung}
 Dienste, die sich auf bestimmte Zielgruppen, Länder oder Themengebiete
@@ -358,7 +355,7 @@ hier ein Interesse daran, nur die Menge an Hosting-Kosten zu zahlen,
 die zu einem gegebenen Zeitpunkt benötigt wird. Dazu kann
 Live-Migration beitragen, indem Dienste je nach Last auf schnellere
 oder langsamere Systeme verschoben werden, und so mehr oder weniger
-CPU Zeit bekommen.
+CPU-Zeit bekommen.
 
 Hier sind alle vorgestellten Systeme einsetzbar, der Umfang der
 Schwankungen sollte über die Auswahl entscheiden. Bei vMotion und
@@ -366,12 +363,10 @@ Schwankungen sollte über die Auswahl entscheiden. Bei vMotion und
 Hardware beim Migrieren möglich, was in bei einer hohen Varianz der
 verwendeten Hardware nützlich ist. Bei den von IBM unterstützten
 Lösungen Xen und \ac{KVM} müssen die unterliegenden Systeme relativ
-ähnlich sein, was die Hardwareauswahl einschränkt. Bei Solaris
-basierten Lösungen, schließlich, ist lediglich die Ressourcenzuteilung
-variabel. Das wiederum schränkt Schwankungen stark ein, zu hohe
-Lastspitzen können vom System schlicht nicht kompensiert werden, bei
-zu geringer Auslastung kann jedoch auch nicht Hardware abgestellt
-werden, um Stromkosten zu sparen.
+ähnlich sein, was die Hardwareauswahl einschränkt. Bei
+\ac{ldom}-basierten Lösungen, schließlich, muss die Hardware nahezu
+identisch sein.
+
 
 \paragraph*{Erzwungene Verschiebungen}
 In manchem Anwendungsgebieten müssen Dienste an bestimmten
