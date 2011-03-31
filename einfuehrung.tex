@@ -284,6 +284,12 @@ stattfinden.
 
 \medskip
 
+Das einrichten von in Cloud-Manier betriebenen Rechenzentren in
+Unternehmen, führt nun dazu, dass diese beiden Probleme angegangen
+werden können, das Unternehmen betreibt nun eine \emph{private cloud}.
+Es bleiben jedoch noch Herausforderungen, die der privaten und der
+öffentlichen Variante gemein sind oder gar durch das private Betreiben
+hinzukommen.~\cite{Schwarzer2010:Cloud-Hype-Tren}
 
 \paragraph*{Skalierungsplanung}
 \label{sec:skalierungsplanung}
@@ -297,14 +303,44 @@ wenn das Projekt plötzlich sehr stark Genutzt wird~\cite{whoever1}.
 Andersherum kann eine zu großzügige Konfiguration zu kostenintensiv
 sein, ob nun \emph{private} oder \emph{public}. Anpassbare
 \ac{IaaS}-Konfigurationen sind daher wünschenswert. Im Rahmen von
-Betriebssystemvirtualisierung ist das auch durchführbar, stößt aber
-auch an seine Grenzen: benötigt ein virtualisiertes Betriebssystemen
-plötzlich weit mehr Speicher als vorher, weil \zB die Datenbank des
-betriebenen Projektes stark vergößert wurde, ist die Grenze der
-Speicher, der physisch verfügbar ist. Wachsen die Anforderungen
-darüber hinaus, kann das Verschieben des virtualisierten
-Betriebssystemes auf Hardware mit mehr Speicher Abhilfe schaffen.
-Live-Migration kann hier helfen, Ausfallzeiten gering zu halten.
+Betriebssystemvirtualisierung mit \acfp{VM} ist das auch durchführbar,
+stößt aber auch an seine Grenzen: benötigt eine \ac{VM} plötzlich weit
+mehr Speicher als vorher, weil \zB die Datenbank des betriebenen
+Projektes stark vergrößert wurde, ist die Grenze der Speicher, der
+physisch verfügbar ist. Wachsen die Anforderungen darüber hinaus, kann
+das Verschieben der \ac{VM} auf Hardware mit mehr Speicher Abhilfe
+schaffen. Live-Migration kann hier helfen, Ausfallzeiten gering zu
+halten.
+
+
+\paragraph*{Auslastungsplanung}
+\label{sec:auslastungsplanung}
+
+Eine Herausforderung, auf die Cloud-Computing konzeptuell überhaupt
+reagieren sollte, ist, die vorhandene Hardware bestmöglich, das heißt,
+gleichmäßig hoch auszulasten. Nutz man öffentliche Cloud-Anbieter, ist
+das für ein Unternehmen als Kunden kein Problem, bei privat
+betriebenen Clouds muss das jedoch bedacht werden. Das Konsolidieren
+von sonst einzelnen Betriebssystem auf einen Server mittels
+Virtualisierung ist eine Möglichkeit, eine verbesserte Auslastung von
+Hardware zu ermöglichen. Auslastungsplanung und Konsolidierung ist
+jedoch auch im Kontext von Skalierungsplanung zu betrachten. Das
+heißt, dass hier normalerweise eine Abwägung zwischen guter Auslastung
+und Lastspitzensicherheit geschehen muss. Live-Migration von \acp{VM}
+kann helfen, beides in gewisser Weise zu ermöglichen: Wird eine
+\ac{VM} unter Normalbedingungen zusammen mit anderen auf einer
+Hardware betrieben, ist es doch möglich, bei Lastspitzen die \ac{VM}
+auf eine andere, gegebenenfalls eigene, Hardware zu verschieben.
+
+\paragraph*{Wartung}
+\label{sec:wartung}
+
+In jedem Rechenzentrum gehört der Ausfall von Hardware, aber auch das
+Aufstocken oder Austauschen dieser zum Tagesgeschäft. Dies ist im
+Normalfall mit Ausfallzeiten verbunden. Das Verschieben von \acp{VM}
+auf andere Hardware und nachfolgende Wartungsarbeiten an der
+Vorherigen hilft, Ausfallzeiten zu minimieren.
+
 
 %%% Local Variables: 
 %%% mode: latex
