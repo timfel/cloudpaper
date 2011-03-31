@@ -8,7 +8,7 @@ verbessern, außerdem wird Hardware vorgehalten, um fehlerhafte
 Komponenten zu ersetzen, \acp{USV} werden eingesetzt, um auch im Falle
 eines Stromausfalls nicht offline zu gehen.
 
-\acp{VM} spielen hier eine große Rolle. Die Technologie zur
+\acfp{VM} spielen hier eine große Rolle. Die Technologie zur
 Virtualisierung von Hardware existiert seit über 40
 Jahren~\cite{tanenbaum1992modern}, die Fähigkeit, mehrere Maschinen
 auf einem physikalischen System auszuführen, und Sicherungen ganzer
@@ -345,24 +345,23 @@ hinzukommen.~\cite{Schwarzer2010:Cloud-Hype-Tren}
 \paragraph*{Skalierungsplanung}
 \label{sec:skalierungsplanung}
 
-Bei den meist als Entwicklungsprojekte betriebenen
-Cloud-Computing-Projekten ist für Unternehmen oft im Vorhinein nicht
+Bei den meist als Entwicklungsprojekten betriebenen
+Cloud-Computing-Anwendungen ist für Unternehmen oft im Vorhinein nicht
 klar, wie stark eine Skalierung später notwendig ist. Zumeist
 \ac{IaaS}-Projekte, birgt eine zu sparsame Konfiguration das Risiko,
-potentiell nicht schnell genug auf Lastspitzen reagieren zu können,
-wenn das Projekt plötzlich sehr stark Genutzt wird~\cite{whoever1}.
-Andersherum kann eine zu großzügige Konfiguration zu kostenintensiv
-sein, ob nun \emph{private} oder \emph{public}. Anpassbare
-\ac{IaaS}-Konfigurationen sind daher wünschenswert. Im Rahmen von
-Betriebssystemvirtualisierung mit \acfp{VM} ist das auch durchführbar,
-stößt aber auch an seine Grenzen: benötigt eine \ac{VM} plötzlich weit
-mehr Speicher als vorher, weil \zB die Datenbank des betriebenen
-Projektes stark vergrößert wurde, ist die Grenze der Speicher, der
-physisch verfügbar ist. Wachsen die Anforderungen darüber hinaus, kann
-das Verschieben der \ac{VM} auf Hardware mit mehr Speicher Abhilfe
-schaffen. Live-Migration kann hier helfen, Ausfallzeiten gering zu
-halten.
-
+nicht schnell genug auf Lastspitzen reagieren zu können, wenn das
+Projekt plötzlich sehr stark genutzt
+wird~\cite{flightcaster_success}. Andersherum kann eine zu großzügige
+Konfiguration zu kostenintensiv sein, ob nun \emph{private} oder
+\emph{public}. Anpassbare \ac{IaaS}-Konfigurationen sind daher
+wünschenswert. Im Rahmen von Betriebssystemvirtualisierung mit
+\acfp{VM} ist das auch durchführbar, stößt aber auch an seine Grenzen:
+benötigt eine \ac{VM} plötzlich weit mehr Speicher als vorher, weil
+\zB die Datenbank des betriebenen Projektes stark vergrößert wurde,
+ist die Grenze der Speicher, der physisch verfügbar ist. Wachsen die
+Anforderungen darüber hinaus, kann das Verschieben der \ac{VM} auf
+Hardware mit mehr Speicher Abhilfe schaffen. Live-Migration kann hier
+helfen, Ausfallzeiten gering zu halten.
 
 \paragraph*{Auslastungsplanung}
 \label{sec:auslastungsplanung}
