@@ -3,14 +3,13 @@
 Hansen präsentierte das
 NomadBIOS~\cite{nomadbioslivemigration-cloudseminar} als
 Live-Migrations-Lösung als Teil der Lösung für oben genannte Probleme
-der Clouds. Im Folgenden werden wir auf die von ihm vorgestellte
-Lösung technische rekapitulieren und dabei den Lösungsbeitrag
-aufzeigen.
+der Clouds. Im Folgenden wird auf mögliche Anwendungsfälle dafür
+eingegangen.
 
 \subsection{Verlässlichkeit von Virtualisierung}
 In jedem verteilten System muss man mit der Realität umgehen, dass
 Hardware und Software Fehler enthält, die zu Ausfällen führen
-können. Da scheint die Idee, viele Virtuelle Maschinen auf wenigen
+können. Da scheint die Idee, viele \acp{VM} auf wenigen
 physikalischen Systemen auszuführen zunächst wie ein Schritt in die
 falsche Richtung: Wenn dann ein physikalischer Server ausfällt, oder
 die Virtualisierungssoftware einen Fehler enthält, fallen potentiell
@@ -32,15 +31,15 @@ Kritische Dienste können so in kompletter Isolation ausgeführt um das
 Risiko eines Ausfalls durch inkompatible Software auf demselben Server
 zu minimieren.
 
-Nichtsdestotrotz müssen auch Vorkehrungen gegen Hardwarefehler
-getroffen werden. In klassischen Hosting-Umgebungen kann man bei
+Dessen ungeachtet müssen auch Vorkehrungen gegen Hardwarefehler
+getroffen werden. In klassischen Hostingumgebungen kann man bei
 immanenten Ausfällen von physikalischen Systemen relevante Prozesse
-auf neue VMs migrieren~\cite{hansen2004self}. Für eine gegebene VM
-kann eine Ähnliche (z.B. aus einem früheren, gesicherten Zustand) auf
+auf neue \acp{VM} migrieren~\cite{hansen2004self}. Für eine gegebene \ac{VM}
+kann eine Ähnliche (\zB aus einem früheren, gesicherten Zustand) auf
 einem neuen Server gestartet werden. Der Zustand der relevanten
 Prozesse wird soweit als möglich gemäß den Gegebenheiten des
 Betriebssystems kopiert und neue Dienstanfragen dann auf den neuen
-Server umgeleitet. Die alte VM muss allerdings zunächst online
+Server umgeleitet. Die alte \ac{VM} muss allerdings zunächst online
 bleiben, um Abhängigkeiten von Dienstanfragen bereitzustellen, die
 sich noch in Ausführung befinden, wenn der Hardwarealarm ausgelöst
 wird~\cite{clark2005live}. Das ist bekannt als "`residual
@@ -54,22 +53,22 @@ verschiedene Weisen auf die Fähigkeiten des Betriebsystems, die
 Hardware anzusteueren und in geeignete Zustände zu überführen, die den
 Ablauf der Applikation erst möglich machen. Das heißt, dass ein
 laufender Prozess meistens nicht einzeln verschoben werden
-kann~\cite{hansen2002nomadic}. Im Falle eines Web-Servers, bei dem
-jeder Request auch an einen neuen Prozess gehen kann, ist das nicht
+kann~\cite{hansen2002nomadic}. Im Falle eines Webservers, bei dem
+jede Anfrage auch an einen neuen Prozess gehen kann, ist das nicht
 weiter problematisch. Schwieriger ist die Situation bei Diensten wie
-z.B. Online-Spieleplattformen, bei denen ein Serverprozess
+\zB Online-Spieleplattformen, bei denen ein Serverprozess
 TCP-Verbindungen zu mehreren Clients teilweise über Stunden aufrecht
 erhalten muss. Wenn ein Hardwareausfall kurz bevor steht, bleibt hier
-meist nichts anderes übrig, als das Spiel zu unterbrechen: Das kann
-bedeutet mindestens unzufriedene Kunden, und vielleicht sogar
+meist nichts anderes übrig, als das Spiel zu unterbrechen: Das 
+bedeutet mindestens unzufriedene Kunden und vielleicht sogar
 verringerten Umsatz.
 
 Wenn man aber stattdessen den Prozess und die virtuelle Maschine als
 Einheit betrachtet~\cite{nelson2005fast}, und geschlossen live
 migriert, kann auf Hardwarefehler angemessener reagiert werden: Zuerst
-kann die VM bis aufs letzte Detail vom aktuellen Stand kopiert werden,
+kann die \ac{VM} bis aufs letzte Detail vom aktuellen Stand kopiert werden,
 das heißt, dass Änderungen, die seit der letzten Checkpoint-Sicherung
-geschehen sind, nicht verloren gehen. Wichtiger, allerdings, ist, dass
+geschehen sind, nicht verloren gehen. Wichtiger allerdings ist, dass
 auch Prozesse, die sich gerade in Ausführung befinden, migriert werden
 können. Im Beispiel der Spieleplattform bedeutet dies, dass Spiele
 nicht unterbrochen werden müssen, sondern, für den Nutzer transparent,
@@ -83,8 +82,8 @@ mitzuhalten, darf die Virtualisierungstechnologie des Providers nicht
 die Verwendung des Systems innerhalb das Unternehmens
 einschränken. Insbesondere muss für den Kunden die Möglichkeit
 bestehen, auf eine andere Virtualisierungstechnologie umzusteigen, um
-z.B. vorhandene VMs auf die Technologie eines Cloud-Anbieters zu
-bewegen oder umgekehrt auch VMs aus der Cloud wieder in das eigene
+\zB vorhandene \acp{VM} auf die Technologie eines Cloud-Anbieters zu
+bewegen oder umgekehrt auch \acp{VM} aus der Cloud wieder in das eigene
 Rechenzentrum oder auf die Rechner der Entwickler umzuziehen. Die
 Interoparibilität der verwendeten Virtualisierungslösungen spielt hier
 eine wichtige Rolle.
@@ -98,8 +97,8 @@ Technologien von außen eine Konvertierung zwischen den (oft
 proprietären) Formaten bedeutet, aber auch im virtualisierten Host
 unter Umständen Treiber neu installiert werden müssen. Solch
 tiefgreifende Änderungen, die oftmals gezwungenermaßen mit Neustarts
-der virtuellen Betriebssysteme einhergehen, sind kaum ohne
-Ausfallzeiten zu unternehmen. Folglich hat ein Cloud-Hosting Provider
+der virtualisierten Betriebssysteme einhergehen, sind kaum ohne
+Ausfallzeiten zu unternehmen. Folglich hat ein Cloud-Hosting-Provider
 allein durch die Auswahl seiner Virtualisierungslösung die
 Möglichkeit, Kunden sehr stark zu binden.
 
@@ -107,13 +106,13 @@ Live-Migration verspricht hier Abhilfe, wenn nur die
 Migrationsprotokolle der Hypervisoren kompatibel sind. Dann nämlich
 kann, ohne Umweg über die serialisierten Formate der
 Virtualisierungslösungen, das virtualisierte System direkt zwischen
-zwei VMs kopiert werden, und sozusagen zur Laufzeit konvertiert
+zwei \acp{VM} kopiert werden, und sozusagen zur Laufzeit konvertiert
 werden.
 
 \subsection{Inter-Cloud Verschiebungen}
 \label{sec:movclouds}
 Probleme durch inkompatible Virtualisierungen werden im Rahmen des
-Outsourcings in die \emph{Public Cloud} noch verstärkt, da die
+Outsourcings in die \emph{public cloud} noch verstärkt, da die
 Entscheidung für einen Cloudprovider unter Umständen bedeutet, dass
 die Dienste nur unter erheblichem Aufwand wieder in eine andere Cloud
 verschiebbar sind. Das bedeutet für den Cloud-Kunden eine starke
@@ -123,7 +122,7 @@ Provider ganz verzichtet werden muss.
 
 Zur Migration von Systemen auf andere Maschinen können, wie bereits
 beschrieben, Prozessemigrationssystem, wie sie in den 1980er Jahren
-entwickelt wurden, verwendet werden. Dazu zählen z.B. das Sprite oder
+entwickelt wurden, verwendet werden. Dazu zählen \zB das Sprite oder
 das MOSIX System~\cite{hansen2004self}. Diese benutzten Fähigkeiten
 des Hypervisors sowie der darauf laufenden Betriebssysteme in
 Konjunktion und sind damit nicht auf beliebigen Kombinationen der
@@ -134,41 +133,41 @@ von Unternehmen und Organisationen hinweg de-facto unmöglich. Diese
 Art System skaliert folglich nicht auf Verschiebungen zwischen Clouds
 mit inkompatiblen Stacks.
 
-Migration ganzer VMs bietet hier einen Ausweg durch kleinere
+Migration ganzer \acp{VM} bietet hier einen Ausweg durch kleinere
 Schnittstellen und Wegfallen der Kommunikation zwischen den migrierten
-Systemen nachdem die neue VM in Betrieb geht. Da kein kompliziertes
-Routing zwischen der neuen und der alten VM vonstatten gehen muss,
+Systemen nachdem die neue \ac{VM} in Betrieb geht. Da kein kompliziertes
+Routing zwischen der neuen und der alten \ac{VM} vonstatten gehen muss,
 beschränkt sich die Kommunikation (und damit der Anspruch an die
 Schnittstellen der Providers) auf die initiale Synchronisationsphase.
 
 Selbst wenn der Migrationspfad zwischen Virtualisierungslösungen
-vorhanden ist, ist das Bewegen einer VM aus einer fremden Cloud
-trotzdem oft nicht trivial. Cloud Provider bieten derzeit noch
+vorhanden ist, ist das Bewegen einer \ac{VM} aus einer fremden Cloud
+trotzdem oft nicht trivial. Cloud-Provider bieten derzeit noch
 verschiedene, teilweise inkompatible und in ihrer Mächtigkeit
 schwankende Zugriffsmöglichkeiten auf die gehosteten Systeme. Kleine
 Provider wie Heroku~\cite{heroku} bieten üblicherweise nur Zugriff auf
 einen Teil der gehosteten Software und erlauben Maschinenkonfiguration
-nach dem Baukastenprinzip. Ein vollständiges VM-Image ist nicht
+nach dem Baukastenprinzip. Ein vollständiges \ac{VM}-Abbild ist nicht
 verfügbar. Im Vergleich dazu bieten Engine Yard~\cite{engineyard} und
-VMWare ausgefeilte Tools~\cite{engineyard-cli} um VMs mit
+VMWare ausgefeilte Tools~\cite{engineyard-cli} um \acp{VM} mit
 Meta-Konfigurationen~\cite{opscode-chef} vollständig selbst
-einzurichten und bei Problemen auch komplette Images dieser Maschinen
+einzurichten und bei Problemen auch komplette Abbilder dieser Maschinen
 zu erhalten. Wieder muss allerdings gesagt werden, dass diese
-Interfaces inkompatibel sind, und es unseres Wissens nicht ohne
+Schnittstellen inkompatibel sind, und es unseres Wissens nicht ohne
 Ausfallzeit möglich ist, Dienste von einer in die andere Cloud zu
-bewegen. Zwar bieten die meisten Provider eine VM-Import Funktion,
-dazu muss die VM am Ursprung aber natürlich erst heruntergefahren
+bewegen. Zwar bieten die meisten Provider eine \ac{VM}-Importfunktion,
+dazu muss die \ac{VM} am Ursprung aber natürlich erst heruntergefahren
 werden~\cite{amazon-import}.
 
 Es gibt Bemühungen diese Verschiedenen Aspekte des Cloud-Hostings zu
 standardisieren~\cite{cloudstandard}. Darin inbegriffen sind die
-Beschreibungen von VMs, sowie APIs, die die Hypervisoren
+Beschreibungen von \acp{VM}, sowie \acp{API}, die die Hypervisoren
 bereitstellen. Dieser Prozess ist allerdings noch nicht abgeschlossen,
 und obwohl große Hosting-Anbieter wie Rackspace, VMWare und Engine
-Yard ihre Unterstützung bekennen~\cite{openstack}, fehlt z.B. noch
+Yard ihre Unterstützung bekennen~\cite{openstack}, fehlt \zB noch
 Amazon als der größte Hosting-Provider in Europa.
 
-Die Fortentwicklung der VM-Migrationstechnologie, wie sie Hansen
+Die Fortentwicklung der \ac{VM}-Migrationstechnologie, wie sie Hansen
 beschrieben hat, könnte eine einfache Lösung für dieses Problem
 bieten, indem sie die Fähigkeiten zur Live-Migration vollständig in
 das Betriebssystem verschiebt. Mittels standardisierter
@@ -176,7 +175,7 @@ Hypervisor-APIs könnte dann vom virtuellen System aus der
 Migrationsprozess angestoßen werden, und der Umzug in eine neue Cloud
 auch ohne Mitwirken des Hosting-Providers möglich werden. Das bedeutet
 effektiv eine Reduzierung der Bindung an eine bestimmte Cloud und
-vermindert das Risiko von \emph{Public Clouds} aus Sicht des
+vermindert das Risiko von \emph{public clouds} aus Sicht des
 Unternehmes.
 
 \subsection{Hardware-Aufstockung ohne Ausfallzeigen}
@@ -194,23 +193,23 @@ Oftmals können diese Vorrausetzungen nur durch großzügige Planung der
 kommendenen Hardwareanforderungen erfüllt werden, was mit einem
 größeren finanziellen Risiko einhergeht. Gerade kleine Unternehmen und
 \emph{Start-Ups} können sich dies oft nicht leisten. Die Fähigkeit,
-Services in der Cloud anzubieten und \emph{bei Bedarf} mehr
-gleichartige VMs zu starten, oder VMs auf stärkere physikalische Nodes
-zu verschieben, ohne dafür Ausfallzeit in Kauf nehmen zu müssen, kann
-den Unterschied zwischen einem erfolgreichen Service und einer Seite,
-zu der Kunden nicht mehr zurückkehren, weil sie zu langsam ist,
-machen. Der Cloud-Hosting Provider \emph{Heroku} hat sich auf ebenso
-solche, kleine, Webdienste spezialisiert, und versteckt den Prozess
-des Skalierens für den Kunden vollständig hinter einem einfach
+Dienste in der Cloud anzubieten und \emph{bei Bedarf} mehr
+gleichartige \acp{VM} zu starten, oder \acp{VM} auf stärker ausgebaute
+Hardware zu verschieben, ohne dafür Ausfallzeit in Kauf nehmen zu
+müssen, kann den Unterschied machen zwischen einem erfolgreichen
+Dienst und einer Seite, zu der Kunden nicht mehr zurückkehren, weil
+sie zu langsam ist. Der Cloud-Hosting Provider \emph{Heroku} hat sich
+auf ebenso solche, kleine, Webdienste spezialisiert, und versteckt den
+Prozess des Skalierens für den Kunden vollständig hinter einem einfach
 Schieberegler im Web-Interface: Der benötigte Leistungsindex wird
-erhöht und Heroku kümmert sich um das Spawning und Verschieben von
-VMs innerhalb seines Grids.
+erhöht und Heroku kümmert sich um das Spawning und Verschieben von VMs
+innerhalb seiner Infrastruktur.
 
-Verwandt hierzu sind auch Services wie die Google-App Engine zu
-nennen, wenngleich sie eher \ac{IaaS} zuzurechnen sind, bieten auch
-sie kleineren Unternehmen die Möglichkeit, nur den Umfang an Leistung
-zu zahlen, der auch tatsächlich genutzt wird, und bei Bedarf mehr
-Leistung "`einzukaufen"'.
+Verwandt hierzu sind auch Dienste wie Google~App~Engine, wenngleich
+sie eher \ac{PaaS} zuzurechnen sind, bieten auch sie kleineren
+Unternehmen die Möglichkeit, nur den Umfang an Leistung zu zahlen, der
+auch tatsächlich genutzt wird, und bei Bedarf mehr Leistung
+"`einzukaufen"'.
 
 \subsection{Adaptive Auslastung}
 \label{sec:adaptive-auslastung}
@@ -232,12 +231,11 @@ Abweichung von der durchschnittlichen Auslastung sehr groß ist, oder
 Lastspitzen sehr selten auftreten, ist die Investition oft nicht
 gerechtfertigt.
 
-VM-Live-Migration kann auch hier zum schnellen Verschieben von
-Maschienen zwischen leistungsstarken und -schwachen physikalischen
-Nodes genutzt werden.
+Live-Migration kann auch hier zum schnellen Verschieben von Maschienen
+zwischen leistungsstarker und -schwachere Hardware genutzt werden.
 
-Ein Gegenargument, dass man für diesen Use-Case im Besonderen
-hervorbringen kann, ist, dass VM-Migration mit hoher Netzwerklast
+Ein Gegenargument, dass man für diesen Anwendungsfall im Besonderen
+hervorbringen kann, ist, dass \ac{VM}-Migration mit hoher Netzwerklast
 einhergeht. In Situationen, in denen der Durchsatz ohnehin gefärdet
 ist, kann man argumentieren, dass die zusätzliche Netzwerklast durch
 eine laufende Migration den Dienst vorübergehend ganz zum Erliegen
@@ -281,14 +279,14 @@ Umständen nicht den Ertrag solcher Aufträge auf.
 Durch die Möglichkeit, ohne Verlust des aktuellen Dienstzustandes die
 Virtuelle Maschine umzuziehen, ist es jedoch möglich, solchen
 gesetzlichen Vorschriften nichtsdestoweniger zu genügen. Indem der
-Datenverarbeiter bei einem Cloud Hosting Service auf deutschem Boden
+Datenverarbeiter bei einem Cloud-Hosting-Anbieter auf deutschem Boden
 Rechenzeit einkauft, kann er den gestzlichen Vorschriften gerecht
-werden. Die VMs, die für den Auftrag bereitgestellt sind, können
+werden. Die \acp{VM}, die für den Auftrag bereitgestellt sind, können
 einfach in die Cloud auf deutschem Boden migriert werden. Migrationen
-über Ländergrenzen hinweg, z.B. durch den Atlantik, sind zwar
-notwendigerweise langsamer als zwischen Rechenzentren mit höherer
-Lokalität, bei großen, lang laufenden Aufträgen ist das jedoch unter
-Umständen zu vernachlässigen.
+über Ländergrenzen oder Kontinente hinweg, \zB durch den Atlantik,
+sind zwar notwendigerweise langsamer als zwischen Rechenzentren mit
+höherer Lokalität, bei großen, lang laufenden Aufträgen ist das jedoch
+unter Umständen zu vernachlässigen.
 
 Auf diese Weise ist es Datenverarbeitungsdiensten möglich,
 landesspezifischen Einschränkungen bezüglich der geografischen Lage
@@ -298,10 +296,10 @@ aufzugeben.
 
 Die Amazon EC2 bietet diese Möglichkeit bereits zum Teil, indem man
 solche Einschränkungen beim Kauf der Rechenzeit angibt. Derzeit müssen
-dazu allerdings die VMs neu gestartet werden. Mithilfe von
-Live-Migration könnte man hier einen Service anbieten, bei dem es
+dazu allerdings die \acp{VM} neu gestartet werden. Mit Hilfe von
+Live-Migration könnte man hier einen Dienst anbieten, bei dem es
 möglich ist, zur Laufzeit solche Einschränkungen zu konfigurieren,
-ohne Downtime in Kauf nehmen zu müssen.
+ohne Ausfallzeiten in Kauf nehmen zu müssen.
 
 \subsection{Langzeit-Lauffähigkeit}
 \label{sec:langz-lauff}
@@ -314,11 +312,11 @@ entstehen, werden gerechtfertigt dadurch, dass der Zugang zu
 kritischen Diensten und Informationen nicht alle paar Monate
 unterbrochen wird, um mit den Folgen von
 \begin{itemize}
-\item Hardware-Ausfällen
-\item Turnus-mäßigen Hardware-Upgrades
-\item Schwankenden Anforderungen
-\item Ausweitung des Kerngeschäfts
-\item Hosting Wechsel
+\item Hardware-Ausfällen,
+\item Turnusmäßigen Hardware-Aufstockung,
+\item Schwankenden Anforderungen,
+\item Ausweitung des Kerngeschäfts, oder
+\item Hosting-Wechsel
 \end{itemize}
 umzugehen.
 

@@ -1,12 +1,13 @@
 \section{Einführung}
 \label{sec:einfuehrung}
-\IEEEPARstart{H}{eutzutage} betreiben große Firmen eine Vielzahl
-von Diensten auf einer großen Anzahl von Servern, möglicherweise in
-einem oder mehreren Rechenzentren. Oft laufen Dienste physikalisch
-getrennt auf unterschiedlichen Servern, um die Ausfallsicherheit zu
-verbessern, außerdem wird Hardware vorgehalten, um fehlerhafte
-Komponenten zu ersetzen, \acp{USV} werden eingesetzt, um auch im Falle
-eines Stromausfalls nicht offline zu gehen.
+\IEEEPARstart{H}{eutzutage} betreiben große Firmen eine Vielzahl von
+Diensten auf einer großen Anzahl von Servern, möglicherweise in einem
+oder mehreren Rechenzentren. Oft laufen Dienste physisch getrennt auf
+unterschiedlichen Servern, um die Ausfallsicherheit zu verbessern,
+außerdem wird Hardware vorgehalten, um fehlerhafte Komponenten zu
+ersetzen, Systeme zur unterbrechungsfreien Stromversorgung werden
+eingesetzt, um auch im Falle eines Stromausfalls nicht offline zu
+gehen.
 
 \acfp{VM} spielen hier eine große Rolle. Die Technologie zur
 Virtualisierung von Hardware existiert seit über 40
@@ -18,21 +19,21 @@ zu isolieren und schnell zu beheben und deshalb können Versprechen von
 werden~\cite{google-app-sla}.
 
 
-Mit dem Aufkommen von Cloud Anbietern hat sich ein
+Mit dem Aufkommen von Cloud-Anbietern hat sich ein
 Dienstleistungssektor etabliert, der sich voll und ganz mit dem Ziel
 "`100\% Uptime"' beschäftigt. Diese Clouds, privat oder öffentlich,
-sind für Unternehmen zunehmend interessant, da sie die physikalische
+sind für Unternehmen zunehmend interessant, da sie die physische
 Hardware von der Ausführungsumgebung von Diensten zunehmend
 entkoppelt. Für Unternehmen ist der Schritt schon heute aufgrund eines
 potentiell geringeren administrativen Aufwands interessant,
 Rechenleistung kann bereitgestellt werden. Doch egal wie abstrahiert,
-auch \acp{VM} laufen letzten Endes auf physikalischer Hardware, und
-diese kann ausfallen. Um dem "`100\% Uptime"'-Ziel nahe zu kommen,
-müssen Dienste nicht nur virtualisiert werden, sondern auch frei
-zwischen Servern und Rechenzentren bewegt werden können. Hierfür sind
-in den letzten Jahren mehrere Lösungen auf den Markt gekommen, nachdem
-im Jahr 2002 erstmals erfolgreich eine virtualisiert laufendes System
-ohne herunterfahren auf einen anderen Server migriert wurde.
+auch \acp{VM} laufen letzten Endes auf Hardware, und diese kann
+ausfallen. Um dem "`100\% Uptime"'-Ziel nahe zu kommen, müssen Dienste
+nicht nur virtualisiert werden, sondern auch frei zwischen Servern und
+Rechenzentren bewegt werden können. Hierfür sind in den letzten Jahren
+mehrere Lösungen auf den Markt gekommen, nachdem im Jahr 2002 erstmals
+erfolgreich eine virtualisiert laufendes System ohne herunterfahren
+auf einen anderen Server migriert wurde.
 
 
 
@@ -110,7 +111,7 @@ Ich will scalieren:
 }
 
 Wenn es um Cloud-Computing und Virtualisierung geht, stellt sich die
-Frage, was an sich Virtualisiert werden soll und überhaupt mit
+Frage, was an sich virtualisiert werden soll und überhaupt mit
 Cloud-Computing unterstützbar ist. Neben der Frage nach dem Was, ist
 auch interessant, wo zwischen Systemplatine und Endbenutzeranwendung
 Virtualisierung stattfinden kann. Dies soll im Folgenden beleuchtet werden.
@@ -140,12 +141,12 @@ ohne (oder mit minimaler) gegenseitige(r) Kenntnis.}
 In der untersten Schicht kann die so genannte
 \emph{Systempartitionierung} betrachtet werden (Siehe zu den Ebenen
 \autoref{fig:levels}). Die "`Sun Fire Dynamic System
-Domains"'~\cite{Shoumack2007:Beginners-Guid-}, die auf Sun Fire
-Servern zur Verfügung steht, ist ein Beispiel für diesen
+Domains"'~\cite{Shoumack2007:Beginners-Guid-}, die auf Sun
+Fire-Servern zur Verfügung steht, ist ein Beispiel für diesen
 Virtualisierungsansatz. Die Hardware dieser Server ist in der Lage,
 verschiedene Ausführungsumgebungen, das heißt, Betriebssysteme,
 elektronisch isoliert zu betreiben. Es bedarf keinerlei Unterstützung
-in den darüberliegenen Frimware- oder Softwareschichten. Diese Art
+in den darüberliegenen Softwareschichten. Diese Art
 Virtualisierung kommt der Ausführung auf physikalisch getrennten
 Rechnern am nächsten.
 
@@ -251,10 +252,10 @@ davon sich als "`Cloud-Ebene"' eignen.~\cite{Gebhart2010:Virtualization-}
   Betriebssystemen auf Nachfrage zur Verfügung zu stellen. Damit ist
   \ac{IaaS} die Ebene, auf der Virtualisierung im hier vorgestellten
   Sinn genutzt wird. Anbieter und Kunden von \ac{IaaS}-Diensten
-  können ein Interesse daran haben, den Ort, an dem der Dienst /das
+  können ein Interesse daran haben, den Ort, an dem der Dienst\,/\,das
   Betriebssystem, ausgeführt wird, zu wechseln. Damit kann einerseits
   die Hardware gemeint sein, auf der das Betriebssystem läuft,
-  andererseits auch der geographische Ort an dem die Hardware steht.
+  andererseits auch der geografische Ort an dem die Hardware steht.
   Anforderungen wie
   \begin{itemize}
   \item schnelles Bereitstellen von neuen Betriebssysteminstanzen,
@@ -264,7 +265,7 @@ davon sich als "`Cloud-Ebene"' eignen.~\cite{Gebhart2010:Virtualization-}
   machen \ac{IaaS} zur eigentlichen Schnittstelle zwischen
   Virtualisierung und Cloud-Computing.
 
-  Interessanterweise ist für das Bereitstellen von \ac{IaaS}-Diensten
+  Interessanterweise ist für das Bereitstellen von Infrastrukturdiensten
   mit Hilfe von virtualisierten Betriebssystemen vom Ansatz her nicht
   relevant, welches Virtualisierungslevel (vgl.
   \autoref{fig:levels}) dafür genutzt wird. Praktisch hat es jedoch
@@ -326,7 +327,7 @@ Anbieter ganz zu Schweigen.
 
 Aufgrund gesetzlicher Bestimmungen ist es bisweilen notwendig,
 sicherzustellen, das die Verarbeitung bestimmter Daten an einem
-gestimmten geographischen Ort stattfindet, \zB einem bestimmten
+gestimmten geografischen Ort stattfindet, \zB einem bestimmten
 Staatsgebiet. Bei \emph{public cloud}-Betreibern ist es zumeist nicht
 möglich das zu gewährleisten. Sollte das doch der Fall sein, kann ein
 Unternehmen trotzdem Interesse daran haben, das zumindest bestimmte

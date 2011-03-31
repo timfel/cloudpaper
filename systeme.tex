@@ -26,6 +26,14 @@ Betriebssystemprozesse zu verschieben. Außerdem verwendet das
 NomadBIOS \emph{Checkpointing}, den Akt, den Speicherzustand von
 Prozessen einzufrieren um sie später fortsetzen zu können.
 
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.7\linewidth]{images/nomad_stage1}
+  \caption{NomadBIOS: 1. Migrationsphase}
+  \label{fig:nomad_stage1}
+\end{figure}
+
+
 \subsubsection{Implementierungsdetails des NomadBIOS}
 \label{sec:impl-des-nomadb}
 Im NomadBIOS werden mehrere Userspace Module für den L4 Kernel
@@ -38,12 +46,19 @@ Hostbetriebssystem zu ermöglichen. Letzteres wird genutzt, um
 Unterstützung für den Migrationsvorgang im Gastsystem implementieren
 zu können.
 
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.7\linewidth]{images/nomad_stage2}
+  \caption{NomadBIOS: 2. Migrationsphase}
+  \label{fig:nomad_stage2}
+\end{figure}
 \begin{figure}[b]
   \centering
-  \includegraphics[width=0.7\linewidth]{images/nomad_stage1}
-  \caption{NomadBIOS: 1. Migrationsphase}
-  \label{fig:nomad_stage1}
+  \includegraphics[width=0.7\linewidth]{images/nomad_stage3}
+  \caption{NomadBIOS: 3. Migrationsphase}
+  \label{fig:nomad_stage3}
 \end{figure}
+
 Für die eigentliche Migration implementiert das NomadBIOS ein
 \emph{Precopy} Scheme, wie es bereits aus der Prozessmigration bekannt
 ist~\cite{hansen2002nomadic}.
@@ -76,18 +91,7 @@ ist~\cite{hansen2002nomadic}.
   Routing angepasst wird, so kann die \ac{VM} direkt weiterarbeiten, ohne
   das Benutzer mehr als einen kurzen Latenzanstieg bemerken.
 \end{enumerate}
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=0.7\linewidth]{images/nomad_stage2}
-  \caption{NomadBIOS: 2. Migrationsphase}
-  \label{fig:nomad_stage2}
-\end{figure}
-\begin{figure}[b]
-  \centering
-  \includegraphics[width=0.7\linewidth]{images/nomad_stage3}
-  \caption{NomadBIOS: 3. Migrationsphase}
-  \label{fig:nomad_stage3}
-\end{figure}
+
 
 Hansen arbeitet seit 2007 bei VMWare. VMWare bietet inzwischen ein
 kommerzielles Produkt zur Live-Migration names \emph{vMotion}. Der
