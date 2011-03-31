@@ -6,26 +6,25 @@ Einsatzbarkeit für die oben genannten Use-Cases betrachten.
 
 \subsection{NomadBIOS und vMotion}
 \label{sec:nomadbios--vmware}
-Wie im Vortrag von Dr. Jacob Gorm Hansen beschrieben, war die erste
-vollständige Implementierung zur Live-Migration einer kompletten \ac{VM}
-der NomadBIOS Hypervisor. Asger Jensen und Dr. Jacob Gorm Hansen
-entwickelten diesen Hypervisor auf dem L4 Microkernel und
-demonstrierten als erste erfolgreich Live-Migration von virtuellen
-Maschinen über ein lokales Netzwerk. Die Motivation dieser Arbeit kam
-aus dem Grid-Computing: Für jeden Job sollte eine \ac{VM} gestartet werden,
-die dann, mit Prioritäten ausgestattet, durch das Grid verschoben
-werden konnte, auf der Suche nach freien Ressourcen. Daher rührt auch
-der Name \emph{NomadBIOS}, ein "`nomadisches"' System.
+Wie im Vortrag von Hansen beschrieben, war die erste vollständige
+Implementierung zur Live-Migration einer kompletten \ac{VM} der
+NomadBIOS Hypervisor. Asger Jensen und Hansen entwickelten diesen
+Hypervisor auf dem L4 Microkernel und demonstrierten als erste
+erfolgreich Live-Migration von virtuellen Maschinen über ein lokales
+Netzwerk. Die Motivation dieser Arbeit kam aus dem Grid-Computing: Für
+jeden Job sollte eine \ac{VM} gestartet werden, die dann, mit
+Prioritäten ausgestattet, durch das Grid verschoben werden konnte, auf
+der Suche nach freien Ressourcen. Daher rührt auch der Name
+\emph{NomadBIOS}, ein "`nomadisches"' System.
 
-Im Rahmen ihrer Master-Arbeit implementierten Jacob Gorm Hansen und
-Asger Kahl Henriksen den Hypervisor zunächst auf dem L4
-Kernel. Gastsysteme mussten angepasst werden, um auf diesem
-teilvirtualisierten System als Userspace Prozess ausgeführt zu
-werden. Im Umkehrschluss konnten viele der Prinzipien hinter
-Prozessmigration verwendet werden, um Betriebssystemprozesse zu
-verschieben. Außerdem verwendet das NomadBIOS \emph{Checkpointing},
-den Akt, den Speicherzustand von Prozessen einzufrieren um sie später
-fortsetzen zu können.
+Im Rahmen ihrer Master-Arbeit implementierten Hansen und Asger Kahl
+Henriksen den Hypervisor zunächst auf dem L4 Kernel. Gastsysteme
+mussten angepasst werden, um auf diesem teilvirtualisierten System als
+Userspace Prozess ausgeführt zu werden. Im Umkehrschluss konnten viele
+der Prinzipien hinter Prozessmigration verwendet werden, um
+Betriebssystemprozesse zu verschieben. Außerdem verwendet das
+NomadBIOS \emph{Checkpointing}, den Akt, den Speicherzustand von
+Prozessen einzufrieren um sie später fortsetzen zu können.
 
 \subsubsection{Implementierungsdetails des NomadBIOS}
 \label{sec:impl-des-nomadb}
@@ -90,14 +89,14 @@ ist~\cite{hansen2002nomadic}.
   \label{fig:nomad_stage3}
 \end{figure}
 
-Dr. Hansen arbeitet seit 2007 bei VMWare. VMWare bietet inzwischen ein
+Hansen arbeitet seit 2007 bei VMWare. VMWare bietet inzwischen ein
 kommerzielles Produkt zur Live-Migration names \emph{vMotion}. Der
 primäre Fokus dieses Produktes liegt, ähnlich wie beim NomadBIOS,
-darin \acp{VM} innerhalb eines Netzwerkes mit gemeinsamem Speicher wandern
-zu lassen, um größtmögliche Ressourcennutzung zu erzielen. Dazu bietet
-VMWare vMotion die Möglichkeit, sog. \emph{Resource Pools} zu
-definieren, in denen \acp{VM} fortwährend automatisiert wandern
-können.
+darin \acp{VM} innerhalb eines Netzwerkes mit gemeinsamem Speicher
+wandern zu lassen, um größtmögliche Ressourcennutzung zu
+erzielen. Dazu bietet VMWare vMotion die Möglichkeit,
+sog. \emph{Resource Pools} zu definieren, in denen \acp{VM}
+fortwährend automatisiert wandern können.
 
 Um höhere Verfügbarkeit zu gewährleisten, weicht vMotion vom oben
 etablierten Precopy-Schema ab~\cite{nelson2005fast}. Im letzten
