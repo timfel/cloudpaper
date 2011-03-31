@@ -181,16 +181,17 @@ eingesetzt werden kann~\cite{hp2010integrity}.
 
 \subsection{Oracle}
 
-Oracle (vormals Sun) biete in Solaris eine betriebssystemintegrierte
+Oracle (vormals Sun) bietet in Solaris eine betriebssystemintegrierte
 Form der Virtualisierung an: Solaris Zones. Im Gegensatz zu den vorher
 vorgestellten Lösungen werden in den Zones keine vollständigen
 Betriebsysteme ausgeführt, vielmehr gibt es eine
-Betribessysteminstanz, gennant \emph{global zone}, in der der
+Betriebssysteminstanz, genannt \emph{global zone}, in der der
 Betriebssystemkern läuft und mehrere \emph{non-global zones}, die
 diesen Kern mitbenutzen. Den \emph{non-global zones} erscheint der
 Kern jedoch als ihr "`eigener"'. Solaris Zones werden zumeist zur
 Separierung von Applikationen genutzt und mit Resourcenmanagement
-verbunden; die Kombination wird \emph{Solaris Container} genannt~\cite{price2004solaris}.
+verbunden; die Kombination wird \emph{Solaris Container}
+genannt~\cite{price2004solaris}.
 
 Im Kontext von Live-Migration sind Solaris Zones (und damit auch
 Container) jedoch ungeeignet. Es existieren keinerlei Vorrichtungen
@@ -202,7 +203,7 @@ von Zones als Standard-Anwendungsfall ist in Solaris nicht vorgesehen.
 
 Oracle \acfp{ldom} (jetzt VM Server for SPARC), die auf SPARC-Servern
 der T-Serie und einigen anderen Systemen zur Verfügung stehen,
-unterstützen sein der Version 1.2 aus dem Jahr 2009
+unterstützen seit der Version 1.2 aus dem Jahr 2009
 Live-Migration~\cite{Laurent:Answering-a-cus}. Diese
 hardware-gestützte Virtualisierungsvariante bietet physisch getrennte
 Gast-Systeme (Domänen) und dabei die Rekonfigurierbarkeit dieser im
@@ -218,7 +219,8 @@ wird~\cite{2010:Oracle-VM-Serve}. Als Betriebssystem in den \acp{ldom}
 sind praktisch nur Solaris (und -- dank Linux-Kern-Emulation in
 bestimmten Solaris Zones -- ältere Linux) bekannt, theoretisch ist es
 aber möglich, beliebige Betriebssystem, die SPARC-Tx-Prozessoren
-unterstützen, zu nutzen; so \zB natives Linux~\cite{Chartre:Linux-with-LDom}.
+unterstützen, zu nutzen; so \zB natives
+Linux~\cite{Chartre:Linux-with-LDom}.
 
 
 
@@ -254,6 +256,7 @@ APIs wurden ebenfalls explizit mit dem Gedanken erstellt, Migration
 über große Entfernungen zu ermöglichen, und sind deshalb per-se
 geeignet, um Dienste gegen weitreichende Hardware-Ausfälle
 abzusichern.
+
 \paragraph{Interoperabilität}
 Virtualisierungslösungen existieren unabhängig von der Cloud
 (\autoref{sec:def-virtualisierung}) und es besteht Interesse, die
@@ -283,6 +286,7 @@ bieten. Die Abstraktion von verwendeten Hypervisor-Technologien und
 dem verwendeten Speicher wird es ermöglichen, zwischen zu den
 beschriebenen Schnittstellen kompatiblen Systemen dynamisch zu
 migrieren.
+
 \paragraph{Inter-Cloud Verschiebungen}
 Ebenso wie die Abhängigkeit von einer Virtualisierungslösung, soll die
 Bindung an einen Cloud-Anbieter möglichst schwach bleiben. Deshalb
@@ -300,6 +304,7 @@ mit denselben Technologien Live-Migration durchzuführen. Wirklich
 möglich wird auch das allerdings erst, wenn die \reservoir
 Schnittstellen oder die vorgeschlagenen Cloudstandards von vielen
 Lösungen implementiert werden.
+
 \paragraph{Hardware-Maintenance}
 Die Kosten alte Hardware am Laufen zu halten übersteigen nach einiger
 Zeit immer die Anschaffungskosten für neue, bessere Hardware. Deshalb
@@ -319,6 +324,7 @@ aufgestockt und ausgetauscht werden kann, ohne Gast-VMs herunterfahren
 zu müssen, allerdings ist eine Live-Migration auf einen komplett neuen
 Server nicht möglich. Deshalb ist auch die Oracle Lösung nur bis zu
 einem gewissen Punkt für diesen Anwendungsfall geeignet.
+
 \paragraph{Adaptive Auslastung}
 Dienste, die sich auf bestimmte Zielgruppen, Länder oder Themengebiete
 spezialisieren, sehen oft stark schwankende Nutzerzahlen, sei es, weil
