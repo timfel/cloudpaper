@@ -43,11 +43,39 @@ helfen kann, zeigen wir
 - Derzeit Rechner im Rechenzentrum
 - Cluster
 - Grid
-- Probleme:
+
+\paragraph*{Mögliche Probleme}
+\label{sec:mogliche-probleme}
+
+\onlydraft{- Probleme:
   - Ungleichmäßige Auslastung
   - Wartungskosten (Admins)
   - Downtime bei Upgrades/HW-Problemen
   - Operationskosten (Strom)
+}
+
+Beim traditionellen Betrieb eines Rechenzentrums können jedoch
+wirtschaftliche Probleme auftreten. 
+
+Ein Server ist dann für den Betreiber am effizientesten, wenn er
+möglichst ausgelastet ist~\cite{Schwarzer2010:Cloud-Hype-Tren}. Nun
+ist bei vielen Anwendungen, die auf solchen Servern laufen mit
+Lastspitzen aus den verschiedensten Gründen zu rechnen, wie das
+Verarbeiten von Batch-Jobs am Monatsende, das bei vielen
+\ac{ERP}-Systemen üblich ist. Auch das plötzliche Bekanntwerden vorher
+eher unbekannter Anwendungen (insbesondere Webseiten), bekannt als
+\emph{Slashdot effect}~\cite{halavais2001slashdot}, kann solche
+Lastspitzen auslösen. Während erstere planbar sind, können letztere
+unerwartet auftreten. Aus diesem Grund muss dafür Sorge getragen
+werden, dass für Lastspitzen ausreichend Pufferkapazitäten vorhanden
+sind. Eine \emph{gleichmäßig hohe Auslastung} ist damit traditionell
+kaum möglich, selbst wenn Anwendungen in einem Cluster betrieben
+werden.
+
+
+
+
+
 
 \subsection{Cloud-Computing und Virtualisierung}
 \label{sec:ziel}
