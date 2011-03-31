@@ -251,9 +251,60 @@ Oft wird in letzter Zeit, wenn der Begriff Cloud-Computing benutzt
 wird, zwischen \emph{public cloud} und \emph{private cloud}
 unterschieden. Zur \emph{public cloud} gehören alle Anbieter von
 Cloud-Diensten, von \ac{SaaS} bis \ac{IaaS}, die auf dem Markt
-auftreten; im Gegensatz dazu 
+auftreten; im Gegensatz dazu sind \emph{private clouds} an ein
+Unternehmen -- oder Betreiber -- gebunden und im Normalfall der
+Öffentlichkeit nicht zugänglich ~\cite{Wagener2010:Cloud-Computing}.
+Zumeist geht es bei dieser Weise, Cloud-Computing zu betreiben, um
+\ac{IaaS}. Die Idee der \emph{private cloud} hat sich in den letzten
+Jahren aus dem bis dahin im Allgemeinen öffentlichen, das heißt, durch
+nich-unternehmenseigene Firmen betrieben, Cloud-Computing gebildet:
+Unternehmen, die die Vorteile davon nutzen wollten, hatten gewisse
+Herausforderungen zu bewältigen.
+
+\paragraph*{Anbieterbindung}
+\label{sec:anbieterbindung}
+
+Wählt ein Unternehmen einen bestimmten Cloud-Computing-Anbieter, heißt
+das bis dato, sich langfristig an diesen zu binden. Proprietäre oder
+zumindest inkompatible Cloud-Computing-Platformen machen ein
+zukünftiges Wechseln schwierig, von Live-Migration von Anbieter zu
+Anbieter ganz zu Schweigen. 
+
+\paragraph*{Anforderungen an den Standort}
+\label{sec:anforderungen-an-den}
+
+Aufgrund gesetzlicher Bestimmungen ist es bisweilen notwendig,
+sicherzustellen, das die Verarbeitung bestimmter Daten an einem
+gestimmten geographischen Ort stattfindet, \zB einem bestimmten
+Staatsgebiet. Bei \emph{public cloud}-Betreibern ist es zumeist nicht
+möglich das zu gewährleisten. Sollte das doch der Fall sein, kann ein
+Unternehmen trotzdem Interesse daran haben, das zumindest bestimmte
+Teile der Datenverarbeitung "`innerhalb"' des Unternehmens
+stattfinden.
+
+\medskip
 
 
+\paragraph*{Skalierungsplanung}
+\label{sec:skalierungsplanung}
+
+Bei den meist als Entwicklungsprojekte betriebenen
+Cloud-Computing-Projekten ist für Unternehmen oft im Vorhinein nicht
+klar, wie stark eine Skalierung später notwendig ist. Zumeist
+\ac{IaaS}-Projekte, birgt eine zu sparsame Konfiguration das Risiko,
+potentiell nicht schnell genug auf Lastspitzen reagieren zu können,
+wenn das Projekt plötzlich sehr stark Genutzt wird~\cite{whoever1}.
+Andersherum kann eine zu großzügige Konfiguration zu kostenintensiv
+sein, ob nun \emph{private} oder \emph{public}. Anpassbare
+\ac{IaaS}-Konfigurationen sind daher wünschenswert. Im Rahmen von
+Betriebssystemvirtualisierung ist das auch durchführbar, stößt aber
+auch an seine Grenzen: benötigt ein virtualisiertes Betriebssystemen
+plötzlich weit mehr Speicher als vorher, weil \zB die Datenbank des
+betriebenen Projektes stark vergößert wurde, ist die Grenze der
+Speicher, der physisch verfügbar ist. Wachsen die Anforderungen
+darüber hinaus, kann das Verschieben des virtualisierten
+Betriebssystemes auf Hardware mit mehr Speicher Abhilfe schaffen.
+Live-Migration kann hier helfen, Ausfallzeiten gering zu halten.
 
 %%% Local Variables: 
 %%% mode: latex
