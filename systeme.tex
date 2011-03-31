@@ -241,6 +241,7 @@ größten Teil auf den Informationen der Hersteller.
   \caption{Anwendung-Anbieter-Matrix}
   \centering
   \normalsize
+  \smallskip
   \begin{tabular}[h]{r | c@{\qquad}c@{\qquad}c@{\qquad}c}
     & VMWare & IBM & HP & Oracle \\
     Verlässlichkeit & \checked & \checked & \checked &  \\
@@ -250,6 +251,7 @@ größten Teil auf den Informationen der Hersteller.
     Adaptive Auslastung & \checked & \checked & \checked & (\checked) \\
     Erzwungene Verschiebungen & & (\checked) & (\checked) & \\
   \end{tabular}
+  \smallskip
  \label{tab:anw-anb-matrix}
 \end{table*}
 
@@ -376,18 +378,19 @@ Datenverarbeitungsdiensten möchte nicht jedes mal, wenn eine solche
 Einschränkung in Kraft tritt, bestehende, und möglicherweise lang
 laufende Jobs abbrechen, um sie an einem anderen Ort neu zu starten.
 
-Die Solaris Lösung fällt hier durch, da Migration über geografische
-Entfernungen nicht möglich sind. Auch vMotion ist ungeeignet, da nicht
-ohne weiteres zwischen entfernten Netzwerken migriert werden kann. HP
-bietet hier zwar mit der \ac{CLX} eine Lösung, allerdings steht
-zumindest zu vermuten, dass die reine Ausführung an anderer Stelle
-nicht eventuellen Sicherheits- oder Gesetzesrichtlinien entspricht,
-wenn es eine Replikation der Daten an verschiedenen Orten
-gibt. Trotzdem scheint das derzeit die einzige verfügbare Lösung zu
-sein.  Einzig die von IBM vorgeschlagenen \acp{VEEM} wären hier besser
-geeignet, da sie, laut Spezifikation, die Möglichkeit bieten sollen,
-derlei Einschränkungen an den Ort der \ac{VM}-Daten zu konfigurieren. Damit
-ließe sich eine allgemeine Lösung auch automatisieren.
+Die \ac{ldom}-Lösung fällt hier durch, da Migration über geografische
+Entfernungen nicht angemessen möglich sind. Auch vMotion ist
+ungeeignet, da nicht ohne weiteres zwischen entfernten Netzwerken
+migriert werden kann. HP bietet hier zwar mit der \ac{CLX} eine
+Lösung, allerdings steht zumindest zu vermuten, dass die reine
+Ausführung an anderer Stelle nicht eventuellen Sicherheits- oder
+Gesetzesrichtlinien entspricht, wenn es eine Replikation der Daten an
+verschiedenen Orten gibt. Trotzdem scheint das derzeit die einzige
+verfügbare Lösung zu sein. Einzig die von IBM vorgeschlagenen
+\acp{VEEM} wären hier besser geeignet, da sie, laut Spezifikation, die
+Möglichkeit bieten sollen, derlei Einschränkungen an den Ort der
+\ac{VM}-Daten zu konfigurieren. Damit ließe sich eine allgemeine
+Lösung auch automatisieren.
 
 
 %%% Local Variables:
