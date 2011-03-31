@@ -11,10 +11,30 @@
 
 \maketitle
 
-\ifdraft{\tableofcontents}{}
+\onlydraft{\tableofcontents}
 
 \begin{abstract}
-  
+\onlydraft{
+\begin{itemize}
+  \item Einf.
+  \item Lifemig.
+  \item Systeme
+  \item Vgl.
+  \end{itemize}
+}
+Beim Betrieb von Infrastrukturdiensten im Umfeld von Cloud-Computing
+-- \acf{IaaS} -- gibt es
+%neben vielen Vorteilen wie
+%on-demand-Verfügbarkeit,
+% auch
+einige Herausforderungen wie Ausfallzeitminimierung,
+Hardware-Änderungen im laufenden Betrieb und Skaliereung nach Last.
+Mit Hilfe von Live-Migration von virtuellen Maschinen ist es möglich,
+einige davon anzugehen. Es gibt diverse
+Virtualisierungs-Platformen unterschiedlicher Hersteller, die
+Live-Migration auch zu einem hohen Grad unterstützen. Es mangelt noch
+an Interoperabilität zwischen den Systemen und Standardisierung ist
+in diesem Bereich noch nicht weit fortgeschritten.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -22,7 +42,7 @@
 \end{IEEEkeywords}
 \IEEEpeerreviewmaketitle
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "FelgentreffPape_2010_Live-MigrationInVirtuellenUmgebungen"
-%%% End: 
+%%% End:
