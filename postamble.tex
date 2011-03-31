@@ -1,12 +1,11 @@
-% trigger a \newpage just before the given reference
-% number - used to balance the columns on the last page
-% adjust value as needed - may need to be readjusted if
-% the document is modified later
-%\IEEEtriggeratref{8}
-% The "triggered" command can be changed if desired:
-%\IEEEtriggercmd{\enlargethispage{-5in}}
+% as per Peter Troeger, natdin is ok.
+\iffalse
+\bibliographystyle{natdin}
+\bibliography{Live-MigrationInVrituellenUmgebungen}
+\else
 \bibliographystyle{IEEEtran}
 \bibliography{IEEEabrv,german,Live-MigrationInVrituellenUmgebungen}
+\fi
 
 %%% Local Variables: 
 %%% mode: latex
