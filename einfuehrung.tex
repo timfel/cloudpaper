@@ -1,43 +1,37 @@
 \section{Einführung}
 \label{sec:einfuehrung}
-% \IEEEPARstart{H}{eutzutage} gibt es zu viele Probleme
-% Today, many organizations deploy a multitude of services on a large
-% number of servers. In some cases, all these services run on different
-% machines not because one machine cannot handle the load, but for
-% reasons of reliability.  All software is faulty~\cite{zellerprograms},
-% and operating systems with thousands of lines of code, running servers
-% written by different software vendors simply cannot be trusted to
-% provide uptimes of 99.9 percent or more. Putting each service on a
-% separate machine will achieve reliability at the expense of
-% maintainability simply because a large number of physical machines is
-% involved.
+\IEEEPARstart{H}{eutzutage} betreiben große Firmen eine Vielzahl
+von Diensten auf einer großen Anzahl von Servern, möglicherweise in
+einem oder mehreren Rechenzentren. Oft laufen Dienste physikalisch
+getrennt auf unterschiedlichen Servern, um die Ausfallsicherheit zu
+verbessern, außerdem wird Hardware vorgehalten, um fehlerhafte
+Komponenten zu ersetzen, \acp{USV} werden eingesetzt, um auch im Falle
+eines Stromausfalls nicht offline zu gehen.
 
-% Virtual machine technology has been around for more than 40
-% years~\cite{tanenbaum1992modern}. The technology to host multiple
-% machines on a single system reduces the space and power requirements
-% for data centers and represents enormous cost savings for companies
-% like Amazon, Microsoft or Google, which deploy hundreds or thousands
-% of servers for a variety of services. Unsurprisingly, virtualization
-% for cost reduction and transparent scalability is becoming
-% increasingly popular. Cloud providers such as Amazon, Rackspace or
-% Engine Yard offer scalable hosting solutions for companies and
-% individuals who cannot of do not want to maintain a private cloud.
+\acp{VM} spielen hier eine große Rolle. Die Technologie zur
+Virtualisierung von Hardware existiert seit über 40
+Jahren~\cite{tanenbaum1992modern}, die Fähigkeit, mehrere Maschinen
+auf einem physikalischen System auszuführen, und Sicherungen ganzer
+Betriebszustände zu erstellen ermöglichen es Dienstanbietern, Ausfälle
+zu isolieren und schnell zu beheben und deshalb können Versprechen von
+99.9\% Verfügbarkeit an alle Kunden gegeben
+werden~\cite{google-app-sla}.
 
-% There are obvious issues with isolation, however. As a service
-% provider, I want to avoid downtime as much as possible. Thus, I cannot
-% easily move my virtual machine from one provider to another. I cannot
-% easily migrate existing VMs to new a hypervisor architecture or a
-% completely new virtualization solution. If hardware is failing, I
-% cannot simply migrate the VM to new hardware without taking it down.
-
-% Asger Jensen and Dr. Jacob Gorm Hansen proposed live VM migration as a
-% solution to these problems. They were the first to demonstrate live
-% migration of a running VM in 2002 on a research hypervisor called
-% NomadBIOS. 
-- Firmen sehen heutzutage so aus
-- Cloud könnte für sie interessant sein
-- Welche Rolle Live-Migration da für sie spielt, und wie es ihnen
-helfen kann, zeigen wir
+Mit dem Aufkommen von Cloud Anbietern hat sich ein
+Dienstleistungssektor etabliert, der sich voll und ganz mit dem Ziel
+"`100\% Uptime"' beschäftigt. Diese Clouds, privat oder öffentlich,
+sind für Unternehmen zunehmend interessant, da sie die physikalische
+Hardware von der Ausführungsumgebung von Diensten zunehmend
+entkoppelt. Für Unternehmen ist der Schritt schon heute aufgrund eines
+potentiell geringeren administrativen Aufwands interessant,
+Rechenleistung kann bereitgestellt werden. Doch egal wie abstrahiert,
+auch \acp{VM} laufen letzten Endes auf physikalischer Hardware, und
+diese kann ausfallen. Um dem "`100\% Uptime"' Ziel nahe zu kommen,
+müssen Dienste nicht nur virtualisiert werden, sondern auch frei
+zwischen Servern und Rechenzentren bewegt werden können. Hierfür sind
+in den letzten Jahren mehrere Lösungen auf den Markt gekommen, nachdem
+im Jahr 2002 erstmals erfolgreich eine virtualisiert laufendes System
+ohne herunterfahren auf einen anderen Server migriert wurde.
 
 \subsection{Der Status in Rechenzentren}
 - Derzeit Rechner im Rechenzentrum
