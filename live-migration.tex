@@ -239,14 +239,22 @@ ist, kann man argumentieren, dass die zusätzliche Netzwerklast durch
 eine laufende Migration den Dienst vorübergehend ganz zum Erliegen
 bringen könnte. Die erhöhte Last liegt, je nach Anwendung, für mehrere
 Minuten auf dem Netzwerk, da die Umzugszeiten von der Netzwerklatenz
-zwischen den Servern abhängen. Zu lösen wäre dieses Problem durch ein
-komplett parallel betriebenes Netzwerk, dass speziell für diesen
-Anwendungsfall freigehalten wird.
-
-Es steht zu vermuten, dass die Kosten für einen solchen
-Parallelbetrieb zweier Netzwerke weit hinter den Kosten für das
-vorhalten von ausreichender, aber meist ungenutzter, Rechenkapazität
-zurückbleiben.
+zwischen den Servern abhängen. Tests von VMWare haben allerdings
+gezeigt, das sogar unter Last bei der angemessenen Migrationslösung
+eine schnelle Migration gewährleistet werden kann
+(\autoref{fig:vmware-network}). Zu lösen wäre dieses Problem in jedem
+Fall durch ein parallel betriebenes Netzwerk, dass speziell für diesen
+Anwendung reserviert bleibt. Es steht zu vermuten, dass die Kosten für
+einen solchen Parallelbetrieb zweier Netzwerke weit hinter den Kosten
+für das vorhalten von ausreichender, aber meist ungenutzter,
+Rechenkapazität zurückbleiben.
+\begin{figure}[b]
+  \centering
+  \includegraphics[width=0.9\linewidth]{images/vmware-network}
+  \caption{Effekt von VMWare Live-Migraton auf das
+    Netzwerk. Quelle:~\cite{nelson2005fast}}
+  \label{fig:vmware-network}
+\end{figure}
 
 \subsection{Keine Ausfallzeit durch erzwungene Verschiebungen}
 \label{sec:keine-ausfallzeit}
@@ -327,7 +335,7 @@ Verfügbarkeit einfacher zu gewährleisten ist, und nicht mit längerer
 Laufzeit rapide schwieriger und damit teurer wird.
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "FelgentreffPape_2010_Live-MigrationInVirtuellenUmgebungen"
-%%% End: 
+%%% End:
